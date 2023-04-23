@@ -1,0 +1,97 @@
+<script defer src="/socket.io/socket.io.js"></script>
+<script defer src="/static/js/realTimeProducts.js"></script>
+
+<h2>RealTime Productos</h2>
+
+<div id="divProdTable" class="table-responsive align-self-center w-75">
+	<table
+		id="productTable"
+		class="table table-sm table-primary table-striped align-self-center text-center"
+	>
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">Producto</th>
+				<th scope="col">Imagen</th>
+				<th scope="col">Precio</th>
+				<th scope="col">Categoría</th>
+				<th scope="col">Stock</th>
+			</tr>
+		</thead>
+		<tbody class="productList">
+			{{#each productList}}
+				<tr>
+					<th scope="row">{{title}}</th>
+					<td><img
+							src="{{correctThumbnails thumbnails}}"
+							alt="product image"
+						/></td>
+					<td>{{price}}</td>
+					<td>{{category}}</td>
+					<td>{{stock}}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>
+
+<form id="productForm">
+	<fieldset>
+		<legend><span class="number">1</span>Ingrese los datos del producto</legend>
+		<label for="code">Código:</label>
+		<input
+			type="text"
+			id="code"
+			name="code"
+			placeholder="Escriba aquí el código del producto"
+		/>
+
+		<label for="category">Categoría:</label>
+		<select id="category" name="category">
+			<option value="Estética">Estética</option>
+			<option value="Prótesis">Prótesis</option>
+			<option value="Rehabilitación">Rehabilitación</option>
+		</select>
+
+		<label for="thumbnails">Thumbnails:</label>
+		<input
+			type="text"
+			id="thumbnails"
+			name="thumbnails"
+			placeholder="/aaa/images/ej.webp"
+		/>
+
+		<label for="title">Título:</label>
+		<input
+			type="text"
+			id="title"
+			name="title"
+			placeholder="Escriba aquí el nombre del producto"
+		/>
+
+		<label for="description">Descripción:</label>
+		<input
+			type="text"
+			id="description"
+			name="description"
+			placeholder="Escriba aquí la descripción del producto"
+		/>
+
+		<label for="price">Precio:</label>
+		<input
+			type="number"
+			id="price"
+			name="price"
+			placeholder="Escriba aquí el precio del producto"
+		/>
+
+		<label for="stock">Stock:</label>
+		<input
+			type="number"
+			id="stock"
+			name="stock"
+			placeholder="Escriba aquí el stock del producto"
+		/>
+
+		<button class="btn--submit__contact" type="submit">Crear</button>
+	</fieldset>
+</form>

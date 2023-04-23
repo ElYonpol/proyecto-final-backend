@@ -1,0 +1,43 @@
+<h2>Productos</h2>
+
+<div id="divProdTable" class="table-responsive align-self-center w-75">
+	<table
+		id="productTable"
+		class="table table-sm table-primary table-striped align-self-center text-center"
+	>
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">Producto</th>
+				<th scope="col">Imagen</th>
+				<th scope="col">Precio</th>
+				<th scope="col">Categoría</th>
+				<th scope="col">Stock</th>
+			</tr>
+		</thead>
+		<tbody class="productList">
+			{{#each productList}}
+				<tr>
+					<th scope="row">{{this.title}}</th>
+					<td><img
+							src="{{correctThumbnails this.thumbnails}}"
+							alt="product image"
+						/></td>
+					<td>{{this.price}}</td>
+					<td>{{this.category}}</td>
+					<td>{{this.stock}}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	<center>
+		{{#if hasPrevPage}}
+			<a href="/api/products?limit={{limit}}&page={{prevPage}}"><button
+				>Anterior</button></a>
+		{{/if}}
+		{{#if hasNextPage}}
+			<a href="/api/products?limit={{limit}}&page={{nextPage}}"><button
+				>Siguiente</button></a>
+		{{/if}}
+		<br />
+	</center>
+</div>

@@ -1,0 +1,101 @@
+const fs = require("fs");
+
+class CartManagerMongo {
+	// constructor(path) {
+	// 	this.path = path;
+	// }
+
+	getCarts = async () => {
+		try {
+			if (fs.existsSync(this.path)) {
+				const carts = await fs.promises.readFile(this.path, "utf-8");
+				return JSON.parse(carts);
+			}
+			throw new Error();
+		} catch (error) {
+			return [];
+		}
+	};
+
+	getCartByID = async (cid) => {
+		const carts = await this.getCarts();
+
+		const cartFound = carts.find((cart) => cart.id === cid);
+
+		if (!cartFound) {
+			console.error("Cart not found");
+			return null;
+		}
+
+		return cartFound.products;
+	};
+
+	addProductToCart = async (cid, pid) => {
+		try {
+			const cart = await this.getCartByID(cid);
+
+			const cartFoundIndex = cart.findIndex((cart) => cart.id === cid);
+
+			if (cartFoundIndex === -1) return console.error("Cart not found");
+
+			const productFoundIndex = cart[cartFoundIndex].products.findIndex(
+				(prod) => prod.id === pid
+			);
+			if (productFoundIndex === -1) {
+				cart[cartFoundIndex].products.push({ id: pid, quantity: 1 });
+			} else {
+				cart[cartFoundIndex].products[productFoundIndex].quantity += 1;
+			}
+
+			await fs.promises.writeFile(
+				this.path,
+				JSON.stringify(carts, null, 2),
+				"utf-8"
+			);
+		} catch (error) {}
+	};
+
+	addCart = async () => {
+		const carts = await this.getCarts();
+
+		const newCart = {
+			id: 1,
+			products: [],
+		};
+
+		carts.length === 0
+			? (newCart.id = 1)
+			: (newCart.id = carts[carts.length - 1].id + 1);
+
+		carts.push(newCart);
+
+		await fs.promises.writeFile(
+			this.path,
+			JSON.stringify(carts, null, 2),
+			"utf-8"
+		);
+
+		return newCart;
+	};
+
+	deleteProductFromCart = async (cid, pid) => {
+		const cart = await this.getCartByID(cid);
+
+		const productFoundIndex = cart.products.findIndex(
+			(product) => product.id === pid
+		);
+
+		if (productFoundIndex === -1) {
+			console.error("Product not found");
+			return null;
+		}
+
+		console.log("El producto a eliminar es:", cart.products[productFoundIndex]);
+
+		return await cartModel.deleteOne({ _id: pid });
+	};
+}
+
+const cartMgr = new CartManagerMongo();
+
+module.exports = { CartManagerMongo, cartMgr };

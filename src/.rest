@@ -1,0 +1,17 @@
+###
+POST http://localhost:8080/api/productos 
+Content-Type: application/json
+
+{
+    "code": "abc123",
+    "category":"Prótesis",
+    "thumbnail":"url",
+    "title": "nuevoProducto",
+    "description": "Desc nuevo producto",
+    "price": 1500,
+    "stock": 13
+}
+
+###
+GET http://localhost:8080/api/productos 
+

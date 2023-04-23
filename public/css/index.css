@@ -1,0 +1,178 @@
+* {
+	/* Reset CSS */
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Para que ocupe toda la altura */
+html {
+	height: 100%;
+}
+
+/*ESTILOS DEL BODY*/
+body {
+	font-family: "Montserrat", sans-serif;
+	/*   min-height: 100%; */
+}
+
+h1 {
+	color: #475681;
+}
+
+/*ESTILOS DEL HEADER*/
+header {
+	position: sticky;
+	top: 0px;
+	width: 100%;
+	z-index: 3;
+}
+
+#bs--navbar {
+	background-image: url("/static/assets/images/consultorio_header.webp");
+	background-size: cover;
+	background-position: center center;
+	width: 100%;
+	border-radius: 4px;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	width: 100%;
+	margin: 0px;
+}
+
+.col {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 5px;
+	margin: 0px;
+}
+
+.nav__list li {
+	margin-left: 1.5rem;
+	color: #f88a02;
+	text-transform: uppercase;
+	font-weight: bold;
+	list-style: none;
+	display: inline-block;
+	align-self: center;
+	text-shadow: 2px 2px 4px black;
+}
+
+.nav__link {
+	color: #fff7ef;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a.nav__link:hover {
+	color: #f85d5a;
+	text-shadow: 2px 2px 4px #6f756b;
+}
+
+/*ESTILOS DEL MAIN -- Formularios*/
+form {
+	width: 80%;
+	min-width: 350px;
+	max-width: 500px;
+	margin: 10px auto;
+	padding: 10px 20px;
+	background: #f4f7f8;
+	border-radius: 8px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="datetime"],
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="time"],
+input[type="url"],
+textarea,
+select {
+	background: rgba(255, 255, 255, 0.1);
+	border: none;
+	font-size: 16px;
+	height: auto;
+	margin: 0;
+	outline: 0;
+	padding: 15px;
+	width: 100%;
+	background-color: #e8eeef;
+	color: #8a97a0;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+	margin-bottom: 30px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+	margin: 0 4px 8px 0;
+}
+
+select {
+	padding: 6px;
+	height: 32px;
+	border-radius: 2px;
+}
+
+.btn--submit__contact {
+	padding: 19px 39px 18px 39px;
+	color: #fff;
+	background-color: #f88a02;
+	font-size: 18px;
+	text-align: center;
+	font-style: normal;
+	border-radius: 5px;
+	width: 100%;
+	border: 1px solid #f85d5a;
+	border-width: 1px 1px 3px;
+	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+	margin-bottom: 10px;
+}
+
+fieldset {
+	margin-bottom: 30px;
+	border: none;
+}
+
+legend {
+	font-size: 1.4em;
+	margin-bottom: 10px;
+}
+
+label {
+	display: block;
+	margin-bottom: 8px;
+}
+label.light {
+	font-weight: 300;
+	display: inline;
+}
+
+.number {
+	background-color: #f88a02;
+	color: #fff;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+	font-size: 0.8em;
+	margin-right: 4px;
+	line-height: 30px;
+	text-align: center;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+	border-radius: 100%;
+}
+
+.image {
+	box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
+	border-radius: 4px;
+}
