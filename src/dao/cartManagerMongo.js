@@ -6,15 +6,13 @@ class CartManagerMongo {
 	// 	this.path = path;
 	// }
 
-	getCarts = async () => {
+	getCarts = async ({ page, limit, query = "" }) => {
 		try {
-			if (fs.existsSync(this.path)) {
-				const carts = await fs.promises.readFile(this.path, "utf-8");
-				return JSON.parse(carts);
-			}
-			throw new Error();
+			// const resp = await productModel.find().lean();
+			const resp = await cartModel.paginate({}, { limit, page, lean: true });
+			return resp;
 		} catch (error) {
-			return [];
+			return error;
 		}
 	};
 
