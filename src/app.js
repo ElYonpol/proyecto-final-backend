@@ -6,6 +6,9 @@ const { objConfig } = require("./config/config.js");
 const routerApp = require("./routes/viewsRouter.js");
 const cookieRouter = require("./routes/cookie.router.js");
 const sessionRouter = require("./routes/session.router.js");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const handlebars = require("express-handlebars");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -17,20 +20,16 @@ const httpServer = app.listen(PORT, (err) => {
 	}
 	console.log(`Servidor iniciado en el puerto ${PORT}`);
 });
-const io = new Server(httpServer);
+// const io = new Server(httpServer);
 // socket server config _______________________________________________________
 
 // handlebars config _______________________________________________________
-const handlebars = require("express-handlebars");
-
 app.engine("handlebars", handlebars.engine({ helpers: { correctThumbnails } }));
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
 
 // _________________________________ cookies y session________________________
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
 app.use(cookieParser("CookieJPP3"));
 app.use(
 	session({
@@ -39,11 +38,12 @@ app.use(
 		saveUninitialized: true,
 	})
 );
-app.use('/cookie', cookieRouter)
-app.use('/session', sessionRouter)
+app.use("/cookie", cookieRouter);
+app.use("/session", sessionRouter);
 // _________________________________ cookies y session________________________
 
-objConfig.connectDB(); //Clase 8 MongoDB
+// MongoDB
+objConfig.connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -51,6 +51,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
 
 app.use(routerApp);
+
+
+/* // _________________________________ socket________________________
 
 io.on("connection", (socket) => {
 	console.log("Nuevo cliente conectado");
@@ -72,4 +75,4 @@ io.on("connection", (socket) => {
 		"evento_para_todos",
 		"Este mensaje lo reciben todos los sockets conectados"
 	);
-});
+}); */

@@ -8,7 +8,7 @@ const objConfig = {
 	connectDB: async () => {
 		try {
 			await connect(URL);
-			console.log("Base de datos conectada");
+			console.log("Base de datos Mongo conectada");
 		} catch (error) {
 			console.log(error);
 		}

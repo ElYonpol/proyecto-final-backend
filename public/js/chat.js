@@ -1,6 +1,9 @@
 const socket = io();
 
 let user;
+const chatBox = document.getElementById("chatBox");
+const submitMessage = document.getElementById("submitMessage");
+let chatLog = document.getElementById("messageLogs");
 
 Swal.fire({
 	title: "Registro",
@@ -11,26 +14,23 @@ Swal.fire({
 	},
 	allowOutsideClick: false,
 }).then((resp) => {
-	console.log(resp);
 	user = resp.value;
 	socket.emit("authenticated", user);
 });
 
-// socket.on("ChatConnection", (socket) => {
-// 	console.log("Connected");
-// 	socket.on("chatMessage", (data) => {
-// 		console.log(socket.id);
-// 		logs.push({ socketid: socket.id, message: data });
-// 		socketServer.emit("chatLog", { logs });
-// 	});
-// });
-
-const chatBox = document.getElementById("chatBox");
+socket.on("authenticated", (newUser) => {
+	if (user) {
+		Swal.fire({
+			text: `Usuario ${newUser} conectado`,
+			toast: true,
+			position: "top-right",
+		});
+	}
+});
 
 const handleKeyUp = (evt) => {
 	if (evt.key === "Enter") {
 		if (chatBox.value.trim().length > 0) {
-			console.log(chatBox.value);
 			socket.emit("chatMessage", { user: user, userMessage: chatBox.value });
 			chatBox.value = "";
 		}
@@ -38,9 +38,15 @@ const handleKeyUp = (evt) => {
 };
 chatBox.addEventListener("keyup", handleKeyUp);
 
+const handleClick = (evt) => {
+	if (chatBox.value.trim().length > 0) {
+		socket.emit("chatMessage", { user: user, userMessage: chatBox.value });
+		chatBox.value = "";
+	}
+};
+submitMessage.addEventListener("click", handleClick);
+
 socket.on("messageLogs", (arrayServerMessage) => {
-	console.log(arrayServerMessage);
-	let chatLog = document.querySelector("#messageLogs");
 	let messages = "";
 	arrayServerMessage.forEach((message) => {
 		messages += `<li>User: ${message.user} - says:  ${message.userMessage}</li>`;
@@ -49,14 +55,12 @@ socket.on("messageLogs", (arrayServerMessage) => {
 	chatLog.innerHTML = messages;
 });
 
-socket.on("newUserConnected", (data) => {
-	if (!user) return;
-	Swal.fire({
-		toast: true,
-		position: "top-end",
-		showConfirmButton: false,
-		timer: 3000,
-		title: `${data} has joined the chat`,
-		icon: "success",
-	});
+socket.on("newUser", (newUser) => {
+	if (user) {
+		Swal.fire({
+			text: `Nuevo usuario ${newUser} conectado`,
+			toast: true,
+			position: "top-right",
+		});
+	}
 });

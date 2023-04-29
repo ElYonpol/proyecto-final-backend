@@ -1,11 +1,10 @@
 const { Schema, model } = require("mongoose");
 
-const collection = "messages";
+const messagesCollection = "messages";
 
 const messageSchema = new Schema({
 	user: {
 		type: String,
-		unique: true,
 		required: true,
 	},
 	message: {
@@ -14,6 +13,6 @@ const messageSchema = new Schema({
 	},
 });
 
-const messageModel = model(collection, messageSchema);
+const messageModel = model(messagesCollection, messageSchema);
 
 module.exports = { messageModel };
