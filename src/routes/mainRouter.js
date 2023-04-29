@@ -5,8 +5,8 @@ const viewsRouter = require("./viewsRouter.js");
 
 const router = Router();
 
-router.use("/api/products/", productsRouter);
-router.use("/api/cart/", cartsRouter);
+router.use("/api/products", productsRouter);
+router.use("/api/carts", cartsRouter);
 router.use("/", viewsRouter);
 
 module.exports = router;

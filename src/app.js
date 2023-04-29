@@ -52,7 +52,6 @@ app.use("/static", express.static(path.resolve(__dirname, "../public")));
 
 app.use(routerApp);
 
-
 /* // _________________________________ socket________________________
 
 io.on("connection", (socket) => {

@@ -1,23 +1,64 @@
 <h2>Productos</h2>
 
+<script defer src="../static/js/products.js"></script>
+
+<div>
+	<span><strong>Productos:</strong> {{paginate.totalDocs}}</span>
+	|
+	<span><strong>Página:</strong>
+		{{paginate.page}}
+		de
+		{{paginate.totalPages}}</span>
+</div>
+<div>
+	<label for="status"><strong>Disponibilidad:</strong></label>
+	<select name="query" id="status" onchange="changeOptions(this)">
+		<option value="none">Todos</option>
+		<option value="true">Disponibles</option>
+		<option value="false">No Disponibles</option>
+	</select>
+	<label for="category"><strong>Categorías:</strong></label>
+	<select name="query" id="category" onchange="changeOptions(this)">
+		<option value="none">Todas</option>
+		{{#each categories}}
+			<option value="{{this}}">{{this}}</option>
+		{{/each}}
+	</select>
+	<label for="sort"><strong>Ordenar:</strong></label>
+	<select name="sort" id="sort" onchange="changeOptions(this)">
+		<option value="none">-</option>
+		<option value="asc">Precio ascendente</option>
+		<option value="desc">Precio descendente</option>
+	</select>
+</div>
+<div>
+	{{#if paginate.hasPrevPage}}
+		<button onclick="changePage(1)">Primera Página</button>
+		<button onclick="changePage({{paginate.prevPage}})">Página Anterior</button>
+	{{/if}}
+	{{#if paginate.hasNextPage}}
+		<button onclick="changePage({{paginate.nextPage}})">Página Siguiente</button>
+		<button onclick="changePage({{paginate.totalPages}})">Última Página</button>
+	{{/if}}
+</div>
 <div>
 	{{#each products}}
-		<li><strong>Producto: </strong>{{this.title}}
-			-
-			<strong>Precio: </strong>{{this.price}}
-			-
-			<strong>Categoría: </strong>{{this.category}}
-			-
-			<strong>Stock: </strong>{{this.stock}}
-		</li>
+		<div>
+			<img
+				class="image"
+				src="{{correctThumbnails thumbnails}}"
+				alt="Imagen del producto"
+			/>
+			<h2>{{title}}</h2>
+			<p>{{description}}</p>
+			<p>Precio: ${{price}}</p>
+			<p>Categoría: {{category}}</p>
+			{{#if status}}
+				<p>Stock:{{stock}}</p>
+			{{else}}
+				<p>No disponible</p>
+			{{/if}}
+			<button class="addToCart" id={{_id}}>Añadir al carrito</button>
+		</div>
 	{{/each}}
-	<center>
-		{{#if hasPrevPage}}
-			<a href="/api/products?page={{prevPage}}"><button>Anterior</button></a>
-		{{/if}}
-		{{#if hasNextPage}}
-			<a href="/api/products?page={{nextPage}}"><button>Siguiente</button></a>
-		{{/if}}
-		<br />
-	</center>
 </div>
