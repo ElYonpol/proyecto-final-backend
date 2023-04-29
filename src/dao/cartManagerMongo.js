@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { cartModel } = require("./models/cartsModelMongo");
 
 class CartManagerMongo {
 	// constructor(path) {
@@ -42,16 +43,16 @@ class CartManagerMongo {
 				(prod) => prod.id === pid
 			);
 			if (productFoundIndex === -1) {
-				cart[cartFoundIndex].products.push({ id: pid, quantity: 1 });
+				return await cartModel.updateOne(
+					{ _id: cid },
+					products[productFoundIndex]
+				);
 			} else {
-				cart[cartFoundIndex].products[productFoundIndex].quantity += 1;
+				return await cartModel.updateOne(
+					{ _id: cid },
+					(products[productFoundIndex].quantity += 1)
+				);
 			}
-
-			await fs.promises.writeFile(
-				this.path,
-				JSON.stringify(carts, null, 2),
-				"utf-8"
-			);
 		} catch (error) {}
 	};
 
@@ -67,15 +68,7 @@ class CartManagerMongo {
 			? (newCart.id = 1)
 			: (newCart.id = carts[carts.length - 1].id + 1);
 
-		carts.push(newCart);
-
-		await fs.promises.writeFile(
-			this.path,
-			JSON.stringify(carts, null, 2),
-			"utf-8"
-		);
-
-		return newCart;
+		return await cartModel.create(newCart);
 	};
 
 	deleteProductFromCart = async (cid, pid) => {
