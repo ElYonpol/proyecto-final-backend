@@ -8,3 +8,5 @@ const router = Router();
 router.use("/api/products/", productsRouter);
 router.use("/api/cart/", cartsRouter);
 router.use("/", viewsRouter);
+
+module.exports = router;

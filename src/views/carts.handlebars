@@ -1,4 +1,4 @@
-<h2>Productos</h2>
+<h2>Carrito</h2>
 
 <div id="divProdTable" class="table-responsive align-self-center w-75">
 	<table
@@ -11,11 +11,11 @@
 				<th scope="col">Imagen</th>
 				<th scope="col">Precio</th>
 				<th scope="col">Categoría</th>
-				<th scope="col">Stock</th>
+				<th scope="col">Cantidad</th>
 			</tr>
 		</thead>
 		<tbody class="productList">
-			{{#each productList}}
+			{{#each products}}
 				<tr>
 					<th scope="row">{{this.title}}</th>
 					<td><img
@@ -24,20 +24,9 @@
 						/></td>
 					<td>{{this.price}}</td>
 					<td>{{this.category}}</td>
-					<td>{{this.stock}}</td>
+					<td>{{this.quantity}}</td>
 				</tr>
 			{{/each}}
 		</tbody>
 	</table>
-	<center>
-		{{#if hasPrevPage}}
-			<a href="/api/products?limit={{limit}}&page={{prevPage}}"><button
-				>Anterior</button></a>
-		{{/if}}
-		{{#if hasNextPage}}
-			<a href="/api/products?limit={{limit}}&page={{nextPage}}"><button
-				>Siguiente</button></a>
-		{{/if}}
-		<br />
-	</center>
 </div>
