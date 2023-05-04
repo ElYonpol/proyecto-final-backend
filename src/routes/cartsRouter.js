@@ -63,7 +63,7 @@ cartRouter.post("/:cid/products/:pid", async (req, res) => {
 		}
 
 		if (!productExists) products = [...products, { pid: pid, quantity: 1 }];
-		const resp = await cartMgr.addProductByCartId(cid, products);
+		const resp = await cartMgr.addProductToCartbyId(cid, products);
 
 		res.status(201).json({ status: "success", payload: resp });
 	} catch (error) {
