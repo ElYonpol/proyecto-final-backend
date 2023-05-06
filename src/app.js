@@ -29,6 +29,7 @@ app.set("view engine", "handlebars");
 // passport config _______________________________________________________
 initializePassport();
 app.use(passport.initialize());
+app.use(passport.session());
 // passport config _______________________________________________________
 
 // MongoDB config _______________________________________________________
