@@ -7,7 +7,6 @@ const routerApp = require("./routes/mainRouter.js");
 const handlebars = require("express-handlebars");
 const { initializePassport } = require("./passport-jwt/passportConfig.js");
 const passport = require("passport");
-const session = require("express-session");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
