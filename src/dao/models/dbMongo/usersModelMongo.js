@@ -23,6 +23,11 @@ const UserSchema = new Schema({
 		unique: true,
 		required: true,
 	},
+	role: {
+		type: String,
+		unique: true,
+		required: true,
+	},
 });
 
 UserSchema.plugin(mongoosePaginate);

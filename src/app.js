@@ -5,6 +5,8 @@ const { correctThumbnails } = require("./config/helpers.js");
 const { objConfig } = require("./config/config.js");
 const routerApp = require("./routes/mainRouter.js");
 const handlebars = require("express-handlebars");
+const { initializePassport } = require("./passport-jwt/passportConfig.js");
+const passport = require("passport");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -16,7 +18,6 @@ const httpServer = app.listen(PORT, (err) => {
 	}
 	console.log(`Servidor iniciado en el puerto ${PORT}`);
 });
-// const io = new Server(httpServer);
 // socket server config _______________________________________________________
 
 // handlebars config _______________________________________________________
@@ -25,8 +26,14 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
 
-// MongoDB
+// passport config _______________________________________________________
+initializePassport()
+app.use(passport.initialize());
+// passport config _______________________________________________________
+
+// MongoDB config _______________________________________________________
 objConfig.connectDB();
+// MongoDB config _______________________________________________________
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
