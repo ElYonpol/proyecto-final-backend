@@ -48,14 +48,17 @@ sessionsRouter.post(
 	}
 );
 
-sessionsRouter.get("/github", passport.authenticate("github"));
+sessionsRouter.get(
+	"/github",
+	passport.authenticate("github")
+);
 
 sessionsRouter.get(
 	"/githubcallback",
 	passport.authenticate("github", { failureRedirect: "/session/failregister" }),
 	(req, res) => {
 		req.session.user = req.user;
-		res.redirect("/api/usuarios");
+		res.redirect("/products");
 	}
 );
 
