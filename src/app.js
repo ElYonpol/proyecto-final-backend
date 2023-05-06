@@ -27,7 +27,7 @@ app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
 
 // passport config _______________________________________________________
-initializePassport()
+initializePassport();
 app.use(passport.initialize());
 // passport config _______________________________________________________
 

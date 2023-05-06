@@ -1,3 +1,4 @@
+/* -----------------------  Pruebas de Clase 12 aún no implementado -----------------------
 const { Router } = require("express");
 const passport = require("passport");
 const { passportCall } = require("../passport-jwt/passportCall.js");
@@ -61,3 +62,5 @@ router.get("*", async (req, res) => {
 });
 
 module.exports = router;
+
+-----------------------  Pruebas de Clase 12 aún no implementado ----------------------- */

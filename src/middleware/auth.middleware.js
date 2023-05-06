@@ -1,23 +1,24 @@
-// const authSession = (req, res, next) => {
-// 	if (req.session?.user !== "jppe" && !req.session?.admin) {
-// 		return res.status(401).send("Error de autenticación");
-// 	}
+const authSession = (req, res, next) => {
+	if (req.session?.user !== "jppe" && !req.session?.admin) {
+		return res.status(401).send("Error de autenticación");
+	}
 
-// 	next();
-// };
-
-// module.exports = {
-// 	authSession,
-// };
-
-const authorization = (role) => {
-	return async (req, res, next) => {
-		if (!req.user)
-			return res.status(401).json({ status: "error", error: "Unauthorized" });
-		if (!req.user.role !== role)
-			return res.status(403).json({ status: "error", error: "No permissions" });
-		next();
-	};
+	next();
 };
 
-module.exports = { authorization };
+module.exports = {
+	authSession,
+};
+
+// Clase 12 aún no implementado
+// const authorization = (role) => {
+// 	return async (req, res, next) => {
+// 		if (!req.user)
+// 			return res.status(401).json({ status: "error", error: "Unauthorized" });
+// 		if (!req.user.role !== role)
+// 			return res.status(403).json({ status: "error", error: "No permissions" });
+// 		next();
+// 	};
+// };
+
+// module.exports = { authorization };

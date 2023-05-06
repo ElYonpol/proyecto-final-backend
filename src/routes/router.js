@@ -49,15 +49,15 @@ class ClassRouter {
 		next();
 	};
 
-	// get(path, policies, ...callbacks) {
-	// 	this.router.get(
-	// 		path,
-	// 		this.handlePolicies(policies),
-	// 		this.generateCustomResponse,
-	// 		["admin"],
-	// 		this.applyCallbacks(callbacks)
-	// 	);
-	// }
+	get(path, policies, ...callbacks) {
+		this.router.get(
+			path,
+			this.handlePolicies(policies),
+			this.generateCustomResponse,
+			["admin"],
+			this.applyCallbacks(callbacks)
+		);
+	}
 	post(path, policies, ...callbacks) {
 		this.router.get(
 			path,

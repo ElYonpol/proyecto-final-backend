@@ -1,8 +1,10 @@
-<h2>Productos</h2>
+<h1 class="display-1">
+	<div class="display-1--intro">Productos</div>
+</h1>
 
 <script defer src="../static/js/products.js"></script>
 
-<div>
+<div class="display-1--description">
 	<span><strong>Productos:</strong> {{paginate.totalDocs}}</span>
 	|
 	<span><strong>Página:</strong>
@@ -10,7 +12,7 @@
 		de
 		{{paginate.totalPages}}</span>
 </div>
-<div>
+<div class="display-1--description">
 	<label for="status"><strong>Disponibilidad:</strong></label>
 	<select name="query" id="status" onchange="changeOptions(this)">
 		<option value="none">Todos</option>
@@ -31,7 +33,7 @@
 		<option value="desc">Precio descendente</option>
 	</select>
 </div>
-<div>
+<div class="display-1--description">
 	{{#if paginate.hasPrevPage}}
 		<button onclick="changePage(1)">Primera Página</button>
 		<button onclick="changePage({{paginate.prevPage}})">Página Anterior</button>
@@ -41,24 +43,29 @@
 		<button onclick="changePage({{paginate.totalPages}})">Última Página</button>
 	{{/if}}
 </div>
-<div>
+<div class="cartCards--container">
 	{{#each products}}
-		<div>
-			<img
-				class="image"
-				src="{{correctThumbnails thumbnails}}"
-				alt="Imagen del producto"
-			/>
-			<h2>{{title}}</h2>
-			<p>{{description}}</p>
-			<p>Precio: ${{price}}</p>
-			<p>Categoría: {{category}}</p>
-			{{#if status}}
-				<p>Stock:{{stock}}</p>
-			{{else}}
-				<p>No disponible</p>
-			{{/if}}
-			<button class="addToCart" id={{_id}}>Añadir al carrito</button>
+		<div class="cartCard">
+			<div class="cartCard-image">
+				<img
+					class="image"
+					style="height: 350px;"
+					src="{{correctThumbnails thumbnails}}"
+					alt="Imagen del producto"
+				/>
+			</div>
+			<div class="cartCard-content">
+				<p class="cartCard-content__title">{{title}}</p>
+				<p class="cartCard-content__body">{{description}}</p>
+				<p class="cartCard-content__body">Precio: ${{price}}</p>
+				<p class="cartCard-content__body">Categoría: {{category}}</p>
+				{{#if status}}
+					<p class="cartCard-content__body">Stock: {{stock}}</p>
+				{{else}}
+					<p class="cartCard-content__body">No disponible</p>
+				{{/if}}
+				<button class="addToCart button-cart" id={{_id}}>Añadir al carrito</button>
+			</div>
 		</div>
 	{{/each}}
 </div>

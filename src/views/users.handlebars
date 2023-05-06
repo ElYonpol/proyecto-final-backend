@@ -1,8 +1,10 @@
-<h2>Usuarios</h2>
+<h1 class="display-1">
+		<div class="display-1--intro">Usuarios</div>
+	</h1>
 
 <script defer src="../static/js/users.js"></script>
 
-<div>
+<div class="display-1--description">
 	<span><strong>Usuarios:</strong> {{paginate.totalDocs}}</span>
 	|
 	<span><strong>Página:</strong>
@@ -10,7 +12,7 @@
 		de
 		{{paginate.totalPages}}</span>
 </div>
-<div>
+<div class="display-1--description">
 	<label for="status"><strong>Status:</strong></label>
 	<select name="query" id="status" onchange="changeOptions(this)">
 		<option value="none">Todos</option>
@@ -31,7 +33,7 @@
 		<option value="desc">Nombre descendente</option>
 	</select>
 </div>
-<div>
+<div class="display-1--description">
 	{{#if paginate.hasPrevPage}}
 		<button onclick="changePage(1)">Primera Página</button>
 		<button onclick="changePage({{paginate.prevPage}})">Página Anterior</button>

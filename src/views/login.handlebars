@@ -1,22 +1,18 @@
 <div>
-    <h1>Formulario de login</h1>
-    {{!-- <h1>Inyección de cookies</h1> --}}
-    {{!-- <form id="cookieForm" onsubmit="return false">
-        <label>Username</label>
-        <input name="username">
-        <br />
-        <label>password</label>
-        <input name="password">
-        <input type="submit">
-    </form> --}}
-    <form method="POST" action="/session/login" >
-        <label>Username</label>
-        <input name="username">
-        <br />
-        <label>Password</label>
-        <input name="password">
-        <input type="submit">
-    </form>
-    {{!-- <button onclick="getCookie()">Ver Cookie</button> --}}
+	<h1 class="display-1">
+		<div class="display-1--intro">Menú de login</div>
+	</h1>
+	<form method="POST" action="/session/login">
+		<label>Username</label>
+		<input name="username" />
+		<br />
+		<label>Password</label>
+		<input name="password" />
+		<input type="submit" />
+	</form>
+	<div class="display-1--subtitle"><a href="session/github">
+			Entrar con GitHub
+		</a>
+	</div>
+
 </div>
-{{!-- <script src="/virtual/js/cookieSetter.js"></script> --}}

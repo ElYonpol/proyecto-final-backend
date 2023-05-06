@@ -7,8 +7,6 @@ const usersRouter = require("./usersRouter.js");
 const viewsRouter = require("./viewsRouter.js");
 const cookieRouter = require("./cookieRouter.js");
 const sessionRouter = require("./sessionRouter.js");
-const pruebasRouter = require("./pruebasRouter.js");
-const { UserRouter } = require("./users.js");
 
 const router = Router();
 
@@ -17,9 +15,13 @@ router.use("/api/carts", cartsRouter);
 router.use("/api/users", usersRouter)
 router.use("/", viewsRouter);
 
-const userRouter = new UserRouter();
-router.use("/users", userRouter.getRouter());
-router.use("/pruebas", pruebasRouter);
+// ----------- Pruebas de Clase 12 aún no implementado -------------------------------
+// const pruebasRouter = require("./pruebasRouter.js");
+// const { UserRouter } = require("./users.js");
+// const userRouter = new UserRouter();
+// router.use("/users", userRouter.getRouter());
+// router.use("/pruebas", pruebasRouter);
+// ----------- Pruebas de Clase 12 aún no implementado -------------------------------
 
 // _________________________________ cookies y session________________________
 router.use(cookieParser("CookieJPP3"));

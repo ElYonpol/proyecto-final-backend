@@ -68,6 +68,10 @@ router.get("/chat", async (req, res) => {
 	res.render("chat", { style: "index.css" });
 });
 
+router.get("/register", async (req, res) => {
+	res.render("register", { style: "index.css" });
+});
+
 //Listar usuarios con formato tabla
 router.get("/users", async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
