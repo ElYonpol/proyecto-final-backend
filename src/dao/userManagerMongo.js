@@ -4,6 +4,10 @@ class UserManagerMongo {
 	getUsers = async (filter, specs) => {
 		return await userModel.paginate(filter, specs);
 	};
+	
+	getUserByID = async (uid) => {
+		return await userModel.find({ _id: uid });
+	};
 
 	addUser = async (newUser) => {
 		return await userModel.create(newUser);
