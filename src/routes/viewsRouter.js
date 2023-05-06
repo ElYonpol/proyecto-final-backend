@@ -19,7 +19,7 @@ router.get("/products", async (req, res) => {
 	const { docs, ...rest } = await productMgr.getProducts(query, spec);
 	const categories = await productMgr.getProductCategories();
 
-	res.render("products", {
+	res.render("productsCards", {
 		style: "index.css",
 		products: docs,
 		paginate: rest,

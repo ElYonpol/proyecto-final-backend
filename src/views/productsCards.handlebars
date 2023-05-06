@@ -1,0 +1,77 @@
+<h2>Productos</h2>
+
+<script defer src="../static/js/products.js"></script>
+
+<div>
+	<span><strong>Productos:</strong> {{paginate.totalDocs}}</span>
+	|
+	<span><strong>Página:</strong>
+		{{paginate.page}}
+		de
+		{{paginate.totalPages}}</span>
+</div>
+<div>
+	<label for="status"><strong>Disponibilidad:</strong></label>
+	<select name="query" id="status" onchange="changeOptions(this)">
+		<option value="none">Todos</option>
+		<option value="true">Disponibles</option>
+		<option value="false">No Disponibles</option>
+	</select>
+	<label for="category"><strong>Categorías:</strong></label>
+	<select name="query" id="category" onchange="changeOptions(this)">
+		<option value="none">Todas</option>
+		{{#each categories}}
+			<option value="{{this}}">{{this}}</option>
+		{{/each}}
+	</select>
+	<label for="sort"><strong>Ordenar:</strong></label>
+	<select name="sort" id="sort" onchange="changeOptions(this)">
+		<option value="none">-</option>
+		<option value="asc">Precio ascendente</option>
+		<option value="desc">Precio descendente</option>
+	</select>
+</div>
+<div>
+	{{#if paginate.hasPrevPage}}
+		<button onclick="changePage(1)">Primera Página</button>
+		<button onclick="changePage({{paginate.prevPage}})">Página Anterior</button>
+	{{/if}}
+	{{#if paginate.hasNextPage}}
+		<button onclick="changePage({{paginate.nextPage}})">Página Siguiente</button>
+		<button onclick="changePage({{paginate.totalPages}})">Última Página</button>
+	{{/if}}
+</div>
+<div class="cartCardDetail--container">
+	{{#each products}}
+		<div className="cartCardDetail">
+			<div><img
+					class="image"
+					src="{{correctThumbnails thumbnails}}"
+					alt="Imagen del producto"
+				/></div>
+			<div className="cartCardDetail-content">
+				<span className="cartCardDetail-content__category">
+					{{category}}
+				</span>
+				<p className="cartCardDetail-content__title">
+					{{title}}
+				</p>
+				<p className="cartCardDetail-content__body">{{description}}</p>
+				<div className="cartCardDetail-content__priceQty">
+					<span>${{price}}</span>
+				</div>
+				<span className="cartCardDetail-content__title">
+					{{#if status}}
+						<p>{{stock}} unidades disponibles</p>
+					{{else}}
+						<p>No disponible</p>
+					{{/if}}
+				</span>
+				--
+				<span>
+					<button class="addToCart button-cart" id={{_id}}>Añadir al 🛒</button>
+				</span>
+			</div>
+		</div>
+	{{/each}}
+</div>
