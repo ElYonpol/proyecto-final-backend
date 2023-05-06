@@ -31,30 +31,53 @@ class ClassRouter {
 		next();
 	}
 
-	get(path, ...callbacks) {
+	handlePolicies = (policies) => (req, res, next) => {
+		if (policies[0] === "PUBLIC") return next();
+		const authHeader = req.headers.authorization;
+		if (!authHeader)
+			return res
+				.status(401)
+				.send({ status: "error", error: "Not Authenticated" });
+
+		const token = authHeader.split(" ")[1];
+
+		let user = jwt.verify(token, "secretJPPE");
+		if (!policies.includes(user.role.toUpperCase()))
+			return res.status(403).send({ status: "error", error: "No permissions" });
+
+		res.user = user;
+		next();
+	};
+
+	// get(path, policies, ...callbacks) {
+	// 	this.router.get(
+	// 		path,
+	// 		this.handlePolicies(policies),
+	// 		this.generateCustomResponse,
+	// 		["admin"],
+	// 		this.applyCallbacks(callbacks)
+	// 	);
+	// }
+	post(path, policies, ...callbacks) {
 		this.router.get(
 			path,
+			this.handlePolicies(policies),
 			this.generateCustomResponse,
 			this.applyCallbacks(callbacks)
 		);
 	}
-	post(path, ...callbacks) {
+	put(path, policies, ...callbacks) {
 		this.router.get(
 			path,
+			this.handlePolicies(policies),
 			this.generateCustomResponse,
 			this.applyCallbacks(callbacks)
 		);
 	}
-	put(path, ...callbacks) {
+	delete(path, policies, ...callbacks) {
 		this.router.get(
 			path,
-			this.generateCustomResponse,
-			this.applyCallbacks(callbacks)
-		);
-	}
-	delete(path, ...callbacks) {
-		this.router.get(
-			path,
+			this.handlePolicies(policies),
 			this.generateCustomResponse,
 			this.applyCallbacks(callbacks)
 		);

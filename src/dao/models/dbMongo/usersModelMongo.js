@@ -7,7 +7,7 @@ const UserSchema = new Schema({
 	first_name: {
 		type: String,
 		index: true,
-        required: true,
+		required: true,
 	},
 	last_name: {
 		type: String,
@@ -27,6 +27,15 @@ const UserSchema = new Schema({
 		type: String,
 		unique: true,
 		required: true,
+	},
+	password: {
+		type: String,
+		required: true,
+	},
+	status: {
+		type: Boolean,
+		default: true,
+		required: false,
 	},
 });
 

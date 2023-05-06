@@ -1,0 +1,70 @@
+<h2>Usuarios</h2>
+
+<script defer src="../static/js/users.js"></script>
+
+<div>
+	<span><strong>Usuarios:</strong> {{paginate.totalDocs}}</span>
+	|
+	<span><strong>Página:</strong>
+		{{paginate.page}}
+		de
+		{{paginate.totalPages}}</span>
+</div>
+<div>
+	<label for="status"><strong>Status:</strong></label>
+	<select name="query" id="status" onchange="changeOptions(this)">
+		<option value="none">Todos</option>
+		<option value="true">Activos</option>
+		<option value="false">No Activos</option>
+	</select>
+	<label for="role"><strong>Roles:</strong></label>
+	<select name="query" id="role" onchange="changeOptions(this)">
+		<option value="none">Todas</option>
+		{{#each roles}}
+			<option value="{{this}}">{{this}}</option>
+		{{/each}}
+	</select>
+	<label for="sort"><strong>Ordenar:</strong></label>
+	<select name="sort" id="sort" onchange="changeOptions(this)">
+		<option value="none">-</option>
+		<option value="asc">Precio ascendente</option>
+		<option value="desc">Precio descendente</option>
+	</select>
+</div>
+<div>
+	{{#if paginate.hasPrevPage}}
+		<button onclick="changePage(1)">Primera Página</button>
+		<button onclick="changePage({{paginate.prevPage}})">Página Anterior</button>
+	{{/if}}
+	{{#if paginate.hasNextPage}}
+		<button onclick="changePage({{paginate.nextPage}})">Página Siguiente</button>
+		<button onclick="changePage({{paginate.totalPages}})">Última Página</button>
+	{{/if}}
+</div>
+<div>
+	<table
+		id="userTable"
+		class="table table-sm table-primary table-striped align-self-center text-center"
+	>
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">Nombre</th>
+				<th scope="col">Apellido</th>
+				<th scope="col">email</th>
+				<th scope="col">Usuario</th>
+				<th scope="col">Rol</th>
+			</tr>
+		</thead>
+		<tbody class="userList">
+			{{#each users}}
+				<tr>
+					<th scope="row">{{first_name}}</th>
+					<td>{{last_name}}</td>
+					<td>{{email}}</td>
+					<td>{{username}}</td>
+					<td>{{role}}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</div>

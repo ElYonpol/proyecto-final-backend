@@ -1,7 +1,12 @@
 const { Router } = require("express");
-const { UserManagerMongo } = require("../managersDao/uesrManagerMongo");
+const { userMgr } = require("../dao/userManagerMongoose");
 const { authSession } = require("../middleware/auth.middleware");
-// import { Router } from 'express'
+const {
+	productsCreationSchema,
+	productsUpdatingSchema,
+} = require("../validation/productsValidation.js");
+const { objectsValidation } = require("../middleware/validator.js");
+const { SERVER_URL, PORT } = require("../config/setups.js");
 
 const router = Router();
 const usersManager = new UserManagerMongo();
