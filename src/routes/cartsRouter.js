@@ -6,7 +6,7 @@ const cartRouter = express.Router();
 cartRouter.get("/", async (req, res) => {
 	try {
 		const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-		const respCarts = await cartManager.getCarts();
+		const respCarts = await cartMgr.getCarts();
 		const limit = req.query.limit;
 		let limitedCarts = [];
 		if (limit) limitedCarts = respCarts.slice(0, limit);
