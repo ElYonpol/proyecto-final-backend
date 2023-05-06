@@ -10,7 +10,7 @@ const { SERVER_URL, PORT } = require("../config/setups.js");
 
 const usersRouter = Router();
 
-// get http://localhost:8080/api/users
+// GET http://localhost:8080/api/users
 usersRouter.get("/", authSession, async (req, res) => {
 	try {
 		const { page = 1, limit = 10, sort = null } = req.query;
@@ -47,7 +47,7 @@ usersRouter.get("/", authSession, async (req, res) => {
 	}
 });
 
-// get http://localhost:8080/api/users /id
+// GET http://localhost:8080/api/users /id
 usersRouter.get("/:uid", async (req, res) => {
 	try {
 		const uid = req.params.uid;
