@@ -1,5 +1,5 @@
 const passport = require("passport");
-const { userModel } = require("../dao/models/dbMongo/usersModelMongo.js");
+const { userMgr } = require("../dao/userManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
@@ -16,7 +16,7 @@ const initializePassport = () => {
 				try {
 					const { first_name, last_name, username } = req.body;
 					// buscar el usuario en la base de datos
-					const user = await userModel.findOne({ email });
+					const user = await userMgr.getUserByEmail(email);
 					console.log({ user });
 					// done si  hay usuario
 					if (user) {
@@ -33,7 +33,7 @@ const initializePassport = () => {
 						role,
 						password: hashedPassword,
 					};
-					const result = await userModel.create(newUser);
+					const result = await userMgr.addUser(newUser);
 
 					// done con el usuario
 					return done(null, result);
@@ -53,7 +53,7 @@ const initializePassport = () => {
 			},
 			async (email, password, done) => {
 				try {
-					const user = await userModel.findOne({ email });
+					const user = await userMgr.getUserByEmail(email);
 					if (!user) {
 						return done(null, false);
 					}
@@ -84,7 +84,7 @@ const initializePassport = () => {
 			async (accessToken, refreshToken, profile, done) => {
 				try {
 					console.log({ email: profile.emails[0].value });
-					const user = await userModel.findOne({
+					const user = await userMgr.getUserByEmail({
 						email: profile.emails[0].value,
 					});
 					if (!user) {
@@ -95,7 +95,7 @@ const initializePassport = () => {
 							email: profile.emails[0].value,
 						};
 						console.log({ newUser });
-						const result = await userModel.create(newUser);
+						const result = await userMgr.addUser(newUser);
 						return done(null, result);
 					} else {
 						return done(null, user);
@@ -110,9 +110,9 @@ const initializePassport = () => {
 	passport.serializeUser((user, done) => {
 		done(null, user._id);
 	});
-	passport.deserializeUser(async (id, done) => {
+	passport.deserializeUser(async (uid, done) => {
 		try {
-			const user = await userModel.findById(id);
+			const user = await userMgr.getUserByID(uid);
 			done(null, user);
 		} catch (error) {
 			done(error);

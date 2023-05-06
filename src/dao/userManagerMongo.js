@@ -9,6 +9,10 @@ class UserManagerMongo {
 		return await userModel.find({ _id: uid });
 	};
 
+	getUserByEmail = async (userEmail) => {
+		return await userModel.find({ email: userEmail });
+	};
+
 	addUser = async (newUser) => {
 		return await userModel.create(newUser);
 	};
