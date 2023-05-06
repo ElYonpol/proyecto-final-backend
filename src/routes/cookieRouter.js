@@ -4,7 +4,7 @@ const router = Router();
 
 router.get("/set", (req, res) => {
 	res
-		.cookie("CookiePruebaJP", "Este es el valor de la cookie", {
+		.cookie("CookieJPP3", "Este es el valor de la cookie", {
 			maxAge: 50000000,
 		})
 		.send("Cookie set");
@@ -33,7 +33,7 @@ router.get("/getSigned", (req, res) => {
 });
 
 router.get("/delete", (req, res) => {
-	res.clearCookie("CookiePruebaJP").send("Cookie removed");
+	res.clearCookie("CookieJPP3").send("Cookie removed");
 });
 
 module.exports = router;

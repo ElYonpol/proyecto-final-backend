@@ -9,13 +9,13 @@ router.get("/", (req, res) => {
 router.post("/login", (req, res) => {
 	const { username, password } = req.body;
 
-	if (username !== "fede" || password !== "fede") {
-		return res.status(401).send("pass o username no es correcto");
+	if (username !== "jppe" || password !== "jppe") {
+		return res.status(401).send("Nombre de usuario o contraseña incorrectos.");
 	}
 	req.session.user = username;
 	req.session.admin = true;
 
-	res.send("login success");
+	res.send("Login exitoso");
 });
 
 router.get("/", (req, res) => {
@@ -31,7 +31,7 @@ router.get("/", (req, res) => {
 router.get("/logout", (req, res) => {
 	req.session.destroy((err) => {
 		if (err) return res.send({ status: "Logout error", message: err });
-		res.send("logou ok");
+		res.send("Logout ok");
 	});
 });
 
