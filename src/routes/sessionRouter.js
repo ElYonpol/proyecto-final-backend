@@ -4,7 +4,6 @@ const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
 
-
 const sessionsRouter = Router();
 
 sessionsRouter.get("/", (req, res) => {
@@ -41,19 +40,31 @@ sessionsRouter.get("/register", (req, res) => {
 });
 
 // POST Registro
-sessionsRouter.post(
-	"/register",
-	passport.authenticate("register", {
-		failureRedirect: "/session/failregister",
-		session: false,
-	}),
-	async (req, res) => {
-		res.send({
-			status: "success",
-			message: "Usuario creado",
-		});
-	}
-);
+sessionsRouter.post("/register", async (req, res) => {
+	const { name, email, password, role } = req.body;
+	const users = await userMgr.getUserByEmail(email);
+	const userExist = users.find((user) => user.email === email);
+	if (userExist)
+		return res
+			.status(400)
+			.send({ status: "error", message: "El usuario ya existe" });
+	const newUser = {
+		name,
+		email,
+		password,
+		role,
+	};
+
+	const resp = await userMgr.addUser(newUser);
+
+	const accessToken = generateToken(newUser);
+
+	res.send({
+		status: "success",
+		message: "Usuario creado",
+		accessToken,
+	});
+});
 
 sessionsRouter.get("/github", passport.authenticate("github"));
 
