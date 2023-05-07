@@ -1,7 +1,9 @@
 const { Router } = require("express");
-const { userModel } = require("../dao/models/dbMongo/usersModelMongo.js");
+const { userMgr } = require("../dao/userManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
+const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
+
 
 const sessionsRouter = Router();
 
@@ -9,23 +11,27 @@ sessionsRouter.get("/", (req, res) => {
 	res.render("login", {});
 });
 
-sessionsRouter.post("/login", (req, res) => {
-	if (!req.user)
-		return res.status(400).send({
-			status: "error",
-			message: "Nombre de usuario y/o contraseña incorrectos.",
-		});
-
-	req.session.user = {
-		username: req.user.username,
-		email: req.user.email,
-		admin: true,
-	};
-
+sessionsRouter.post("/login", async (req, res) => {
+	const { email, password } = req.body;
+	const users = await userMgr.getUserByEmail(email);
+	const user = users.find(
+		(user) => user.email === email && user.password === password
+	);
+	if (!user)
+		return res
+			.status(400)
+			.send({ status: "error", message: "Revisar usuario y contraseña" });
+	const accessToken = generateToken(user);
 	res.send({
 		status: "success",
-		payload: req.session.user,
-		message: "login correcto",
+		payload: accessToken,
+	});
+});
+
+sessionsRouter.get("/current", authToken, (req, res) => {
+	res.send({
+		status: "success",
+		payload: req.user,
 	});
 });
 
@@ -39,6 +45,7 @@ sessionsRouter.post(
 	"/register",
 	passport.authenticate("register", {
 		failureRedirect: "/session/failregister",
+		session: false,
 	}),
 	async (req, res) => {
 		res.send({
@@ -48,17 +55,17 @@ sessionsRouter.post(
 	}
 );
 
-sessionsRouter.get(
-	"/github",
-	passport.authenticate("github")
-);
+sessionsRouter.get("/github", passport.authenticate("github"));
 
 sessionsRouter.get(
 	"/githubcallback",
-	passport.authenticate("github", { failureRedirect: "/session/failregister" }),
+	passport.authenticate("github", {
+		failureRedirect: "/session/failregister",
+		session: false,
+	}),
 	(req, res) => {
 		req.session.user = req.user;
-		res.redirect("/products");
+		res.redirect("/api/products");
 	}
 );
 
@@ -68,7 +75,7 @@ sessionsRouter.get("/failregister", (req, res) => {
 
 sessionsRouter.put("/recoverypass", async (req, res) => {
 	const { email, password } = req.body;
-	const user = await userModel.findOne({ email });
+	const user = await userMgr.getUserByEmail(email);
 	if (!user)
 		return res
 			.status(401)
