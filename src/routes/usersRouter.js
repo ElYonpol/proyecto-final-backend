@@ -67,7 +67,7 @@ usersRouter.get("/:uid", async (req, res) => {
 
 // POST http://localhost:8080/api/users /
 usersRouter.post(
-	"/",
+	"/register",
 	objectsValidation(usersCreationSchema),
 	async (req, res) => {
 		try {

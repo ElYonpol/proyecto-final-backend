@@ -11,10 +11,10 @@ sessionsRouter.get("/", (req, res) => {
 });
 
 sessionsRouter.post("/login", async (req, res) => {
-	const { email, password } = req.body;
-	const users = await userMgr.getUserByEmail(email);
+	const { username, password } = req.body;
+	const users = await userMgr.getUserByUsername(username);
 	const user = users.find(
-		(user) => user.email === email && user.password === password
+		(user) => user.username === username && user.password === password
 	);
 	if (!user)
 		return res
@@ -41,7 +41,14 @@ sessionsRouter.get("/register", (req, res) => {
 
 // POST Registro
 sessionsRouter.post("/register", async (req, res) => {
-	const { name, email, password, role } = req.body;
+	const {
+		username,
+		first_name,
+		last_name,
+		email,
+		password,
+		role = "user",
+	} = req.body;
 	const users = await userMgr.getUserByEmail(email);
 	const userExist = users.find((user) => user.email === email);
 	if (userExist)
@@ -49,7 +56,9 @@ sessionsRouter.post("/register", async (req, res) => {
 			.status(400)
 			.send({ status: "error", message: "El usuario ya existe" });
 	const newUser = {
-		name,
+		username,
+		first_name,
+		last_name,
 		email,
 		password,
 		role,
