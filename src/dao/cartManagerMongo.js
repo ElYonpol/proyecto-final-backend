@@ -2,7 +2,7 @@ const { cartModel } = require("./models/dbMongo/cartsModelMongo.js");
 
 class CartManagerMongo {
 	getCarts = async (filters) => {
-		return await cartModel.find(filters);
+		return await cartModel.find(filters).lean();
 	};
 
 	getCartByID = async (cid) => {

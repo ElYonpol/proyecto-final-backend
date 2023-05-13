@@ -7,14 +7,17 @@ const usersRouter = require("./usersRouter.js");
 const viewsRouter = require("./viewsRouter.js");
 const cookieRouter = require("./cookieRouter.js");
 const sessionRouter = require("./sessionRouter.js");
+// const pruebasRouter2 = require("./pruebasRouter2.js")
+
 
 const router = Router();
 
-router.use("/session", sessionRouter);
 router.use("/api/products", productsRouter);
 router.use("/api/carts", cartsRouter);
 router.use("/api/users", usersRouter)
 router.use("/", viewsRouter);
+// router.use("/session", sessionRouter);
+// router.use("/api/pruebas", pruebasRouter2)
 
 // ----------- Pruebas de Clase 12 aún no implementado -------------------------------
 // const pruebasRouter = require("./pruebasRouter.js");

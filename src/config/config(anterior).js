@@ -1,13 +1,7 @@
 const { connect } = require("mongoose");
-const { commander } = require("../utils/commander.js");
 
-const { mode } = commander.opts();
-
-require("dotenv").config({
-	path: mode === "development" ? "./.env.development" : "./.env.production",
-});
-
-let URL = process.env.DB_HOST;
+//Nota para Tutor: Link de la URL está en el mensaje de la entrega
+// let URL ="//colocar aquí la URL del mensaje de la entrega";
 
 const objConfig = {
 	connectDB: async () => {

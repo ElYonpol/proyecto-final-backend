@@ -3,6 +3,16 @@ const { userMgr } = require("../dao/userManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
+const { commander } = require("../utils/commander.js");
+
+const { mode } = commander.opts();
+
+require("dotenv").config({
+	path: mode === "development" ? "./.env.development" : "./.env.production",
+});
+
+let GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+let GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 const initializePassport = () => {
 	passport.use(
@@ -78,6 +88,8 @@ const initializePassport = () => {
 			{
 				//clientID: colocar aquí el clientSecret pasado en la entrega
 				//clientSecret: colocar aquí el clientID pasado en la entrega
+				clientID: GITHUB_CLIENT_ID,
+				clientSecret: GITHUB_CLIENT_SECRET,
 				callbackURL: "http://localhost:8080/session/githubcallback",
 				scope: ["user:email"],
 			},

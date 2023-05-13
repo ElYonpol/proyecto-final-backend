@@ -1,14 +1,15 @@
 <h1 class="display-1">
-		<div class="display-1--intro">Carrito</div>
-	</h1>
+	<div class="display-1--intro">Carrito</div>
+</h1>
 
-<div id="divProdTable" class="table-responsive align-self-center w-75">
+<div id="divProdTable" class="table-responsive align-self-center w-100">
 	<table
 		id="productTable"
 		class="table table-sm table-primary table-striped align-self-center text-center"
 	>
 		<thead class="table-dark">
 			<tr>
+				<th scope="col">Carrito</th>
 				<th scope="col">Producto</th>
 				<th scope="col">Imagen</th>
 				<th scope="col">Precio</th>
@@ -17,17 +18,20 @@
 			</tr>
 		</thead>
 		<tbody class="productList">
-			{{#each products}}
-				<tr>
-					<th scope="row">{{this.title}}</th>
-					<td><img
-							src="{{correctThumbnails this.thumbnails}}"
-							alt="product image"
-						/></td>
-					<td>{{this.price}}</td>
-					<td>{{this.category}}</td>
-					<td>{{this.quantity}}</td>
-				</tr>
+			{{#each carts}}
+				{{#each products}}
+					<tr>
+						<th scope="row">{{_id}}</th>
+						<th scope="row">{{pid.title}}</th>
+						<td><img
+								src="{{correctThumbnails pid.thumbnails}}"
+								alt="product image"
+							/></td>
+						<td>{{pid.price}}</td>
+						<td>{{pid.category}}</td>
+						<td>{{quantity}}</td>
+					</tr>
+				{{/each}}
 			{{/each}}
 		</tbody>
 	</table>
