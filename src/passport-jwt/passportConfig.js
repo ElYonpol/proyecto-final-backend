@@ -86,6 +86,7 @@ const initializePassport = () => {
 		"github",
 		new GitHubStrategy(
 			{
+				//Nota para Tutor: Link en el mensaje de la entrega
 				//clientID: colocar aquí el clientSecret pasado en la entrega
 				//clientSecret: colocar aquí el clientID pasado en la entrega
 				clientID: GITHUB_CLIENT_ID,
