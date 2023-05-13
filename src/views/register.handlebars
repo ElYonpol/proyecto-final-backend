@@ -1,9 +1,11 @@
 <h1 class="display-1">
 		<div class="display-1--intro">Menú de registro</div>
 	</h1>
-<form action="/register" method="POST">
+<form action="/api/users/register" method="POST">
 	<label>Nombre de usuario</label>
 	<input type="text" name="username" /><br />
+	<label>Rol</label>
+	<input type="text" name="role" /><br />
 	<label>Nombre</label>
 	<input type="text" name="first_name" /><br />
 	<label>Apellido</label>

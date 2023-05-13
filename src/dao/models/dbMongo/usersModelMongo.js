@@ -41,7 +41,6 @@ const UserSchema = new Schema({
 	cid: {
 		type: Schema.Types.ObjectId,
 		ref: "carts",
-		unique: true,
 	},
 });
 
