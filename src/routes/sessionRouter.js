@@ -80,7 +80,7 @@ sessionsRouter.get("/github", passport.authenticate("github"));
 sessionsRouter.get(
 	"/githubcallback",
 	passport.authenticate("github", {
-		failureRedirect: "/session/failregister",
+		failureRedirect: "/sessions/failregister",
 		session: false,
 	}),
 	(req, res) => {

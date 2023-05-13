@@ -7,7 +7,6 @@ const usersRouter = require("./usersRouter.js");
 const viewsRouter = require("./viewsRouter.js");
 const cookieRouter = require("./cookieRouter.js");
 const sessionRouter = require("./sessionRouter.js");
-// const pruebasRouter2 = require("./pruebasRouter2.js")
 
 
 const router = Router();
@@ -16,28 +15,11 @@ router.use("/api/products", productsRouter);
 router.use("/api/carts", cartsRouter);
 router.use("/api/users", usersRouter)
 router.use("/", viewsRouter);
-// router.use("/session", sessionRouter);
-// router.use("/api/pruebas", pruebasRouter2)
-
-// ----------- Pruebas de Clase 12 aún no implementado -------------------------------
-// const pruebasRouter = require("./pruebasRouter.js");
-// const { UserRouter } = require("./users.js");
-// const userRouter = new UserRouter();
-// router.use("/users", userRouter.getRouter());
-// router.use("/pruebas", pruebasRouter);
-// ----------- Pruebas de Clase 12 aún no implementado -------------------------------
 
 // _________________________________ cookies y session________________________
+router.use("/api/sessions", sessionRouter);
 router.use(cookieParser("CookieJPP3"));
-// router.use(
-// 	session({
-// 		secret: "secretJPPE",
-// 		resave: true,
-// 		saveUninitialized: true,
-// 	})
-// );
 router.use("/cookie", cookieRouter);
-// router.use("/session", sessionRouter); //Cuando use passport hay que eliminar esto
 // _________________________________ cookies y session________________________
 
 module.exports = router;

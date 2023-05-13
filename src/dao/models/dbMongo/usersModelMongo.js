@@ -25,6 +25,7 @@ const UserSchema = new Schema({
 	},
 	role: {
 		type: String,
+		default: "user",
 		unique: true,
 		required: true,
 	},
@@ -36,6 +37,11 @@ const UserSchema = new Schema({
 		type: Boolean,
 		default: true,
 		required: false,
+	},
+	cid: {
+		type: Schema.Types.ObjectId,
+		ref: "carts",
+		unique: true,
 	},
 });
 
