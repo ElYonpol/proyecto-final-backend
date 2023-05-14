@@ -1,3 +1,5 @@
+console.log("Esta es js de chat.handlebars");
+
 const socket = io();
 
 let user;

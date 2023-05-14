@@ -6,10 +6,12 @@ const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
 
 const sessionsRouter = Router();
 
+// GET http://localhost:8080/api/sessions
 sessionsRouter.get("/", (req, res) => {
 	res.render("login", {});
 });
 
+// POST http://localhost:8080/api/sessions/login
 sessionsRouter.post("/login", async (req, res) => {
 	const { username, password } = req.body;
 	const users = await userMgr.getUserByUsername(username);
@@ -27,6 +29,7 @@ sessionsRouter.post("/login", async (req, res) => {
 	});
 });
 
+// GET http://localhost:8080/api/sessions/current
 sessionsRouter.get("/current", authToken, (req, res) => {
 	res.send({
 		status: "success",
@@ -34,12 +37,12 @@ sessionsRouter.get("/current", authToken, (req, res) => {
 	});
 });
 
-// GET Registro
+// GET http://localhost:8080/api/sessions/register
 sessionsRouter.get("/register", (req, res) => {
 	res.render("register");
 });
 
-// POST Registro
+// POST http://localhost:8080/api/sessions/register
 sessionsRouter.post("/register", async (req, res) => {
 	const {
 		username,
@@ -75,6 +78,7 @@ sessionsRouter.post("/register", async (req, res) => {
 	});
 });
 
+// GET http://localhost:8080/api/sessions/github
 sessionsRouter.get("/github", passport.authenticate("github"));
 
 sessionsRouter.get(
@@ -89,10 +93,12 @@ sessionsRouter.get(
 	}
 );
 
+// GET http://localhost:8080/api/sessions/failregister
 sessionsRouter.get("/failregister", (req, res) => {
 	res.send({ status: "error", message: "Error al crear el usuario" });
 });
 
+// PUT http://localhost:8080/api/sessions/recoverypass
 sessionsRouter.put("/recoverypass", async (req, res) => {
 	const { email, password } = req.body;
 	const user = await userMgr.getUserByEmail(email);
@@ -105,23 +111,12 @@ sessionsRouter.put("/recoverypass", async (req, res) => {
 	res.send({ status: "success", message: "Contraseña actualizada" });
 });
 
-//GET logout
+// GET http://localhost:8080/api/sessions/logout
 sessionsRouter.get("/logout", (req, res) => {
 	req.session.destroy((err) => {
 		if (err) return res.send({ status: "Logout error", message: err });
 		res.send("Logout realizado con éxito.");
 	});
-});
-
-//Ejercicio cantidad de visitas al sitio
-sessionsRouter.get("/", (req, res) => {
-	if (req.session.counter) {
-		req.session.counter++;
-		res.send(`Se ha visitado el sitio ${req.session.counter} veces.`);
-	} else {
-		req.session.counter = 1;
-		res.send("Bienvenido");
-	}
 });
 
 module.exports = sessionsRouter;

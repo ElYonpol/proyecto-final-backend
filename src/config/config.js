@@ -15,7 +15,7 @@ const objConfig = {
 	connectDB: async () => {
 		try {
 			await connect(URL);
-			console.log("Base de datos Mongo conectada");
+			console.log("Base de datos Mongo conectada (config.js)");
 		} catch (error) {
 			console.log(error);
 		}

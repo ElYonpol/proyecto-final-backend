@@ -5,4 +5,4 @@ const { generateIoServer } = require("./io.js");
 const server = http.createServer(app);
 const io = generateIoServer(server);
 
-module.exports = { server, io };
+module.exports = { io };

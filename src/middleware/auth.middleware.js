@@ -1,4 +1,6 @@
 const authSession = (req, res, next) => {
+	// console.log(req.session.user)
+	// console.log(req.session.admin)
 	if (req.session?.user !== "jppe" && !req.session?.admin) {
 		return res.status(401).send("Error de autenticación");
 	}

@@ -1,8 +1,8 @@
 const { Router } = require("express");
 
-const router = Router();
+const cookieRouter = Router();
 
-router.get("/set", (req, res) => {
+cookieRouter.get("/set", (req, res) => {
 	res
 		.cookie("CookieJPP3", "Este es el valor de la cookie", {
 			maxAge: 50000000,
@@ -10,15 +10,15 @@ router.get("/set", (req, res) => {
 		.send("Cookie set");
 });
 
-router.get("/", (req, res) => {
+cookieRouter.get("/", (req, res) => {
 	res.render("login", {});
 });
 
-router.get("/get", (req, res) => {
+cookieRouter.get("/get", (req, res) => {
 	res.send(req.cookies);
 });
 // con firma
-router.post("/setSigned", (req, res) => {
+cookieRouter.post("/setSigned", (req, res) => {
 	const { username, password } = req.body;
 	console.log(username, password);
 
@@ -27,13 +27,13 @@ router.post("/setSigned", (req, res) => {
 		.send({ message: "Cookie set" });
 });
 
-router.get("/getSigned", (req, res) => {
+cookieRouter.get("/getSigned", (req, res) => {
 	console.log(req.signedCookies);
 	res.send(req.signedCookies);
 });
 
-router.get("/delete", (req, res) => {
+cookieRouter.get("/delete", (req, res) => {
 	res.clearCookie("CookieJPP3").send("Cookie removed");
 });
 
-module.exports = router;
+module.exports = cookieRouter;

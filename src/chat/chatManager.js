@@ -4,8 +4,8 @@ const chatDriver = (io, socket) => {
 	socket.on("chatMessage", async (messageData) => {
 		try {
 			messageData = { ...messageData, message: messageData.message.toString() };
-			await messageManager.addMessage(messageData);
-			const messages = await messageManager.getMessages();
+			await chatMgr.addMessage(messageData);
+			const messages = await chatMgr.getMessages();
 			io.emit("messageLogs", messages);
 		} catch (error) {
 			socket.emit("error", error);
@@ -14,7 +14,7 @@ const chatDriver = (io, socket) => {
 
 	socket.on("authenticated", async (newUser) => {
 		try {
-			const messages = await messageManager.getMessages();
+			const messages = await chatMgr.getMessages();
 			io.emit("messageLogs", messages);
 			socket.broadcast.emit("newUser", newUser);
 		} catch (error) {
@@ -23,4 +23,4 @@ const chatDriver = (io, socket) => {
 	});
 };
 
-module.exports = chatDriver;
+module.exports = { chatDriver };

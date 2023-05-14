@@ -1,5 +1,5 @@
 const { Server } = require("socket.io");
-const chatDriver = require("../chat/chatManager.js");
+const { chatDriver } = require("../chat/chatManager.js");
 
 const generateIoServer = (httpServer) => {
 	const io = new Server(httpServer);
@@ -11,8 +11,9 @@ const generateIoServer = (httpServer) => {
 
 		chatDriver(io, socket);
 
-		socket.on("disconnect", (socket) => {
+		socket.on("disconnect", (data) => {
 			console.log("Cliente desconectado");
+			socketServer.emit("disconnect", "Cliente desconectado");
 		});
 	});
 	return io;

@@ -1,1 +1,1 @@
-console.log("Esta es js de index.html");
+console.log("Esta es js de main.handlebars");

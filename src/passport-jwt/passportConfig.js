@@ -24,7 +24,7 @@ const initializePassport = () => {
 			},
 			async (req, email, password, done) => {
 				try {
-					const { first_name, last_name, username } = req.body;
+					const { first_name, last_name, username, role} = req.body;
 					// buscar el usuario en la base de datos
 					const user = await userMgr.getUserByEmail(email);
 					console.log({ user });

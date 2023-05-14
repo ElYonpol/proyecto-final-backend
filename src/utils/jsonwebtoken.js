@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const PRIVATE_KEY = "KeySecretaJPPE";
+const PRIVATE_KEY = "secretJPPE";
 
 const generateToken = (user) => {
   const token = jwt.sign(

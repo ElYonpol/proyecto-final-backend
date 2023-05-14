@@ -97,7 +97,6 @@ header {
 	align-items: center;
 	justify-content: space-between;
 	padding: 5px;
-	width: 100%;
 	margin: 0px;
 }
 
@@ -105,8 +104,13 @@ header {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
+	justify-content: flex-end;
 	padding: 5px;
 	margin: 0px;
+}
+
+.logo {
+	width: auto;
 }
 
 .nav__list li {

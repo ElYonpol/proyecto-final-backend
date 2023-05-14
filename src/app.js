@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const { Server } = require("socket.io");
+const { Server } = require("./config/server.js");
 const { correctThumbnails } = require("./config/helpers.js");
 const { objConfig } = require("./config/config.js");
 const routerApp = require("./routes/mainRouter.js");
@@ -12,14 +12,14 @@ const passport = require("passport");
 const app = express();
 const PORT = objConfig.PORT || 8080;
 
-// socket server config _______________________________________________________
+// server config _______________________________________________________
 const httpServer = app.listen(PORT, (err) => {
 	if (err) {
-		console.error("Error al iniciar el servidor");
+		console.error("Error al iniciar el servidor (app.js)");
 	}
-	console.log(`Servidor iniciado en el puerto ${PORT}`);
+	console.log(`Servidor iniciado en el puerto ${PORT} (app.js)`);
 });
-// socket server config _______________________________________________________
+// server config _______________________________________________________
 
 // handlebars config _______________________________________________________
 app.engine("handlebars", handlebars.engine({ helpers: { correctThumbnails } }));
@@ -47,3 +47,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
 
 app.use(routerApp);
+
+module.exports = { httpServer };
