@@ -1,6 +1,6 @@
 const express = require("express");
+const { generateIoServer } = require("./config/io.js");
 const path = require("path");
-const { Server } = require("./config/server.js");
 const { correctThumbnails } = require("./config/helpers.js");
 const { objConfig } = require("./config/config.js");
 const routerApp = require("./routes/mainRouter.js");
@@ -19,6 +19,7 @@ const httpServer = app.listen(PORT, (err) => {
 	}
 	console.log(`Servidor iniciado en el puerto ${PORT} (app.js)`);
 });
+generateIoServer(httpServer);
 // server config _______________________________________________________
 
 // handlebars config _______________________________________________________
@@ -47,5 +48,3 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
 
 app.use(routerApp);
-
-module.exports = { httpServer };

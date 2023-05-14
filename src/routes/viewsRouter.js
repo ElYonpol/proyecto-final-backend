@@ -57,7 +57,6 @@ router.get("/api/carts/:cid", async (req, res) => {
 
 router.get("/carts", async (req, res) => {
 	const carts = await cartMgr.getCarts();
-	console.log(carts);
 	res.render("carts", {
 		style: "index.css",
 		carts: carts,
@@ -69,12 +68,22 @@ router.post("/upload", uploader.single("myFile"), (req, res) => {
 });
 
 router.get("/realtimeproducts", async (req, res) => {
-	const productList = await productMgr.getProducts();
-	res.render("realTimeProducts", { style: "index.css", productList });
+	const { limit = 10, page = 1, sort = null } = req.query;
+	const query = req.query.query ? JSON.parse(req.query.query) : {};
+	const spec = sort
+		? { limit, page, sort: { price: sort }, lean: true }
+		: { limit, page, lean: true };
+	const { docs, ...rest } = await productMgr.getProducts(query, spec);
+
+	res.render("realTimeProducts", {
+		style: "index.css",
+		products: docs,
+		paginate: rest,
+	});
 });
 
 router.get("/chat", async (req, res) => {
-	res.render("chat", { style: "index.css" });
+	res.render("chat", {});
 });
 
 router.get("/register", async (req, res) => {

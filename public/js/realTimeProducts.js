@@ -1,3 +1,5 @@
+console.log("Esta es js de realTimeProducts.handlebars");
+
 const socket = io();
 
 socket.on("newProductAdded", (resp) => {

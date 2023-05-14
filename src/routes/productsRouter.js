@@ -1,5 +1,5 @@
 const { Router } = require("express");
-// const { io } = require("../config/server.js");
+// const { ioServer } = require("./config/io.js");
 const {	productsCreationSchema,	productsUpdatingSchema, } = require("../validation/productsValidation.js");
 const ProductController = require("../controllers/productsController.js");
 const { objectsValidation } = require("../middleware/validator.js");

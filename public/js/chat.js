@@ -3,9 +3,9 @@ console.log("Esta es js de chat.handlebars");
 const socket = io();
 
 let user;
-const chatBox = document.getElementById("chatBox");
-const submitMessage = document.getElementById("submitMessage");
-let chatLog = document.getElementById("messageLogs");
+let chatBox = document.getElementById("chatBox");
+let submitMessage = document.getElementById("submitMessage");
+let messageLog = document.getElementById("messageLog");
 
 Swal.fire({
 	title: "Registro",
@@ -32,8 +32,9 @@ socket.on("authenticated", (newUser) => {
 
 const handleKeyUp = (evt) => {
 	if (evt.key === "Enter") {
+		console.log(chatBox.value);
 		if (chatBox.value.trim().length > 0) {
-			socket.emit("chatMessage", { user: user, userMessage: chatBox.value });
+			socket.emit("chatMessage", { user: user, message: chatBox.value });
 			chatBox.value = "";
 		}
 	}
@@ -42,7 +43,8 @@ chatBox.addEventListener("keyup", handleKeyUp);
 
 const handleClick = (evt) => {
 	if (chatBox.value.trim().length > 0) {
-		socket.emit("chatMessage", { user: user, userMessage: chatBox.value });
+		console.log(chatBox.value);
+		socket.emit("chatMessage", { user: user, message: chatBox.value });
 		chatBox.value = "";
 	}
 };
@@ -51,10 +53,10 @@ submitMessage.addEventListener("click", handleClick);
 socket.on("messageLogs", (arrayServerMessage) => {
 	let messages = "";
 	arrayServerMessage.forEach((message) => {
-		messages += `<li>User: ${message.user} - says:  ${message.userMessage}</li>`;
+		messages += `<li>User: ${message.user} - says:  ${message.message}</li>`;
 	});
 
-	chatLog.innerHTML = messages;
+	messageLog.innerHTML = "<ul>" + messages + "</ul>";
 });
 
 socket.on("newUser", (newUser) => {
@@ -65,4 +67,12 @@ socket.on("newUser", (newUser) => {
 			position: "top-right",
 		});
 	}
+});
+
+socket.on("disconnect", (data) => {
+	Swal.fire({
+		text: `${data}`,
+		toast: true,
+		position: "top-right",
+	});
 });
