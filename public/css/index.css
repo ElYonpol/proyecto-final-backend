@@ -135,6 +135,10 @@ a.nav__link:hover {
 	text-shadow: 2px 2px 4px #6f756b;
 }
 
+#messageLog{
+	background: rgba(255, 255, 255, 0.5);
+}
+
 /*ESTILOS DEL MAIN -- Formularios*/
 form {
 	width: 80%;

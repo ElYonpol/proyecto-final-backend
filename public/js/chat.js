@@ -53,7 +53,7 @@ submitMessage.addEventListener("click", handleClick);
 socket.on("messageLogs", (arrayServerMessage) => {
 	let messages = "";
 	arrayServerMessage.forEach((message) => {
-		messages += `<li>User: ${message.user} - says:  ${message.message}</li>`;
+		messages += `<li><strong>User:</strong> ${message.user} - <strong>says:</strong>  ${message.message}</li>`;
 	});
 
 	messageLog.innerHTML = "<ul>" + messages + "</ul>";
