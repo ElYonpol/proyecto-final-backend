@@ -1,4 +1,4 @@
-const { productMgr } = require("../dao/productManagerMongo.js");
+const { productService } = require("../service/index.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
 
 class ProductController {
@@ -12,7 +12,7 @@ class ProductController {
 				? { limit, page, sort: { price: sort }, lean: true }
 				: { limit, page, lean: true };
 
-			const resp = await productMgr.getProducts(query, specs);
+			const resp = await productService.getProducts(query, specs);
 
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;
@@ -45,7 +45,7 @@ class ProductController {
 	getProduct = async (req, res) => {
 		try {
 			const pid = req.params.pid;
-			const resp = await productMgr.getProductByID(pid);
+			const resp = await productService.getProductByID(pid);
 			if (!resp)
 				return res
 					.status(404)
@@ -62,7 +62,7 @@ class ProductController {
 	createProduct = async (req, res) => {
 		try {
 			const newProduct = req.body;
-			const resp = await productMgr.addProduct(newProduct);
+			const resp = await productService.addProduct(newProduct);
 			res.status(200).json({ status: "success", payload: resp });
 			if (resp) io.emit("newProductAdded", resp);
 		} catch (error) {
@@ -77,7 +77,7 @@ class ProductController {
 		try {
 			const pid = req.params.pid;
 			const productToUpdate = req.body;
-			const resp = await productMgr.updateProduct(pid, productToUpdate);
+			const resp = await productService.updateProduct(pid, productToUpdate);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -90,7 +90,7 @@ class ProductController {
 	deleteProduct = async (req, res) => {
 		try {
 			const pid = req.params.pid;
-			const resp = await productMgr.deleteProduct(pid);
+			const resp = await productService.deleteProduct(pid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

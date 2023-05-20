@@ -1,10 +1,10 @@
-const { cartMgr } = require("../dao/cartManagerMongo.js");
+const { cartService } = require("../service/index.js");
 
 class CartController {
 	getCarts = async (req, res) => {
 		try {
 			const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-			const respCarts = await cartMgr.getCarts();
+			const respCarts = await cartService.getCarts();
 			const limit = req.query.limit;
 			let limitedCarts = [];
 			if (limit) limitedCarts = respCarts.slice(0, limit);
@@ -22,7 +22,7 @@ class CartController {
 	getCart = async (req, res) => {
 		try {
 			const cid = req.params.cid;
-			const respProducts = await cartMgr.getProductsByCartId(cid);
+			const respProducts = await cartService.getProductsByCartId(cid);
 			res.status(200).json({ status: "success", payload: respProducts });
 		} catch (error) {
 			res.status(404).json({
@@ -34,7 +34,7 @@ class CartController {
 
 	createCart = async (req, res) => {
 		try {
-			const resp = await cartMgr.addCart();
+			const resp = await cartService.addCart();
 			res.status(201).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -48,7 +48,7 @@ class CartController {
 		try {
 			const cid = req.params.cid;
 			const pid = req.params.pid;
-			let products = await cartMgr.getProductsByCartId(cid);
+			let products = await cartService.getProductsByCartId(cid);
 			let productExists = false;
 			//Si el producto existe le agrego 1 unidad
 			for (let i = 0; i < products.length; i++) {
@@ -61,7 +61,7 @@ class CartController {
 			}
 
 			if (!productExists) products = [...products, { pid: pid, quantity: 1 }];
-			const resp = await cartMgr.addProductToCartbyId(cid, products);
+			const resp = await cartService.addProductToCartbyId(cid, products);
 
 			res.status(201).json({ status: "success", payload: resp });
 		} catch (error) {
@@ -76,7 +76,7 @@ class CartController {
 		try {
 			const cid = req.params.cid;
 			const pid = req.params.pid;
-			const resp = await cartMgr.deleteProductFromCart(cid, pid);
+			const resp = await cartService.deleteProductFromCart(cid, pid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -90,7 +90,7 @@ class CartController {
 		try {
 			const cid = req.params.cid;
 			const newProducts = req.body;
-			const resp = await cartMgr.updateProductsByCartId(cid, products);
+			const resp = await cartService.updateProductsByCartId(cid, products);
 			res.status(201).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -105,7 +105,7 @@ class CartController {
 			const cid = req.params.cid;
 			const pid = req.params.pid;
 			const { quantity } = req.body;
-			const resp = await cartMgr.updateProductFromCart(cid, pid, quantity);
+			const resp = await cartService.updateProductFromCart(cid, pid, quantity);
 			res.status(201).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -118,7 +118,7 @@ class CartController {
 	deleteCart = async (req, res) => {
 		try {
 			const cid = req.params.cid;
-			const resp = await cartMgr.deleteAllProductsByCartId(cid);
+			const resp = await cartService.deleteAllProductsByCartId(cid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

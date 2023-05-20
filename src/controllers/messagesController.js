@@ -1,9 +1,9 @@
-const { messageMgr } = require("../dao/messageManagerMongo.js");
+const { messageService } = require("../service/index.js");
 
 class MessageController {
 	getMessages = async (req, res) => {
 		try {
-			const resp = await messageMgr.getMessages();
+			const resp = await messageService.getMessages();
 			res.status(200).json({
 				status: "success",
 				payload: resp.docs,
@@ -19,7 +19,7 @@ class MessageController {
     getMessageById = async (req, res) => {
 		try {
 			const mid = req.params.mid;
-			const resp = await messageMgr.getMessageById(mid);
+			const resp = await messageService.getMessageById(mid);
 			if (!resp)
 				return res
 					.status(404)
@@ -36,7 +36,7 @@ class MessageController {
 	addMessage = async (req, res) => {
 		try {
 			const newMessage = req.body;
-			const resp = await messageMgr.addMessage(newMessage);
+			const resp = await messageService.addMessage(newMessage);
 			res.status(200).json({ status: "success", payload: resp });
 			// if (resp) io.emit("messageLogs", resp);
 		} catch (error) {
@@ -51,7 +51,7 @@ class MessageController {
 		try {
 			const mid = req.params.mid;
 			const messageChanges = req.body;
-			const resp = await messageMgr.updateProduct(mid, messageChanges);
+			const resp = await messageService.updateProduct(mid, messageChanges);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -64,7 +64,7 @@ class MessageController {
 	deleteMessage = async (req, res) => {
 		try {
 			const mid = req.params.mid;
-			const resp = await messageMgr.deleteMessage(mid);
+			const resp = await messageService.deleteMessage(mid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

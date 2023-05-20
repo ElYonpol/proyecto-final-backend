@@ -1,4 +1,4 @@
-const { userMgr } = require("../dao/userManagerMongo.js");
+const { userService } = require("../service/index.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
 
 class UserController {
@@ -9,7 +9,7 @@ class UserController {
 			const specs = sort
 				? { limit, page, sort: { first_name: sort }, lean: true }
 				: { limit, page, lean: true };
-			const resp = await userMgr.getUsers(query, specs);
+			const resp = await userService.getUsers(query, specs);
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;
 			const nextPage = resp.nextPage;
@@ -41,7 +41,7 @@ class UserController {
 	getUserByID = async (req, res) => {
 		try {
 			const uid = req.params.uid;
-			const resp = await userMgr.getUserByID(uid);
+			const resp = await userService.getUserByID(uid);
 			if (!resp)
 				return res
 					.status(404)
@@ -58,7 +58,7 @@ class UserController {
 	addUser = async (req, res) => {
 		try {
 			const newUser = req.body;
-			const resp = await userMgr.addUser(newUser);
+			const resp = await userService.addUser(newUser);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -72,7 +72,7 @@ class UserController {
 		try {
 			const uid = req.params.uid;
 			const userToUpdate = req.body;
-			const resp = await userMgr.updateUser(uid, userToUpdate);
+			const resp = await userService.updateUser(uid, userToUpdate);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -85,7 +85,7 @@ class UserController {
 	deleteUser = async (req, res) => {
 		try {
 			const uid = req.params.uid;
-			const resp = await userMgr.deleteUser(uid);
+			const resp = await userService.deleteUser(uid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
