@@ -1,4 +1,7 @@
 ###
+GET http://localhost:8080/api/products 
+
+###
 POST http://localhost:8080/api/products 
 Content-Type: application/json
 
@@ -11,9 +14,6 @@ Content-Type: application/json
     "price": 1500,
     "stock": 13
 }
-
-###
-GET http://localhost:8080/api/products 
 
 ###
 GET http://localhost:8080/api/users 
@@ -49,4 +49,5 @@ Content-Type: application/json
 GET http://localhost:8080/api/sessions/current
 
 ###
+# GET de un carrito ya creado
 GET http://localhost:8080/api/carts/645fabcf312d608e72f626e5 

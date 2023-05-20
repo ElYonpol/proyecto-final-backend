@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const cookieParser = require("cookie-parser");
-// const session = require("express-session");
 const productsRouter = require("./productsRouter.js");
 const cartsRouter = require("./cartsRouter.js");
 const usersRouter = require("./usersRouter.js");

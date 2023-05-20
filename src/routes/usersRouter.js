@@ -10,7 +10,8 @@ const { getUsers, getUserByID, addUser, updateUser, deleteUser } = new UserContr
 
 
 // GET http://localhost:8080/api/users
-usersRouter.get("/", authSession, getUsers); // Por el authSession, el suer debe ser jppe y el role admin
+// usersRouter.get("/", authSession, getUsers); // Por el authSession, el suer debe ser jppe y el role admin
+usersRouter.get("/", getUsers); // Opción sin authSession
 
 // GET http://localhost:8080/api/users/:uid
 usersRouter.get("/:uid", getUserByID);

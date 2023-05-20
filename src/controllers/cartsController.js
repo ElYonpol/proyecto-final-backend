@@ -90,7 +90,7 @@ class CartController {
 		try {
 			const cid = req.params.cid;
 			const newProducts = req.body;
-			const resp = await cartManager.updateProductsByCartId(cid, products);
+			const resp = await cartMgr.updateProductsByCartId(cid, products);
 			res.status(201).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

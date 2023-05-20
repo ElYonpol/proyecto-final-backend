@@ -9,7 +9,7 @@ class UserController {
 			const specs = sort
 				? { limit, page, sort: { first_name: sort }, lean: true }
 				: { limit, page, lean: true };
-			const resp = await productMgr.getUsers(query, specs);
+			const resp = await userMgr.getUsers(query, specs);
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;
 			const nextPage = resp.nextPage;
