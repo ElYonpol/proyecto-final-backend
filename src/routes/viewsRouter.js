@@ -1,7 +1,10 @@
 const { Router } = require("express");
-const { productMgr } = require("../dao/productManagerMongo.js");
-const { cartMgr } = require("../dao/cartManagerMongo.js");
-const { userMgr } = require("../dao/userManagerMongo.js");
+// const { productMgr } = require("../dao/productManagerMongo.js");
+// const { cartMgr } = require("../dao/cartManagerMongo.js");
+// const { userMgr } = require("../dao/userManagerMongo.js");
+const { productService } = require("../service/index.js");
+const { cartService } = require("../service/index.js");
+const { userService } = require("../service/index.js");
 const { uploader } = require("../utils/uploader.js");
 
 const router = Router();
@@ -17,8 +20,8 @@ router.get("/products", async (req, res) => {
 	const spec = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await productMgr.getProducts(query, spec);
-	const categories = await productMgr.getProductCategories();
+	const { docs, ...rest } = await productService.getProducts(query, spec);
+	const categories = await productService.getProductCategories();
 
 	res.render("products", {
 		style: "index.css",
@@ -35,8 +38,8 @@ router.get("/productsTable", async (req, res) => {
 	const spec = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await productMgr.getProducts(query, spec);
-	const categories = await productMgr.getProductsCategories();
+	const { docs, ...rest } = await productService.getProducts(query, spec);
+	const categories = await productService.getProductsCategories();
 
 	res.render("productsTable", {
 		style: "index.css",
@@ -48,7 +51,7 @@ router.get("/productsTable", async (req, res) => {
 
 router.get("/api/carts/:cid", async (req, res) => {
 	const cid = req.params.cid;
-	const products = await cartMgr.getProductsByCartId(cid);
+	const products = await cartService.getProductsByCartId(cid);
 	res.render("carts", {
 		style: "index.css",
 		products: products,
@@ -56,7 +59,7 @@ router.get("/api/carts/:cid", async (req, res) => {
 });
 
 router.get("/carts", async (req, res) => {
-	const carts = await cartMgr.getCarts();
+	const carts = await cartService.getCarts();
 	res.render("carts", {
 		style: "index.css",
 		carts: carts,
@@ -73,7 +76,7 @@ router.get("/realtimeproducts", async (req, res) => {
 	const spec = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await productMgr.getProducts(query, spec);
+	const { docs, ...rest } = await productService.getProducts(query, spec);
 
 	res.render("realTimeProducts", {
 		style: "index.css",
@@ -97,8 +100,8 @@ router.get("/users", async (req, res) => {
 	const spec = sort
 		? { limit, page, sort: { first_name: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await userMgr.getUsers(query, spec);
-	const roles = await userMgr.getUserRoles();
+	const { docs, ...rest } = await userService.getUsers(query, spec);
+	const roles = await userService.getUserRoles();
 
 	res.render("users", {
 		style: "index.css",

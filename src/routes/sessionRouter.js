@@ -1,5 +1,6 @@
 const { Router } = require("express");
-const { userMgr } = require("../dao/userManagerMongo.js");
+// const { userMgr } = require("../dao/userManagerMongo.js");
+const { userService } = require("../service/index.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
@@ -14,7 +15,7 @@ sessionsRouter.get("/", (req, res) => {
 // POST http://localhost:8080/api/sessions/login
 sessionsRouter.post("/login", async (req, res) => {
 	const { username, password } = req.body;
-	const users = await userMgr.getUserByUsername(username);
+	const users = await userService.getUserByUsername(username);
 	const user = users.find(
 		(user) => user.username === username && user.password === password
 	);
@@ -52,7 +53,7 @@ sessionsRouter.post("/register", async (req, res) => {
 		password,
 		role = "user",
 	} = req.body;
-	const users = await userMgr.getUserByEmail(email);
+	const users = await userService.getUserByEmail(email);
 	const userExist = users.find((user) => user.email === email);
 	if (userExist)
 		return res
@@ -67,7 +68,7 @@ sessionsRouter.post("/register", async (req, res) => {
 		role,
 	};
 
-	const resp = await userMgr.addUser(newUser);
+	const resp = await userService.addUser(newUser);
 
 	const accessToken = generateToken(newUser);
 
@@ -101,7 +102,7 @@ sessionsRouter.get("/failregister", (req, res) => {
 // PUT http://localhost:8080/api/sessions/recoverypass
 sessionsRouter.put("/recoverypass", async (req, res) => {
 	const { email, password } = req.body;
-	const user = await userMgr.getUserByEmail(email);
+	const user = await userService.getUserByEmail(email);
 	if (!user)
 		return res
 			.status(401)

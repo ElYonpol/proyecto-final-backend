@@ -1,5 +1,6 @@
 const passport = require("passport");
-const { userMgr } = require("../dao/userManagerMongo.js");
+// const { userMgr } = require("../dao/userManagerMongo.js");
+const { userService } = require("../service/index.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
@@ -26,7 +27,7 @@ const initializePassport = () => {
 				try {
 					const { first_name, last_name, username, role} = req.body;
 					// buscar el usuario en la base de datos
-					const user = await userMgr.getUserByEmail(email);
+					const user = await userService.getUserByEmail(email);
 					console.log({ user });
 					// done si  hay usuario
 					if (user) {
@@ -43,7 +44,7 @@ const initializePassport = () => {
 						role,
 						password: hashedPassword,
 					};
-					const result = await userMgr.addUser(newUser);
+					const result = await userService.addUser(newUser);
 
 					// done con el usuario
 					return done(null, result);
@@ -63,7 +64,7 @@ const initializePassport = () => {
 			},
 			async (email, password, done) => {
 				try {
-					const user = await userMgr.getUserByEmail(email);
+					const user = await userService.getUserByEmail(email);
 					if (!user) {
 						return done(null, false);
 					}
@@ -97,7 +98,7 @@ const initializePassport = () => {
 			async (accessToken, refreshToken, profile, done) => {
 				try {
 					console.log({ email: profile.emails[0].value });
-					const user = await userMgr.getUserByEmail({
+					const user = await userService.getUserByEmail({
 						email: profile.emails[0].value,
 					});
 					if (!user) {
@@ -108,7 +109,7 @@ const initializePassport = () => {
 							email: profile.emails[0].value,
 						};
 						console.log({ newUser });
-						const result = await userMgr.addUser(newUser);
+						const result = await userService.addUser(newUser);
 						return done(null, result);
 					} else {
 						return done(null, user);
@@ -125,7 +126,7 @@ const initializePassport = () => {
 	});
 	passport.deserializeUser(async (uid, done) => {
 		try {
-			const user = await userMgr.getUserByID(uid);
+			const user = await userService.getUserByID(uid);
 			done(null, user);
 		} catch (error) {
 			done(error);
