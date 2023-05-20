@@ -1,7 +1,9 @@
 const { Router } = require("express");
+// config anterior a Service _______________________________________________________
 // const { productMgr } = require("../dao/productManagerMongo.js");
 // const { cartMgr } = require("../dao/cartManagerMongo.js");
 // const { userMgr } = require("../dao/userManagerMongo.js");
+// config anterior a Service _______________________________________________________
 const { productService } = require("../service/index.js");
 const { cartService } = require("../service/index.js");
 const { userService } = require("../service/index.js");

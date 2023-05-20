@@ -7,12 +7,13 @@ const routerApp = require("./routes/index.js");
 const handlebars = require("express-handlebars");
 const { initializePassport } = require("./passport-jwt/passportConfig.js");
 const passport = require("passport");
+const cors = require("cors");
 // const { processFunction } = require("./utils/process.js");
 
 const app = express();
-const PORT = objConfig.PORT || 8080;
 
 // server config _______________________________________________________
+const PORT = objConfig.PORT || 8080;
 const httpServer = app.listen(PORT, (err) => {
 	if (err) {
 		console.error("Error al iniciar el servidor (app.js)");
@@ -38,8 +39,12 @@ app.use(passport.initialize());
 // processFunction()
 // process config _______________________________________________________
 
+// cors config _______________________________________________________
+app.use(cors());
+// cors config _______________________________________________________
+
 // MongoDB config _______________________________________________________
-objConfig.connectDB();
+objConfig.dbConnection();
 // MongoDB config _______________________________________________________
 
 app.use(express.json());
