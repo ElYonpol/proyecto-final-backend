@@ -43,6 +43,9 @@
 		<button onclick="changePage({{paginate.totalPages}})">Última Página</button>
 	{{/if}}
 </div>
+
+<div class="userCart display-1--description" id={{userData.cart._id}}>--</div>
+
 <div class="cartCards--container">
 	{{#each products}}
 		<div class="cartCard">

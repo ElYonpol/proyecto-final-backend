@@ -2,6 +2,18 @@
 GET http://localhost:8080/api/products 
 
 ###
+# GET de todos los carritos
+GET http://localhost:8080/api/carts 
+
+###
+# GET de un carrito ya creado
+GET http://localhost:8080/api/carts/645fabcf312d608e72f626e5 
+
+###
+# POST para crear un carrito nuevo
+POST http://localhost:8080/api/carts 
+
+###
 POST http://localhost:8080/api/products 
 Content-Type: application/json
 
@@ -48,6 +60,3 @@ Content-Type: application/json
 ####
 GET http://localhost:8080/api/sessions/current
 
-###
-# GET de un carrito ya creado
-GET http://localhost:8080/api/carts/645fabcf312d608e72f626e5 

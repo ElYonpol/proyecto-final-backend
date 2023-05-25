@@ -7,7 +7,8 @@ let sort = document.getElementById("sort");
 let category = document.getElementById("category");
 let state = document.getElementById("status");
 let buttons = document.querySelectorAll(".addToCart");
-let cid;
+let cart = document.querySelector(".userCart");
+let cid
 
 const findIndex = (valueToFind, options) => {
 	for (let i = 0; i < options.length; i++) {
@@ -85,6 +86,7 @@ const changePage = (page) => {
 };
 
 const addToCart = async (pid) => {
+	console.log("pid en try es:", pid);
 	try {
 		if (!cid) {
 			let response = await fetch("/api/carts", {
@@ -93,32 +95,44 @@ const addToCart = async (pid) => {
 			});
 			let data = await response.json();
 			cid = data.payload._id;
+			console.log("cid en if de try es:", cid);
+			let nav = document.querySelector(".nav__list");
+			nav.innerHTML += `<li><a class="nav__link" href="/carts/${cid}">🛒</a></li>`;
 		}
+		
+		console.log("cid en try es:", cid);
+
 		let response = await fetch(`/api/carts/${cid}/products/${pid}`, {
 			method: "POST",
 			headers: { "content-type": "application/json" },
 		});
+
+		console.log("Response es:", response);
+
 		let data = await response.json();
-		let statusResponse = data.status;
-		if (statusResponse !== "success") {
+		let statusResp = data.status;
+
+		console.log("statusResp es:", statusResp);
+		
+		if (statusResp !== "success") {
 			return Swal.fire({
 				icon: "error",
-				title: "Oops...",
-				text: `El producto no pudo ser agregado`,
+				title: "Ocurrió un error",
+				text: "No se pudo agregar el producto al carrito.",
 			});
 		}
 		Swal.fire({
-			text: `Producto agregado`,
+			text: "Producto agregado",
 			toast: true,
 			position: "top-right",
 			icon: "success",
 			showConfirmButton: false,
-			timer: 1500,
+			timer: 1000,
 		});
 	} catch (error) {
 		Swal.fire({
 			icon: "error",
-			title: "Oops...",
+			title: "Ocurrió un error",
 			text: `Ocurrió un error: ${error} ${error.message}`,
 		});
 	}
