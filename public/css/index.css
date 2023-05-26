@@ -177,11 +177,11 @@ select {
 	/* margin: 0; */
 	/* outline: 0; */
 	/* padding: 15px; */
-	/* width: 12rem; */
+	width: 300px;
 	background-color: #e8eeef;
 	color: #8a97a0;
 	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 }
 
 input[type="radio"],
@@ -211,11 +211,10 @@ select {
 	border: 1px solid #f85d5a;
 	border-width: 1px 1px 3px;
 	box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
-	margin-bottom: 10px;
 }
 
 fieldset {
-	margin-bottom: 30px;
+	margin-bottom: 5px;
 	border: none;
 }
 

@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 	res.render("index", { style: "index.css" });
 });
 
-//Prueba de listar productos con texto plano
+//Listar productos con tabla con formato
 router.get("/products", async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
@@ -33,17 +33,17 @@ router.get("/products", async (req, res) => {
 	});
 });
 
-//Prueba de listar productos con tabla con formato
-router.get("/productsTable", async (req, res) => {
+//Listar productos con tabla con formato y socket
+router.get("/realtimeproducts", async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
 	const spec = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
 	const { docs, ...rest } = await productService.getProducts(query, spec);
-	const categories = await productService.getProductsCategories();
+	const categories = await productService.getProductCategories();
 
-	res.render("productsTable", {
+	res.render("realTimeProducts", {
 		style: "index.css",
 		products: docs,
 		paginate: rest,
@@ -70,21 +70,6 @@ router.get("/carts", async (req, res) => {
 
 router.post("/upload", uploader.single("myFile"), (req, res) => {
 	res.send("Archivo subido correctamente");
-});
-
-router.get("/realtimeproducts", async (req, res) => {
-	const { limit = 10, page = 1, sort = null } = req.query;
-	const query = req.query.query ? JSON.parse(req.query.query) : {};
-	const spec = sort
-		? { limit, page, sort: { price: sort }, lean: true }
-		: { limit, page, lean: true };
-	const { docs, ...rest } = await productService.getProducts(query, spec);
-
-	res.render("realTimeProducts", {
-		style: "index.css",
-		products: docs,
-		paginate: rest,
-	});
 });
 
 router.get("/chat", async (req, res) => {
