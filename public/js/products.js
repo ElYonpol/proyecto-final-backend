@@ -8,7 +8,7 @@ let category = document.getElementById("category");
 let state = document.getElementById("status");
 let buttons = document.querySelectorAll(".addToCart");
 let cart = document.querySelector(".userCart");
-let cid
+let cid;
 
 const findIndex = (valueToFind, options) => {
 	for (let i = 0; i < options.length; i++) {
@@ -99,7 +99,7 @@ const addToCart = async (pid) => {
 			let nav = document.querySelector(".nav__list");
 			nav.innerHTML += `<li><a class="nav__link" href="/carts/${cid}">🛒</a></li>`;
 		}
-		
+
 		console.log("cid en try es:", cid);
 
 		let response = await fetch(`/api/carts/${cid}/products/${pid}`, {
@@ -113,7 +113,7 @@ const addToCart = async (pid) => {
 		let statusResp = data.status;
 
 		console.log("statusResp es:", statusResp);
-		
+
 		if (statusResp !== "success") {
 			return Swal.fire({
 				icon: "error",

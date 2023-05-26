@@ -9,7 +9,7 @@
 	>
 		<thead class="table-dark">
 			<tr>
-				<th scope="col">Carrito</th>
+				<th scope="col">Carrito N°</th>
 				<th scope="col">Producto</th>
 				<th scope="col">Imagen</th>
 				<th scope="col">Precio</th>
@@ -18,10 +18,12 @@
 			</tr>
 		</thead>
 		<tbody class="productList">
+			{{!-- Las columnas no me funcionan cuando el carrito tiene más de un producto --}}
+			{{!-- En la primera columna debería repetir el N° de carrito anterior --}}
 			{{#each carts}}
-				{{#each products}}
 					<tr>
 						<th scope="row">{{_id}}</th>
+				{{#each products}}
 						<th scope="row">{{pid.title}}</th>
 						<td><img
 								src="{{correctThumbnails pid.thumbnails}}"
