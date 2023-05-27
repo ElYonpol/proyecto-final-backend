@@ -18,9 +18,9 @@ POST http://localhost:8080/api/products
 Content-Type: application/json
 
 {
-    "code": "abc1232",
+    "code": "abc123212",
     "category": "Prótesis",
-    "thumbnail": ["/static/assets/images/cartCard--nuevo.webp"],
+    "thumbnails": ["/static/assets/images/cartCard--nuevo.webp"],
     "title": "nuevoProducto",
     "description": "Desc nuevo producto",
     "price": 1500,

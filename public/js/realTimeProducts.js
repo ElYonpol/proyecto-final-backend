@@ -93,15 +93,15 @@ const changePage = (page) => {
 // INICIO Subsegmento trabajo con nuevos productos ___________________________________________
 const submitForm = document.querySelector("#newProductForm");
 
-const createHtmlProduct = (newProductToAdd) => {
+const createNewProductCard = (newProductToAdd) => {
 	const addToCartButton = document.createElement("button");
-	addToCartButton.dataset["id"] = newProductToAdd.id; //Creo que acá está el problema
+	addToCartButton.dataset["id"] = newProductToAdd.id;
 	addToCartButton.classList.add("addToCart");
 	addToCartButton.innerText = "Añadir al 🛒";
 
-	const newProductHTML = document.createElement("div");
-	newProductHTML.classList.add("cartCard");
-	newProductHTML.innerHTML = `
+	const newProductCardHTML = document.createElement("div");
+	newProductCardHTML.classList.add("cartCard");
+	newProductCardHTML.innerHTML = `
 	<div class="cartCard-image">
 		<img
 			class="image"
@@ -122,9 +122,9 @@ const createHtmlProduct = (newProductToAdd) => {
 		{{/if}}
 	</div>
 	`;
-	newProductHTML.appendChild(addToCartButton);
+	newProductCardHTML.appendChild(addToCartButton);
 
-	return newProductHTML;
+	return newProductCardHTML;
 };
 
 const addToCart = async (pid) => {
@@ -215,14 +215,12 @@ buttons.forEach((button) => {
 const cardsList = document.getElementById("cartCards--list");
 
 socket.on("newProductAdded", (newProduct) => {
-	if (newProduct) {
-		Swal.fire({
-			text: `Nuevo producto ${newProduct.title} creado.`,
-			toast: true,
-			position: "top-right",
-		});
-	}
-	cardsList.appendChild(createHtmlProduct(newProduct));
+	Swal.fire({
+		text: `Nuevo producto ${newProduct.title} creado.`,
+		toast: true,
+		position: "top-right",
+	});
+	cardsList.appendChild(createNewProductCard(newProduct));
 });
 
 // FIN Segmento configuración socket _________________________________
