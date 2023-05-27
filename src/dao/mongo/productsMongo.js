@@ -1,4 +1,4 @@
-const { productModel } = require("../../models/dbMongo/productsModelMongo");
+const { productModel } = require("./models/productsModelMongo");
 
 class ProductDaoMongo {
 	async get(filter, specs) {

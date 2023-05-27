@@ -1,9 +1,4 @@
 const { Router } = require("express");
-// config anterior a Service _______________________________________________________
-// const { productMgr } = require("../dao/productManagerMongo.js");
-// const { cartMgr } = require("../dao/cartManagerMongo.js");
-// const { userMgr } = require("../dao/userManagerMongo.js");
-// config anterior a Service _______________________________________________________
 const { productService } = require("../service/index.js");
 const { cartService } = require("../service/index.js");
 const { userService } = require("../service/index.js");
@@ -88,13 +83,13 @@ router.get("/users", async (req, res) => {
 		? { limit, page, sort: { first_name: sort }, lean: true }
 		: { limit, page, lean: true };
 	const { docs, ...rest } = await userService.getUsers(query, spec);
-	const roles = await userService.getUserRoles();
+	// const roles = await userService.getUserRoles();
 
 	res.render("users", {
 		style: "index.css",
 		users: docs,
 		paginate: rest,
-		roles,
+		// roles,
 	});
 });
 

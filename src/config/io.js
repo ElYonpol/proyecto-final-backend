@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 // const MessageController = require("../controllers/messagesController.js");
-const { messageMgr } = require("../dao/messageManagerMongo.js");
+const { messageMgr } = require("../dao/mongo/messageManagerMongo.js");
 
 // const {
 // 	getMessages,

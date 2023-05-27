@@ -44,7 +44,7 @@ app.use(cors());
 // cors config _______________________________________________________
 
 // MongoDB config _______________________________________________________
-objConfig.dbConnection();
+// objConfig.dbConnection(); // Ya no se usa, xq usamos factory
 // MongoDB config _______________________________________________________
 
 app.use(express.json());

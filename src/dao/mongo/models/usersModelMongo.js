@@ -4,6 +4,9 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 const collection = "users";
 
 const UserSchema = new Schema({
+	full_name: {
+		type: "string",
+	},
 	first_name: {
 		type: String,
 		index: true,

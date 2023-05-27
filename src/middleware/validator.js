@@ -1,7 +1,9 @@
 const Joi = require("joi");
+const UserDto = require("../dto/userDto");
 
 const objectsValidation = (schema) => (req, res, next) => {
-	const object = req.body;
+	const objectRaw = req.body;
+	const object = new UserDto(objectRaw)
 	const result = schema.validate(object);
 
 	if (result.error)

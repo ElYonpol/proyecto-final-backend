@@ -3,6 +3,7 @@ const { SERVER_URL, PORT } = require("../config/setups.js");
 const ProductDaoMongo = require("../dao/mongo/productsMongo.js");
 const ProductDaoMemory = require("../dao/memory/productsMemory.js");
 const ProductDaoFile = require("../dao/files/productsFiles.js");
+const { ProductsDaos } = require("../dao/factory.js");
 
 class ProductController {
 	getProducts = async (req, res) => {
@@ -15,11 +16,12 @@ class ProductController {
 				? { limit, page, sort: { price: sort }, lean: true }
 				: { limit, page, lean: true };
 
-			const productsDao = await ProductDaoMongo.get(query, specs); //Agregado en clase 15
+			const productsDao = new ProductsDaos //Agregado en clase 15
+			// const productsDao = await ProductDaoMongo.get(query, specs); //Agregado en clase 15
 			// const productsDao = await ProductDaoMemory.get(query, specs); //Agregado en clase 15
 			// const productsDao = await ProductDaoFile.get(query, specs); //Agregado en clase 15
 			
-			const resp = await productsDao; //Agregado en clase 15
+			const resp = await productsDao.get(query, specs); //Agregado en clase 15
 
 			// const resp = await productService.getProducts(query, specs); // Antes de clase 15
 

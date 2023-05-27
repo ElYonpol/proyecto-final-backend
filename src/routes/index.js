@@ -1,18 +1,21 @@
 const { Router } = require("express");
 const cookieParser = require("cookie-parser");
+const viewsRouter = require("./viewsRouter.js");
 const productsRouter = require("./productsRouter.js");
 const cartsRouter = require("./cartsRouter.js");
 const usersRouter = require("./usersRouter.js");
-const viewsRouter = require("./viewsRouter.js");
-const cookieRouter = require("./cookieRouter.js");
+const ordersRouter = require("./ordersRouter.js");
 const sessionRouter = require("./sessionRouter.js");
+const cookieRouter = require("./cookieRouter.js");
 
 const router = Router();
+
+router.use("/", viewsRouter);
 
 router.use("/api/products", productsRouter);
 router.use("/api/carts", cartsRouter);
 router.use("/api/users", usersRouter);
-router.use("/", viewsRouter);
+router.use("/api/orders", ordersRouter)
 
 // _________________________________ cookies y session________________________
 router.use("/api/sessions", sessionRouter);

@@ -1,10 +1,10 @@
-const { userModel } = require("../models/dbMongo/usersModelMongo.js");
+const { userModel } = require("../../models/dbMongo/usersModelMongo.js");
 
 class UserManagerMongo {
 	getUsers = async (filter, specs) => {
 		return await userModel.paginate(filter, specs);
 	};
-	
+
 	getUserByID = async (uid) => {
 		return await userModel.find({ _id: uid });
 	};

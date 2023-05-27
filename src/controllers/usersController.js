@@ -1,5 +1,6 @@
 const { userService } = require("../service/index.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
+const UserDto = require("../dto/userDto.js");
 
 class UserController {
 	getUsers = async (req, res) => {
@@ -57,8 +58,11 @@ class UserController {
 
 	addUser = async (req, res) => {
 		try {
-			const newUser = req.body;
-			const resp = await userService.addUser(newUser);
+			const newUserRaw = req.body;
+			console.log("newUserRaw es:", newUserRaw);
+			const newUser = new UserDto(newUserRaw);
+			console.log("newUser es:", newUser);
+			const resp = await userService.createUser(newUser);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

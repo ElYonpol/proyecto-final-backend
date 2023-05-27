@@ -1,5 +1,4 @@
 const passport = require("passport");
-// const { userMgr } = require("../dao/userManagerMongo.js");
 const { userService } = require("../service/index.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const LocalStrategy = require("passport-local").Strategy;

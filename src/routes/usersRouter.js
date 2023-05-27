@@ -1,13 +1,16 @@
 const { Router } = require("express");
 const { authSession } = require("../middleware/auth.middleware");
-const {	usersCreationSchema, usersUpdatingSchema, } = require("../validation/usersValidation.js");
-const UserController = require("../controllers/usersController.js")
+const {
+	usersCreationSchema,
+	usersUpdatingSchema,
+} = require("../validation/usersValidation.js");
+const UserController = require("../controllers/usersController.js");
 const { objectsValidation } = require("../middleware/validator.js");
 
 const usersRouter = Router();
 
-const { getUsers, getUserByID, addUser, updateUser, deleteUser } = new UserController();
-
+const { getUsers, getUserByID, addUser, updateUser, deleteUser } =
+	new UserController();
 
 // GET http://localhost:8080/api/users
 // usersRouter.get("/", authSession, getUsers); // Por el authSession, el suer debe ser jppe y el role admin

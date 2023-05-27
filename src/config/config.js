@@ -13,7 +13,9 @@ require("dotenv").config({
 // let URL = process.env.DB_HOST;
 
 const objConfig = {
+	persistence: process.env.PERSISTENCE,
 	dbConnection: async () => MongoSingleton.getInstance(),
+	
 	// connectDB: async () => {
 	// 	try {
 	// 		await connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
