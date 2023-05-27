@@ -1,6 +1,8 @@
 ###
 GET http://localhost:8080/api/products 
 
+
+
 ###
 # GET de todos los carritos
 GET http://localhost:8080/api/carts 
@@ -12,6 +14,22 @@ GET http://localhost:8080/api/carts/645fabcf312d608e72f626e5
 ###
 # POST para crear un carrito nuevo
 POST http://localhost:8080/api/carts 
+
+###
+GET http://localhost:8080/api/orders 
+
+###
+# POST para crear una order nueva
+POST http://localhost:8080/api/orders 
+Content-Type: application/json
+
+{
+    "user": "64441f2c733503eccbb26c8a",
+	"products": [{
+			"product":"6444333583e4902e8424e857"
+		}],
+	"total": 12
+}
 
 ###
 POST http://localhost:8080/api/products 

@@ -1,20 +1,12 @@
 const UserDto = require("../dto/userDto");
+const RepositoryGeneric = require("./repositoryGeneric");
 
-class UserRepository {
-    constructor(dao){
-        this.dao = dao;
-    }
+class UserRepository extends RepositoryGeneric {
+	constructor(dao) {
+		super(dao);
+	}
 
-    getUsers = async (filter, specs)=>{
-        let result = await this.dao.get(filter,specs);
-        return result;
-    }
-
-    createUser = async (user)=>{
-        let newUser = new UserDto(user);
-        let result = await this.dao.create(newUser)
-        return result;
-    }
+	//Métodos extras o redefiniciones a los del genérico (ejemplo el DTO)
 }
 
-module.exports = UserRepository
+module.exports = UserRepository;

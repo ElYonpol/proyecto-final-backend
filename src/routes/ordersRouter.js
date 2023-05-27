@@ -1,16 +1,18 @@
-const {Router} = require("express")
+const { Router } = require("express");
+const { OrderController } = require("../controllers/ordersController");
 
 const ordersRouter = Router();
+const orderController = new OrderController();
 
 // GET http://localhost:8080/api/
-ordersRouter.get("/", ()=>{})
+ordersRouter.get("/", orderController.getOrders);
 
-ordersRouter.get("/:oid", ()=>{})
+ordersRouter.get("/:oid", orderController.getOrder);
 
-ordersRouter.post("/", ()=>{})
+ordersRouter.post("/", orderController.createOrder);
 
-ordersRouter.put("/:oid", ()=>{})
+ordersRouter.put("/:oid", orderController.updateOrder);
 
-ordersRouter.delete("/:oid", ()=>{})
+ordersRouter.delete("/:oid", orderController.deleteOrder);
 
-module.exports = ordersRouter
+module.exports = ordersRouter;

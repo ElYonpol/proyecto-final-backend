@@ -9,8 +9,10 @@ const orderSchema = new Schema({
 	},
 	products: [
 		{
-			type: Schema.Types.ObjectId,
-			ref: "products",
+			product: {
+				type: Schema.Types.ObjectId,
+				ref: "products",
+			},
 		},
 	],
 	total: Number,
