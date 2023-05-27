@@ -1,4 +1,4 @@
-const { userModel } = require("./models/dbMongo/usersModelMongo.js");
+const { userModel } = require("../models/dbMongo/usersModelMongo.js");
 
 class UserManagerMongo {
 	getUsers = async (filter, specs) => {
