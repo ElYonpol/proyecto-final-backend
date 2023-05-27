@@ -64,7 +64,7 @@ class ProductController {
 			const newProduct = req.body;
 			const resp = await productService.addProduct(newProduct);
 			res.status(200).json({ status: "success", payload: resp });
-			if (resp) io.emit("newProductAdded", resp);
+			if (resp) io.emit("newProductAdded", resp); //No tendría que traer const { Server } = require("socket.io");?
 		} catch (error) {
 			res.status(404).json({
 				status: "error",

@@ -91,12 +91,11 @@ const changePage = (page) => {
 // FIN Subsegmento ordenamiento y filtros ___________________________________________
 
 // INICIO Subsegmento trabajo con nuevos productos ___________________________________________
-const cardsList = document.getElementById("cartCards--list");
 const submitForm = document.querySelector("#newProductForm");
 
 const createHtmlProduct = (newProductToAdd) => {
 	const addToCartButton = document.createElement("button");
-	addToCartButton.dataset["productId"] = newProductToAdd.id;
+	addToCartButton.dataset["id"] = newProductToAdd.id; //Creo que acá está el problema
 	addToCartButton.classList.add("addToCart");
 	addToCartButton.innerText = "Añadir al 🛒";
 
@@ -185,10 +184,21 @@ submitForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 	const formData = new FormData(event.target);
 	const data = Object.fromEntries(formData.entries());
+	const dataCorrected = {
+		code: data.newProductCode,
+		category: data.newProductCategory,
+		title: data.newProductTitle,
+		description: data.newProductDescription,
+		price: parseFloat(data.newProductPrice),
+		stock: parseFloat(data.newProductStock),
+		thumbnails: ["/static/assets/images/cartCard--nuevo.webp"],
+	};
+	console.log("dataCorrected es:", dataCorrected);
+
 	const res = await fetch("/api/products", {
 		method: "POST",
+		body: JSON.stringify(dataCorrected),
 		headers: { "content-type": "application/json" },
-		body: JSON.stringify(data),
 	});
 });
 
@@ -202,7 +212,16 @@ buttons.forEach((button) => {
 // FIN Segmento configuración js para html____________________________
 
 // INICIO Segmento configuración socket _________________________________
+const cardsList = document.getElementById("cartCards--list");
+
 socket.on("newProductAdded", (newProduct) => {
+	if (newProduct) {
+		Swal.fire({
+			text: `Nuevo producto ${newProduct.title} creado.`,
+			toast: true,
+			position: "top-right",
+		});
+	}
 	cardsList.appendChild(createHtmlProduct(newProduct));
 });
 
