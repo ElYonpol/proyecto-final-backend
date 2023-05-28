@@ -5,7 +5,7 @@ const {
 	usersUpdatingSchema,
 } = require("../validation/usersValidation.js");
 const UserController = require("../controllers/usersController.js");
-const { objectsValidation } = require("../middleware/validator.js");
+const { usersValidation } = require("../middleware/validator.js");
 
 const usersRouter = Router();
 
@@ -20,10 +20,10 @@ usersRouter.get("/", getUsers); // Opción sin authSession
 usersRouter.get("/:uid", getUserByID);
 
 // POST http://localhost:8080/api/users/
-usersRouter.post("/register", objectsValidation(usersCreationSchema), addUser);
+usersRouter.post("/register", usersValidation(usersCreationSchema), addUser);
 
 // PUT http://localhost:8080/api/users/:uid
-usersRouter.put("/:uid", objectsValidation(usersUpdatingSchema), updateUser);
+usersRouter.put("/:uid", usersValidation(usersUpdatingSchema), updateUser);
 
 // DELETE http://localhost:8080/api/users/:uid
 usersRouter.delete("/:uid", deleteUser);

@@ -82,14 +82,14 @@ router.get("/users", async (req, res) => {
 	const spec = sort
 		? { limit, page, sort: { first_name: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await userService.getUsers(query, spec);
-	// const roles = await userService.getUserRoles();
+	const { docs, ...rest } = await userService.getItems(query, spec);
+	const roles = await userService.getUserRoles();
 
 	res.render("users", {
 		style: "index.css",
 		users: docs,
 		paginate: rest,
-		// roles,
+		roles,
 	});
 });
 

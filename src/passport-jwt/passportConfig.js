@@ -43,7 +43,7 @@ const initializePassport = () => {
 						role,
 						password: hashedPassword,
 					};
-					const result = await userService.addUser(newUser);
+					const result = await userService.createItem(newUser);
 
 					// done con el usuario
 					return done(null, result);
@@ -108,7 +108,7 @@ const initializePassport = () => {
 							email: profile.emails[0].value,
 						};
 						console.log({ newUser });
-						const result = await userService.addUser(newUser);
+						const result = await userService.createItem(newUser);
 						return done(null, result);
 					} else {
 						return done(null, user);

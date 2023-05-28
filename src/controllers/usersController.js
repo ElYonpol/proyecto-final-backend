@@ -10,7 +10,7 @@ class UserController {
 			const specs = sort
 				? { limit, page, sort: { first_name: sort }, lean: true }
 				: { limit, page, lean: true };
-			const resp = await userService.getUsers(query, specs);
+			const resp = await userService.getItems(query, specs);
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;
 			const nextPage = resp.nextPage;
@@ -42,7 +42,7 @@ class UserController {
 	getUserByID = async (req, res) => {
 		try {
 			const uid = req.params.uid;
-			const resp = await userService.getUserByID(uid);
+			const resp = await userService.getItem(uid);
 			if (!resp)
 				return res
 					.status(404)
@@ -62,7 +62,7 @@ class UserController {
 			console.log("newUserRaw es:", newUserRaw);
 			const newUser = new UserDto(newUserRaw);
 			console.log("newUser es:", newUser);
-			const resp = await userService.createUser(newUser);
+			const resp = await userService.createItem(newUser);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -76,7 +76,7 @@ class UserController {
 		try {
 			const uid = req.params.uid;
 			const userToUpdate = req.body;
-			const resp = await userService.updateUser(uid, userToUpdate);
+			const resp = await userService.updateItem(uid, userToUpdate);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -89,7 +89,7 @@ class UserController {
 	deleteUser = async (req, res) => {
 		try {
 			const uid = req.params.uid;
-			const resp = await userService.deleteUser(uid);
+			const resp = await userService.deleteItem(uid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

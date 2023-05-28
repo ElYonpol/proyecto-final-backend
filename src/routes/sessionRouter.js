@@ -67,7 +67,7 @@ sessionsRouter.post("/register", async (req, res) => {
 		role,
 	};
 
-	const resp = await userService.addUser(newUser);
+	const resp = await userService.createItem(newUser);
 
 	const accessToken = generateToken(newUser);
 

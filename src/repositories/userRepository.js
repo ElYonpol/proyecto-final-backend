@@ -7,6 +7,9 @@ class UserRepository extends RepositoryGeneric {
 	}
 
 	//Métodos extras o redefiniciones a los del genérico (ejemplo el DTO)
+	async getUserRoles() {
+		return await this.dao.getUserRoles();
+	}
 }
 
 module.exports = UserRepository;

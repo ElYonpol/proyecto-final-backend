@@ -90,7 +90,7 @@ const changePage = (page) => {
 };
 // FIN Subsegmento ordenamiento y filtros ___________________________________________
 
-// INICIO Subsegmento trabajo con nuevos productos ___________________________________________
+// INICIO Subsegmento trabajo con formulario para nuevos productos ___________________________________________
 const submitForm = document.querySelector("#newProductForm");
 
 const createNewProductCard = (newProductToAdd) => {
@@ -191,14 +191,14 @@ submitForm.addEventListener("submit", async (event) => {
 		description: data.newProductDescription,
 		price: parseFloat(data.newProductPrice),
 		stock: parseFloat(data.newProductStock),
-		thumbnails: ["/static/assets/images/cartCard--nuevo.webp"],
+		thumbnails: ["/static/assets/images/cartCard--nuevo.webp"]
 	};
 	console.log("dataCorrected es:", dataCorrected);
 
 	const res = await fetch("/api/products", {
 		method: "POST",
-		body: JSON.stringify(dataCorrected),
 		headers: { "content-type": "application/json" },
+		body: JSON.stringify(dataCorrected),
 	});
 });
 
