@@ -7,7 +7,7 @@ class ProductRepository extends RepositoryGeneric {
 
 	//Métodos extras o redefiniciones a los del genérico
 	async getProductCategories() {
-		return await this.dao.getProductCategories(); //Chequear esto
+		return await this.dao.getProductCategories()
 	};
 }
 

@@ -32,7 +32,6 @@ socket.on("authenticated", (newUser) => {
 
 const handleKeyUp = (evt) => {
 	if (evt.key === "Enter") {
-		console.log(chatBox.value);
 		if (chatBox.value.trim().length > 0) {
 			socket.emit("chatMessage", { user: user, message: chatBox.value });
 			chatBox.value = "";
@@ -43,7 +42,6 @@ chatBox.addEventListener("keyup", handleKeyUp);
 
 const handleClick = (evt) => {
 	if (chatBox.value.trim().length > 0) {
-		console.log(chatBox.value);
 		socket.emit("chatMessage", { user: user, message: chatBox.value });
 		chatBox.value = "";
 	}

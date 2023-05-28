@@ -1,6 +1,6 @@
 const { Server } = require("socket.io");
 // const MessageController = require("../controllers/messagesController.js");
-const { messageMgr } = require("../dao/mongo/managers/messagesManagerMongo.js");
+const { messageMgr } = require("../dao/mongo/managers/messagesMongo.js");
 
 // const {
 // 	getMessages,
@@ -24,8 +24,8 @@ const generateIoServer = (httpServer) => {
 					user,
 					message: messageString,
 				};
-				await messageMgr.addMessage(messageDataOK);
-				const messages = await messageMgr.getMessages();
+				await messageMgr.create(messageDataOK);
+				const messages = await messageMgr.get()
 				io.emit("messageLogs", messages);
 			} catch (error) {
 				socket.emit("error", error);
@@ -34,7 +34,7 @@ const generateIoServer = (httpServer) => {
 
 		socket.on("authenticated", async (newUser) => {
 			try {
-				const messages = await messageMgr.getMessages();
+				const messages = await messageMgr.get();
 				io.emit("messageLogs", messages);
 				socket.broadcast.emit("newUser", newUser);
 			} catch (error) {

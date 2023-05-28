@@ -1,5 +1,10 @@
 const { Router } = require("express");
-const {	productService,	orderService, cartService, userService } = require("../service/index.js");
+const {
+	productService,
+	orderService,
+	cartService,
+	userService,
+} = require("../service/index.js");
 const { uploader } = require("../utils/uploader.js");
 
 const router = Router();
@@ -15,7 +20,7 @@ router.get("/products", async (req, res) => {
 	const spec = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await productService.getProducts(query, spec);
+	const { docs, ...rest } = await productService.getItems(query, spec);
 	const categories = await productService.getProductCategories();
 
 	res.render("products", {
@@ -33,7 +38,7 @@ router.get("/realtimeproducts", async (req, res) => {
 	const spec = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await productService.getProducts(query, spec);
+	const { docs, ...rest } = await productService.getItems(query, spec);
 	const categories = await productService.getProductCategories();
 
 	res.render("realTimeProducts", {
@@ -45,7 +50,7 @@ router.get("/realtimeproducts", async (req, res) => {
 });
 
 router.get("/carts", async (req, res) => {
-	const carts = await cartService.getCarts();
+	const carts = await cartService.getItems();
 	res.render("carts", {
 		style: "index.css",
 		carts: carts,
@@ -54,7 +59,7 @@ router.get("/carts", async (req, res) => {
 
 router.get("/api/carts/:cid", async (req, res) => {
 	const cid = req.params.cid;
-	const products = await cartService.getProductsByCartId(cid);
+	const products = await cartService.getItem(cid);
 	res.render("carts", {
 		style: "index.css",
 		products: products,

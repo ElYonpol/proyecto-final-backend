@@ -3,7 +3,7 @@ const { orderService } = require("../service");
 class OrderController {
 	async getOrders(req, res) {
 		try {
-			let orders = orderService.getItems();
+			let orders = await orderService.getItems();
 			res.status(200).send({ status: "success", payload: orders });
 		} catch (error) {
 			res.status(404).json({
