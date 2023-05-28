@@ -1,10 +1,5 @@
 const { Router } = require("express");
-const {
-	productService,
-	orderService,
-	cartService,
-	userService,
-} = require("../service/index.js");
+const {	productService,	orderService, cartService, userService } = require("../service/index.js");
 const { uploader } = require("../utils/uploader.js");
 
 const router = Router();

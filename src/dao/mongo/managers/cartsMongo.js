@@ -26,7 +26,7 @@ class CartDaoMongo {
 	};
 
 	deleteProductFromCart = async (cid, pid) => {
-		const cart = await this.getCartByID(cid);
+		const cart = await this.getById(cid);
 		const products = cart[0].products;
 
 		const productFoundIndex = products.findIndex(
@@ -45,7 +45,7 @@ class CartDaoMongo {
 	};
 
 	updateProductFromCart = async (cid, pid, quantity) => {
-		const cart = await this.getCartById(cid);
+		const cart = await this.getById(cid);
 		const products = cart[0].products;
 		const productFoundIndex = products.findIndex(
 			(product) => product.pid._id.toString() === pid
@@ -59,7 +59,7 @@ class CartDaoMongo {
 	};
 
 	getProductsByCartId = async (cid) => {
-		const cart = await this.getCartByID(cid);
+		const cart = await this.getById(cid);
 		return cart[0].products ?? [];
 	};
 
