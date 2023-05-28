@@ -3,8 +3,9 @@ const MongoSingleton = require("../utils/MongoSingleton.js");
 
 let ProductsDaos;
 let UsersDaos;
-let CartsDaos;
 let OrdersDaos;
+let CartsDaos;
+let MessagesDaos
 let ContactsDaos;
 
 switch (objConfig.persistence) {

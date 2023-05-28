@@ -1,4 +1,4 @@
-const { orderModel } = require("./models/ordersModelMongo.js");
+const { orderModel } = require("../models/ordersModelMongo.js");
 
 class OrderDaoMongo {
 	constructor() {

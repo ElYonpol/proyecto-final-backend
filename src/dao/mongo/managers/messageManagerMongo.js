@@ -1,4 +1,4 @@
-const { messageModel } = require("./models/messagesModelMongo.js");
+const { messageModel } = require("../models/messagesModelMongo.js");
 
 class MessageManagerMongo {
 	getMessages = async () => {
