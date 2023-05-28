@@ -5,19 +5,19 @@ class CartDaoMongo {
         this.cartModel = cartModel;
     }
 
-	getCarts = async (filters) => {
+	get = async (filters) => {
 		return await this.cartModel.find(filters).lean();
 	};
 
-	getCartByID = async (cid) => {
+	getById = async (cid) => {
 		return await this.cartModel.find({ _id: cid }).lean();
 	};
 
-	addCart = async () => {
+	create = async () => {
 		return await cartModel.create({});
 	};
 
-	deleteCart = async (cid) => {
+	delete = async (cid) => {
 		return await cartModel.deleteOne({ _id: cid });
 	};
 
