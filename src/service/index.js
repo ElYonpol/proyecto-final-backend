@@ -1,8 +1,13 @@
-const {	CartManagerMongo } = require("../dao/mongo/managers/cartManagerMongo.js");
-const { MessageManagerMongo } = require("../dao/mongo/managers/messageManagerMongo.js");
+const {
+	CartManagerMongo,
+} = require("../dao/mongo/managers/cartsManagerMongo.js");
+const {
+	MessageManagerMongo,
+} = require("../dao/mongo/managers/messagesManagerMongo.js");
 const UserRepository = require("../repositories/userRepository.js");
 const OrderRepository = require("../repositories/orderRepository.js");
 const ProductRepository = require("../repositories/productRepository.js");
+
 const { UsersDaos, OrdersDaos, ProductsDaos } = require("../dao/factory.js");
 
 const userService = new UserRepository(new UsersDaos());

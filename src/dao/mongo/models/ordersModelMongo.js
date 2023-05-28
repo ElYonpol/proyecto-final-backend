@@ -1,8 +1,9 @@
 const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const ordersCollection = "orders";
 
-const orderSchema = new Schema({
+const OrderSchema = new Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: "users",
@@ -19,6 +20,7 @@ const orderSchema = new Schema({
 	created: Date,
 });
 
-const orderModel = model(ordersCollection, orderSchema);
+OrderSchema.plugin(mongoosePaginate)
+const orderModel = model(ordersCollection, OrderSchema);
 
 module.exports = { orderModel };

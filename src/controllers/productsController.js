@@ -1,6 +1,5 @@
 const { productService } = require("../service/index.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
-const { ProductsDaos } = require("../dao/factory.js");
 
 class ProductController {
 	getProducts = async (req, res) => {
@@ -13,8 +12,7 @@ class ProductController {
 				? { limit, page, sort: { price: sort }, lean: true }
 				: { limit, page, lean: true };
 
-			const productsDao = new ProductsDaos //Agregado en clase 15
-			const resp = await productsDao.getItems(query, specs); //Agregado en clase 15
+			const resp = await productService.getItems(query, specs);
 
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;

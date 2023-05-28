@@ -5,20 +5,20 @@ class OrderDaoMongo {
 		this.orderModel = orderModel;
 	}
 
-	async get() {
-		return await this.orderModel.find({});
+	get = async (filter, specs) => {
+		return await this.orderModel.paginate(filter, specs);
 	}
 
-	async getById(oid) {
+	async getOrdersById(oid) {
 		return await this.orderModel.findOne({ _id: oid });
 	}
 
-	async create(newOrder) {
+	async createOrder(newOrder) {
 		return await this.orderModel.create(newOrder);
 	}
 
-	async update(oid) {}
-	async delete(oid) {}
+	async updateOrder(oid) {}
+	async deleteOrder(oid) {}
 }
 
 const orderMgr = new OrderDaoMongo();

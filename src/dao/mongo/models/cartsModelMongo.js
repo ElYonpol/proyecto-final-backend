@@ -1,8 +1,9 @@
 const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const cartsCollection = "carts";
 
-const cartSchema = new Schema({
+const CartSchema = new Schema({
 	products: [
 		{
 			pid: {
@@ -18,10 +19,12 @@ const cartSchema = new Schema({
 	],
 });
 
-cartSchema.pre("find", function () {
+CartSchema.pre("find", function () {
 	this.populate("products.pid");
 });
 
-const cartModel = model(cartsCollection, cartSchema);
+CartSchema.plugin(mongoosePaginate)
+
+const cartModel = model(cartsCollection, CartSchema);
 
 module.exports = { cartModel };

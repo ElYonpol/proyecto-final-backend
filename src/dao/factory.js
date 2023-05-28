@@ -14,11 +14,14 @@ switch (objConfig.persistence) {
 		const ProductDaoMongo = require("./mongo/managers/productsMongo.js");
 		ProductsDaos = ProductDaoMongo;
 
-		const UserDaoMongo = require("./mongo/managers/userMongo.js");
+		const UserDaoMongo = require("./mongo/managers/usersMongo.js");
 		UsersDaos = UserDaoMongo;
 
-		const OrderDaoMongo = require("./mongo/managers/orderMongo.js");
+		const OrderDaoMongo = require("./mongo/managers/ordersMongo.js");
 		OrdersDaos = OrderDaoMongo;
+
+		const CartDaoMongo = require("./mongo/managers/cartsMongo.js");
+		CartsDaos = CartDaoMongo;
 
 		//Falta agregar el de carts, orders, contact en todos los case
 		break;
@@ -38,4 +41,4 @@ switch (objConfig.persistence) {
 		break;
 }
 
-module.exports = { ProductsDaos, UsersDaos, OrdersDaos };
+module.exports = { ProductsDaos, UsersDaos, OrdersDaos, CartsDaos };

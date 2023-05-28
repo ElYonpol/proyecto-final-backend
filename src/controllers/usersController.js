@@ -1,6 +1,5 @@
 const { userService } = require("../service/index.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
-const { UsersDaos } = require("../dao/factory.js");
 const UserDto = require("../dto/userDto.js");
 
 class UserController {
@@ -14,8 +13,7 @@ class UserController {
 				? { limit, page, sort: { first_name: sort }, lean: true }
 				: { limit, page, lean: true };
 			
-			const userDao = new UsersDaos
-			const resp = await userDao.getItems(query, specs);
+			const resp = await userService.getItems(query, specs);
 			
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;

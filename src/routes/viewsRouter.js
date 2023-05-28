@@ -1,7 +1,10 @@
 const { Router } = require("express");
-const { productService, orderService } = require("../service/index.js");
-const { cartService } = require("../service/index.js");
-const { userService } = require("../service/index.js");
+const {
+	productService,
+	orderService,
+	cartService,
+	userService,
+} = require("../service/index.js");
 const { uploader } = require("../utils/uploader.js");
 
 const router = Router();
@@ -46,20 +49,20 @@ router.get("/realtimeproducts", async (req, res) => {
 	});
 });
 
+router.get("/carts", async (req, res) => {
+	const carts = await cartService.getCarts();
+	res.render("carts", {
+		style: "index.css",
+		carts: carts,
+	});
+});
+
 router.get("/api/carts/:cid", async (req, res) => {
 	const cid = req.params.cid;
 	const products = await cartService.getProductsByCartId(cid);
 	res.render("carts", {
 		style: "index.css",
 		products: products,
-	});
-});
-
-router.get("/carts", async (req, res) => {
-	const carts = await cartService.getCarts();
-	res.render("carts", {
-		style: "index.css",
-		carts: carts,
 	});
 });
 

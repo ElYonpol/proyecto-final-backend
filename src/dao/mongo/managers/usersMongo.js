@@ -10,11 +10,11 @@ class UserDaoMongo {
 	};
 
 	getById = async (uid) => {
-		return await this.userModel.find({ _id: uid });
+		return await this.userModel.find({ _id: uid }).lean();
 	};
 
 	getByEmail = async (userEmail) => {
-		return await this.userModel.find({ email: userEmail });
+		return await this.userModel.find({ email: userEmail }).lean();
 	};
 
 	getByUsername = async (userUsername) => {

@@ -1,4 +1,4 @@
-const RepositoryGeneric = require("./repositoryGeneric");
+const RepositoryGeneric = require("./repositoryGeneric.js");
 
 class ProductRepository extends RepositoryGeneric {
 	constructor(dao) {
@@ -7,7 +7,7 @@ class ProductRepository extends RepositoryGeneric {
 
 	//Métodos extras o redefiniciones a los del genérico
 	async getProductCategories() {
-		return await this.getProductCategories();
+		return await this.dao.getProductCategories(); //Chequear esto
 	};
 }
 
