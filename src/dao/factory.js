@@ -10,13 +10,13 @@ let ContactsDaos;
 switch (objConfig.persistence) {
 	case "MONGO":
 		MongoSingleton.getInstance();
-		const ProductDaoMongo = require("./mongo/productsMongo.js");
+		const ProductDaoMongo = require("./mongo/managers/productsMongo.js");
 		ProductsDaos = ProductDaoMongo;
 
-		const UserDaoMongo = require("./mongo/userMongo.js");
+		const UserDaoMongo = require("./mongo/managers/userMongo.js");
 		UsersDaos = UserDaoMongo;
 
-		const OrderDaoMongo = require("./mongo/orderMongo.js");
+		const OrderDaoMongo = require("./mongo/managers/orderMongo.js");
 		OrdersDaos = OrderDaoMongo;
 
 		//Falta agregar el de carts, orders, contact en todos los case
@@ -32,7 +32,7 @@ switch (objConfig.persistence) {
 
 	default:
 		// MongoSingleton.getInstance();
-		// const ProductDaoMongo = require("./mongo/productsMongo.js");
+		// const ProductDaoMongo = require("./mongo/managers/productsMongo.js");
 		// ProductsDaos = ProductDaoMongo;
 		break;
 }
