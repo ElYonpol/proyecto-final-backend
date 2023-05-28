@@ -19,7 +19,7 @@ usersRouter.get("/", getUsers); // Opción sin authSession
 // GET http://localhost:8080/api/users/:uid
 usersRouter.get("/:uid", getUserByID);
 
-// POST http://localhost:8080/api/users/
+// POST http://localhost:8080/api/users/register
 usersRouter.post("/register", usersValidation(usersCreationSchema), addUser);
 
 // PUT http://localhost:8080/api/users/:uid

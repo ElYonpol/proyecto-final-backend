@@ -10,6 +10,12 @@ class UserRepository extends RepositoryGeneric {
 	async getUserRoles() {
 		return await this.dao.getUserRoles();
 	}
+	async getByEmail() {
+		return await this.dao.getByEmail();
+	}
+	async getByUsername() {
+		return await this.dao.getByUsername();
+	}
 }
 
 module.exports = UserRepository;

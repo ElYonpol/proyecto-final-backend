@@ -53,7 +53,7 @@ GET http://localhost:8080/api/users
 GET http://localhost:8080/api/users/645ffeb072b44006d84a7b0d 
 
 ###
-# Creación de un usuario (ya hecho)
+# Creación de un usuario (cambiar el email xq es unique)
 POST http://localhost:8080/api/users/register 
 Content-Type: application/json
 
