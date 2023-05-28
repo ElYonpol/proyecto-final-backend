@@ -5,7 +5,7 @@ let ProductsDaos;
 let UsersDaos;
 let CartsDaos;
 let OrdersDaos;
-let ContactDaos;
+let ContactsDaos;
 
 switch (objConfig.persistence) {
 	case "MONGO":

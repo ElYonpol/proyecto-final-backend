@@ -11,10 +11,10 @@ class UserRepository extends RepositoryGeneric {
 		return await this.dao.getUserRoles();
 	}
 	async getByEmail() {
-		return await this.dao.getByEmail();
+		return await this.dao.getByEmail(userEmail);
 	}
 	async getByUsername() {
-		return await this.dao.getByUsername();
+		return await this.dao.getByUsername(userUsername);
 	}
 }
 

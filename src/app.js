@@ -40,7 +40,12 @@ app.use(passport.initialize());
 // process config _______________________________________________________
 
 // cors config _______________________________________________________
-app.use(cors());
+app.use(
+	cors({
+		origin: `http://localhost:${PORT}`,
+		methods: ["GET", "POST", "PUT", "DELETE"],
+	})
+);
 // cors config _______________________________________________________
 
 // MongoDB config _______________________________________________________

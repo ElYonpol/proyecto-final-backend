@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { productService } = require("../service/index.js");
+const { productService, orderService } = require("../service/index.js");
 const { cartService } = require("../service/index.js");
 const { userService } = require("../service/index.js");
 const { uploader } = require("../utils/uploader.js");
@@ -90,6 +90,15 @@ router.get("/users", async (req, res) => {
 		users: docs,
 		paginate: rest,
 		roles,
+	});
+});
+
+//Listar ordenes con formato tabla
+router.get("/orders", async (req, res) => {
+	const orders = await orderService.getItems();
+	res.render("orders", {
+		style: "index.css",
+		orders: orders,
 	});
 });
 

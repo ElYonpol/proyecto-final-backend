@@ -8,7 +8,7 @@ const { UsersDaos, OrdersDaos, ProductsDaos } = require("../dao/factory.js");
 
 
 
-const userService = new UserRepository(new UsersDaos());
+const  userService = new UserRepository(new UsersDaos());
 const orderService = new OrderRepository(new OrdersDaos());
 const productService = new ProductManagerMongo();
 const cartService = new CartManagerMongo();

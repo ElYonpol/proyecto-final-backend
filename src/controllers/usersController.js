@@ -1,16 +1,22 @@
 const { userService } = require("../service/index.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
+const { UsersDaos } = require("../dao/factory.js");
 const UserDto = require("../dto/userDto.js");
 
 class UserController {
 	getUsers = async (req, res) => {
 		try {
 			const { page = 1, limit = 10, sort = null } = req.query;
+			
 			const query = req.query.query ? JSON.parse(req.query.query) : {};
+			
 			const specs = sort
 				? { limit, page, sort: { first_name: sort }, lean: true }
 				: { limit, page, lean: true };
-			const resp = await userService.getItems(query, specs);
+			
+			const userDao = new UsersDaos
+			const resp = await userDao.getItems(query, specs);
+			
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;
 			const nextPage = resp.nextPage;
@@ -59,9 +65,7 @@ class UserController {
 	addUser = async (req, res) => {
 		try {
 			const newUserRaw = req.body;
-			console.log("newUserRaw es:", newUserRaw);
 			const newUser = new UserDto(newUserRaw);
-			console.log("newUser es:", newUser);
 			const resp = await userService.createItem(newUser);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {

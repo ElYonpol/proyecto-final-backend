@@ -1,0 +1,40 @@
+<h1 class="display-1">
+	<div class="display-1--intro">Órdenes</div>
+</h1>
+
+<div id="divProdTable" class="table-responsive align-self-center w-100">
+	<table
+		id="productTable"
+		class="table table-sm table-primary table-striped align-self-center text-center"
+	>
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">Orden N°</th>
+				<th scope="col">Usuario</th>
+				<th scope="col">Producto</th>
+				<th scope="col">Precio</th>
+				<th scope="col">Cantidad</th>
+				<th scope="col">Total $</th>
+			</tr>
+		</thead>
+		<tbody class="productList">
+			{{!-- Las columnas no me funcionan cuando el carrito tiene más de un producto --}}
+			{{!-- En la primera columna debería repetir el N° de carrito anterior --}}
+			{{#each carts}}
+					<tr>
+						<th scope="row">{{_id}}</th>
+				{{#each products}}
+						<th scope="row">{{pid.title}}</th>
+						<td><img
+								src="{{correctThumbnails pid.thumbnails}}"
+								alt="product image"
+							/></td>
+						<td>{{pid.price}}</td>
+						<td>{{pid.category}}</td>
+						<td>{{quantity}}</td>
+					</tr>
+				{{/each}}
+			{{/each}}
+		</tbody>
+	</table>
+</div>

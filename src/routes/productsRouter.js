@@ -1,8 +1,8 @@
 const { Router } = require("express");
-// const { ioServer } = require("./config/io.js");
 const {	productsCreationSchema,	productsUpdatingSchema, } = require("../validation/productsValidation.js");
 const ProductController = require("../controllers/productsController.js");
 const { productsValidation } = require("../middleware/validator.js");
+const { authSession } = require("../middleware/auth.middleware.js");
 const { authPassport } = require("../passport-jwt/authPassport.js");
 const { authorization } = require("../passport-jwt/authorizationPassport.js");
 
