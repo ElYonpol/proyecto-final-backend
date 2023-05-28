@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 
-const messagesCollection = "messages";
+const collection = "messages";
 
 const MessageSchema = new Schema({
 	user: {
@@ -15,6 +15,7 @@ const MessageSchema = new Schema({
 });
 
 MessageSchema.plugin(mongoosePaginate);
-const messageModel = model(messagesCollection, MessageSchema);
+
+const messageModel = model(collection, MessageSchema);
 
 module.exports = { messageModel };

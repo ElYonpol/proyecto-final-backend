@@ -23,6 +23,9 @@ switch (objConfig.persistence) {
 		const CartDaoMongo = require("./mongo/managers/cartsMongo.js");
 		CartsDaos = CartDaoMongo;
 
+		const MessageDaoMongo = require("./mongo/managers/cartsMongo.js");
+		MessagesDaos = MessageDaoMongo;
+
 		//Falta agregar el de carts, orders, contact en todos los case
 		break;
 	case "MEMORY":
@@ -41,4 +44,4 @@ switch (objConfig.persistence) {
 		break;
 }
 
-module.exports = { ProductsDaos, UsersDaos, OrdersDaos, CartsDaos };
+module.exports = { ProductsDaos, UsersDaos, OrdersDaos, CartsDaos, MessagesDaos };

@@ -1,15 +1,19 @@
 const { messageModel } = require("../models/messagesModelMongo.js");
 
-class MessageManagerMongo {
-	getMessages = async () => {
+class MessageDaoMongo {
+    constructor(){
+        this.messageModel = messageModel
+    }
+
+	get = async () => {
 		return await messageModel.find().lean();
 	};
 
-	getMessageById = async (mid) => {
+	getById = async (mid) => {
 		return await messageModel.find({ _id: mid }).lean();
 	};
 
-	addMessage = async (message) => {
+	create = async (message) => {
 		try {
 			return await messageModel.create(message);
 		} catch (error) {
@@ -20,15 +24,15 @@ class MessageManagerMongo {
 		}
 	};
 
-	updateMessage = async (mid, changes) => {
+	update = async (mid, changes) => {
 		return await messageModel.updateOne({ _id: mid }, changes);
 	};
 
-	deleteMessage = async (mid) => {
+	delete = async (mid) => {
 		return await messageModel.deleteOne({ _id: mid });
 	};
 }
 
-const messageMgr = new MessageManagerMongo();
+const messageMgr = new MessageDaoMongo();
 
-module.exports = { MessageManagerMongo, messageMgr };
+module.exports = { MessageDaoMongo, messageMgr };

@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 
-const cartsCollection = "carts";
+const collection = "carts";
 
 const CartSchema = new Schema({
 	products: [
@@ -25,6 +25,6 @@ CartSchema.pre("find", function () {
 
 CartSchema.plugin(mongoosePaginate)
 
-const cartModel = model(cartsCollection, CartSchema);
+const cartModel = model(collection, CartSchema);
 
 module.exports = { cartModel };
