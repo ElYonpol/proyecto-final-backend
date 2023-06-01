@@ -69,11 +69,11 @@
 		<tbody class="userList">
 			{{#each users}}
 				<tr>
-					<th scope="row">{{first_name}}</th>
-					<td>{{last_name}}</td>
-					<td>{{email}}</td>
-					<td>{{username}}</td>
-					<td>{{role}}</td>
+					<th scope="row">{{getInheritedProperty this "first_name"}}</th>
+					<td>{{getInheritedProperty this "last_name"}}</td>
+					<td>{{getInheritedProperty this "email"}}</td>
+					<td>{{getInheritedProperty this "username"}}</td>
+					<td>{{getInheritedProperty this "role"}}</td>
 				</tr>
 			{{/each}}
 		</tbody>
