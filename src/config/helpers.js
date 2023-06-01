@@ -2,4 +2,8 @@ const correctThumbnails = (array) => {
 	return array[0];
 };
 
-module.exports = { correctThumbnails };
+const getInheritedProperty = (object, property) => {
+	return object[property];
+};
+
+module.exports = { correctThumbnails, getInheritedProperty };

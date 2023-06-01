@@ -1,7 +1,7 @@
 const express = require("express");
 const { generateIoServer } = require("./config/io.js");
 const path = require("path");
-const { correctThumbnails } = require("./config/helpers.js");
+const { correctThumbnails, getInheritedProperty } = require("./config/helpers.js");
 const { objConfig } = require("./config/config.js");
 const routerApp = require("./routes/index.js");
 const handlebars = require("express-handlebars");
@@ -24,7 +24,7 @@ generateIoServer(httpServer);
 // server config _______________________________________________________
 
 // handlebars config _______________________________________________________
-app.engine("handlebars", handlebars.engine({ helpers: { correctThumbnails } }));
+app.engine("handlebars", handlebars.engine({ helpers: { correctThumbnails, getInheritedProperty } }));
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
