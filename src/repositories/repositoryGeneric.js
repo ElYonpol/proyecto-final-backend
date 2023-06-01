@@ -3,8 +3,8 @@ class RepositoryGeneric {
 		this.dao = dao;
 	}
 
-	async getItems() {
-		return await this.dao.get();
+	async getItems(query, specs) {
+		return await this.dao.get(query, specs);
 	}
 	async getItem(id) {
 		return await this.dao.getById(id);

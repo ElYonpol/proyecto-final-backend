@@ -6,14 +6,17 @@ class CartRepository extends RepositoryGeneric {
 	}
 
 	//Métodos extras o redefiniciones a los del genérico (ejemplo el DTO)
-	async getUserRoles() {
-		return await this.dao.getUserRoles();
+	async addProductToCartbyId(cid, products) {
+		return await this.dao.addProductToCartbyId(cid, products);
 	}
-	async getByEmail() {
-		return await this.dao.getByEmail(userEmail);
+	async deleteProductFromCart(cid, pid) {
+		return await this.dao.deleteProductFromCart(cid, pid);
 	}
-	async getByUsername() {
-		return await this.dao.getByUsername(userUsername);
+	async updateProductsByCartId(cid, newProducts) {
+		return await this.dao.updateProductFromCart(cid, newProducts);
+	}
+	async updateProductFromCart(cid, pid, quantity) {
+		return await this.dao.updateProductFromCart(cid, pid, quantity);
 	}
 }
 
