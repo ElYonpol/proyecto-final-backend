@@ -50,7 +50,9 @@ router.get("/realtimeproducts", async (req, res) => {
 });
 
 router.get("/carts", async (req, res) => {
-	const carts = await cartService.getItems();
+	const query = {};
+	const specs = {};
+	const carts = await cartService.getItems(query, specs);
 	res.render("carts", {
 		style: "index.css",
 		carts: carts,
@@ -98,7 +100,9 @@ router.get("/users", async (req, res) => {
 
 //Listar ordenes con formato tabla
 router.get("/orders", async (req, res) => {
-	const orders = await orderService.getItems();
+	const query = {};
+	const specs = {};
+	const orders = await orderService.getItems(query, specs);
 	res.render("orders", {
 		style: "index.css",
 		orders: orders,
