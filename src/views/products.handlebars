@@ -62,21 +62,21 @@
 				<img
 					class="image"
 					style="height: 350px;"
-					src="{{getInheritedProperty this "thumbnails"}}"
+					src="{{correctThumbnails thumbnails}}"
 					alt="Imagen del producto"
 				/>
 			</div>
 			<div class="cartCard-content">
-				<p class="cartCard-content__title">{{getInheritedProperty this "title"}}</p>
-				<p class="cartCard-content__body">{{getInheritedProperty this "description"}}</p>
-				<p class="cartCard-content__body">Precio: ${{getInheritedProperty this "price"}}</p>
-				<p class="cartCard-content__body">Categoría: {{getInheritedProperty this "category"}}</p>
+				<p class="cartCard-content__title">{{title}}</p>
+				<p class="cartCard-content__body">{{description}}</p>
+				<p class="cartCard-content__body">Precio: ${{price}}</p>
+				<p class="cartCard-content__body">Categoría: {{category}}</p>
 				{{#if status}}
-					<p class="cartCard-content__body">Stock: {{getInheritedProperty this "stock"}}</p>
+					<p class="cartCard-content__body">Stock: {{stock}}</p>
 				{{else}}
 					<p class="cartCard-content__body">No disponible</p>
 				{{/if}}
-				<button class="addToCart button-cart" id={{getInheritedProperty this "_id"}}>Añadir al carrito</button>
+				<button class="addToCart button-cart" id={{_id}}>Añadir al carrito</button>
 			</div>
 		</div>
 	{{/each}}
