@@ -86,7 +86,6 @@ const changePage = (page) => {
 };
 
 const addToCart = async (pid) => {
-	console.log("pid en try es:", pid);
 	try {
 		if (!cid) {
 			let response = await fetch("/api/carts", {
@@ -95,24 +94,17 @@ const addToCart = async (pid) => {
 			});
 			let data = await response.json();
 			cid = data.payload._id;
-			console.log("cid en if de try es:", cid);
 			let nav = document.querySelector(".nav__list");
 			nav.innerHTML += `<li><a class="nav__link" href="/carts/${cid}">🛒</a></li>`;
 		}
-
-		console.log("cid en try es:", cid);
 
 		let response = await fetch(`/api/carts/${cid}/products/${pid}`, {
 			method: "POST",
 			headers: { "content-type": "application/json" },
 		});
 
-		console.log("Response es:", response);
-
 		let data = await response.json();
 		let statusResp = data.status;
-
-		console.log("statusResp es:", statusResp);
 
 		if (statusResp !== "success") {
 			return Swal.fire({
