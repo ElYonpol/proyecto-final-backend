@@ -14,11 +14,12 @@ const app = express();
 
 // server config _______________________________________________________
 const PORT = objConfig.PORT || 8080;
+const SERVER_URL = objConfig.SERVER_URL || "http://localhost"
 const httpServer = app.listen(PORT, (err) => {
 	if (err) {
 		console.error("Error al iniciar el servidor (app.js)");
 	}
-	console.log(`Servidor iniciado en el puerto ${PORT} (app.js)`);
+	console.log(`Servidor iniciado en el puerto ${PORT}. ${SERVER_URL}:${PORT} (app.js)`);
 });
 generateIoServer(httpServer);
 // server config _______________________________________________________
