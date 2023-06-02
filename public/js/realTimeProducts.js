@@ -194,7 +194,7 @@ submitForm.addEventListener("submit", async (event) => {
 		thumbnails: ["/static/assets/images/cartCard--nuevo.webp"]
 	};
 	console.log("dataCorrected es:", dataCorrected);
-
+	//Acá está el error, la conexión debe ser por socket, con emit
 	const res = await fetch("/api/products", {
 		method: "POST",
 		headers: { "content-type": "application/json" },

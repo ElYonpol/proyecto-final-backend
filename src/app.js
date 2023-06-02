@@ -1,7 +1,11 @@
 const express = require("express");
-const { generateIoServer } = require("./config/io.js");
+const { generateMessageSocketServer } = require("./config/messageSocket.js");
+const { generateProductSocketServer } = require("./config/productSocket.js");
 const path = require("path");
-const { correctThumbnails, getInheritedProperty } = require("./config/helpers.js");
+const {
+	correctThumbnails,
+	getInheritedProperty,
+} = require("./config/helpers.js");
 const { objConfig } = require("./config/config.js");
 const routerApp = require("./routes/index.js");
 const handlebars = require("express-handlebars");
@@ -11,21 +15,26 @@ const cors = require("cors");
 // const { processFunction } = require("./utils/process.js");
 
 const app = express();
-
 // server config _______________________________________________________
-const PORT = objConfig.PORT || 8080;
-const SERVER_URL = objConfig.SERVER_URL || "http://localhost"
+const PORT = process.env.PORT || 8080;
+const SERVER_URL = process.env.SERVER_URL || "http://localhost";
 const httpServer = app.listen(PORT, (err) => {
 	if (err) {
 		console.error("Error al iniciar el servidor (app.js)");
 	}
-	console.log(`Servidor iniciado en el puerto ${PORT}. ${SERVER_URL}:${PORT} (app.js)`);
+	console.log(
+		`Servidor iniciado en el puerto ${PORT}. ${SERVER_URL}:${PORT} (app.js)`
+	);
 });
-generateIoServer(httpServer);
+generateMessageSocketServer(httpServer);
+// generateProductSocketServer(httpServer);
 // server config _______________________________________________________
 
 // handlebars config _______________________________________________________
-app.engine("handlebars", handlebars.engine({ helpers: { correctThumbnails, getInheritedProperty } }));
+app.engine(
+	"handlebars",
+	handlebars.engine({ helpers: { correctThumbnails, getInheritedProperty } })
+);
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________

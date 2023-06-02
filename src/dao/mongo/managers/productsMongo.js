@@ -30,4 +30,6 @@ class ProductDaoMongo {
 	};
 }
 
-module.exports = ProductDaoMongo;
+const productMgr = new ProductDaoMongo();
+
+module.exports = { ProductDaoMongo, productMgr };

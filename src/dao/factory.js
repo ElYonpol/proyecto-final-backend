@@ -5,13 +5,13 @@ let ProductsDaos;
 let UsersDaos;
 let OrdersDaos;
 let CartsDaos;
-let MessagesDaos
+let MessagesDaos;
 let ContactsDaos;
 
 switch (objConfig.persistence) {
 	case "MONGO":
 		MongoSingleton.getInstance();
-		const ProductDaoMongo = require("./mongo/managers/productsMongo.js");
+		const { ProductDaoMongo } = require("./mongo/managers/productsMongo.js");
 		ProductsDaos = ProductDaoMongo;
 
 		const UserDaoMongo = require("./mongo/managers/usersMongo.js");
@@ -44,4 +44,10 @@ switch (objConfig.persistence) {
 		break;
 }
 
-module.exports = { ProductsDaos, UsersDaos, OrdersDaos, CartsDaos, MessagesDaos };
+module.exports = {
+	ProductsDaos,
+	UsersDaos,
+	OrdersDaos,
+	CartsDaos,
+	MessagesDaos,
+};

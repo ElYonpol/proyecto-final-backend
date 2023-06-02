@@ -1,19 +1,11 @@
 const { Server } = require("socket.io");
-// const MessageController = require("../controllers/messagesController.js");
 const { messageMgr } = require("../dao/mongo/managers/messagesMongo.js");
+const { productMgr } = require("../dao/mongo/managers/productsMongo.js");
 
-// const {
-// 	getMessages,
-// 	getMessageById,
-// 	addMessage,
-// 	updateMessage,
-// 	deleteMessage,
-// } = new MessageController();
-
-const generateIoServer = (httpServer) => {
+const generateProductSocketServer = (httpServer) => {
 	const io = new Server(httpServer);
 	io.on("connection", (socket) => {
-		console.log("Nuevo cliente conectado");
+		console.log("Nuevo cliente conectado en productos");
 
 		socket.on("chatMessage", async (messageData) => {
 			try {
@@ -50,4 +42,4 @@ const generateIoServer = (httpServer) => {
 	return io;
 };
 
-module.exports = { generateIoServer };
+module.exports = { generateProductSocketServer };
