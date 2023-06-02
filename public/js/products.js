@@ -1,4 +1,4 @@
-console.log("Esta es js de products.handlebars");
+console.log("Este es js de products.handlebars");
 
 let url = window.location.href;
 let urlObj = new URL(url);

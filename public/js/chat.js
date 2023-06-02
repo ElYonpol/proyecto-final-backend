@@ -1,4 +1,4 @@
-console.log("Esta es js de chat.handlebars");
+console.log("Este es js de chat.handlebars");
 
 const socket = io();
 

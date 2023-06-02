@@ -1,4 +1,4 @@
-console.log("Esta es js de realTimeProducts.handlebars");
+console.log("Este es js de realTimeProducts.handlebars");
 
 const socket = io();
 
