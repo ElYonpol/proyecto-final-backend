@@ -17,7 +17,7 @@ router.use("/api/products", productsRouter);
 router.use("/api/carts", cartsRouter);
 router.use("/api/users", usersRouter);
 router.use("/api/orders", ordersRouter)
-router.use("/api/pruebas", pruebasRouter)
+router.use("/pruebas", pruebasRouter)
 
 
 

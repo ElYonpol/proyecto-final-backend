@@ -46,4 +46,18 @@ pruebasRouter.get("/sms", async (req, res) => {
 	}
 });
 
+const { generateUser } = require("../utils/faker.js");
+
+pruebasRouter.get("/user", async (req, res) => {
+	try {
+		let users = [];
+		for (let i = 0; i < 100; i++) {
+			users.push(generateUser());
+		}
+		res.send({ status: "success", payload: users });
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 module.exports = pruebasRouter;
