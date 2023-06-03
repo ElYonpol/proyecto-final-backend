@@ -23,17 +23,27 @@ pruebasRouter.get("/complejaNoBlock", (req, res) => {
 	});
 });
 
-// Prueba de envío de mail Clase 16
+// Prueba de envío de mail y SMS Clase 16
 const sendMailTransport = require("../utils/nodemailer");
+const sendSMS = require("../utils/sendSMSTwilio");
 
 pruebasRouter.get("/email", async (req, res) => {
 	try {
 		//Acciones
-		await sendMailTransport()
-		res.send("El email ha sido enviado.")
+		await sendMailTransport();
+		res.send("El email ha sido enviado.");
 	} catch (error) {
 		console.log(error);
 	}
-})
+});
+
+pruebasRouter.get("/sms", async (req, res) => {
+	try {
+		await sendSMS("Esto es un mensaje SMS de prueba...");
+		res.send("El SMS ha sido enviado.");
+	} catch (error) {
+		console.log(error);
+	}
+});
 
 module.exports = pruebasRouter;

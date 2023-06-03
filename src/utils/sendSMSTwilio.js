@@ -9,9 +9,9 @@ const {
 
 const client = twilio(twilio_account_sid, twilio_auth_token);
 
-sendSMS = async () => {
+const sendSMS = async (body) => {
 	await client.messages.create({
-		body: "Esto es un mensaje SMS de prueba...",
+		body: body,
 		from: twilio_phone_number,
 		to: twilio_my_phone_number,
 	});
