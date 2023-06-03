@@ -46,7 +46,7 @@ pruebasRouter.get("/sms", async (req, res) => {
 	}
 });
 
-const { generateUser } = require("../utils/faker.js");
+const { generateUser } = require("../utils/fakerGenerator.js");
 
 pruebasRouter.get("/user", async (req, res) => {
 	try {
