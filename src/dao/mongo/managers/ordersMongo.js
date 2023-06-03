@@ -7,7 +7,7 @@ class OrderDaoMongo {
 
 	get = async (filter, specs) => {
 		return await this.orderModel.paginate(filter, specs);
-	}
+	};
 
 	async getOrdersById(oid) {
 		return await this.orderModel.findOne({ _id: oid });
@@ -23,4 +23,4 @@ class OrderDaoMongo {
 
 const orderMgr = new OrderDaoMongo();
 
-module.exports = OrderDaoMongo;
+module.exports = { OrderDaoMongo, orderMgr };

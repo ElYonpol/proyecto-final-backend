@@ -14,16 +14,16 @@ switch (objConfig.persistence) {
 		const { ProductDaoMongo } = require("./mongo/managers/productsMongo.js");
 		ProductsDaos = ProductDaoMongo;
 
-		const UserDaoMongo = require("./mongo/managers/usersMongo.js");
+		const { UserDaoMongo } = require("./mongo/managers/usersMongo.js");
 		UsersDaos = UserDaoMongo;
 
-		const OrderDaoMongo = require("./mongo/managers/ordersMongo.js");
+		const { OrderDaoMongo } = require("./mongo/managers/ordersMongo.js");
 		OrdersDaos = OrderDaoMongo;
 
-		const CartDaoMongo = require("./mongo/managers/cartsMongo.js");
+		const { CartDaoMongo } = require("./mongo/managers/cartsMongo.js");
 		CartsDaos = CartDaoMongo;
 
-		const MessageDaoMongo = require("./mongo/managers/cartsMongo.js");
+		const { MessageDaoMongo } = require("./mongo/managers/messagesMongo.js");
 		MessagesDaos = MessageDaoMongo;
 
 		//Falta agregar el de carts, orders, contact en todos los case

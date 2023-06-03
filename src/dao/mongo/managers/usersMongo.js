@@ -1,8 +1,8 @@
 const { userModel } = require("../models/usersModelMongo.js");
 
 class UserDaoMongo {
-	constructor(){
-		this.userModel = userModel
+	constructor() {
+		this.userModel = userModel;
 	}
 
 	get = async (filter, specs) => {
@@ -40,4 +40,4 @@ class UserDaoMongo {
 
 const userMgr = new UserDaoMongo();
 
-module.exports = UserDaoMongo;
+module.exports = { UserDaoMongo, userMgr };

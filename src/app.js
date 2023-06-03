@@ -1,6 +1,5 @@
 const express = require("express");
-const { generateMessageSocketServer } = require("./config/messageSocket.js");
-const { generateProductSocketServer } = require("./config/productSocket.js");
+const { generateSocketServer } = require("./config/socket.js");
 const path = require("path");
 const {
 	correctThumbnails,
@@ -17,7 +16,7 @@ const cors = require("cors");
 const app = express();
 // server config _______________________________________________________
 const PORT = process.env.PORT || 8080;
-const SERVER_URL = process.env.SERVER_URL || "http://localhost";
+const SERVER_URL = process.env.SERVER_URL || "http://localhost:";
 const httpServer = app.listen(PORT, (err) => {
 	if (err) {
 		console.error("Error al iniciar el servidor (app.js)");
@@ -26,8 +25,7 @@ const httpServer = app.listen(PORT, (err) => {
 		`Servidor iniciado en el puerto ${PORT}. ${SERVER_URL}:${PORT} (app.js)`
 	);
 });
-generateMessageSocketServer(httpServer);
-// generateProductSocketServer(httpServer);
+generateSocketServer(httpServer);
 // server config _______________________________________________________
 
 // handlebars config _______________________________________________________

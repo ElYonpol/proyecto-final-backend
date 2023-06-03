@@ -1,9 +1,9 @@
 const { cartModel } = require("../models/cartsModelMongo.js");
 
 class CartDaoMongo {
-    constructor(){
-        this.cartModel = cartModel;
-    }
+	constructor() {
+		this.cartModel = cartModel;
+	}
 
 	get = async (filters) => {
 		return await this.cartModel.find(filters).lean();
@@ -74,4 +74,4 @@ class CartDaoMongo {
 
 const cartMgr = new CartDaoMongo();
 
-module.exports = CartDaoMongo;
+module.exports = { CartDaoMongo, cartMgr };
