@@ -1,11 +1,7 @@
 const express = require("express");
 const { generateSocketServer } = require("./config/socket.js");
 const path = require("path");
-const {
-	correctThumbnails,
-	getInheritedProperty,
-} = require("./config/helpers.js");
-const { objConfig } = require("./config/config.js");
+const { correctThumbnails } = require("./config/helpers.js");
 const routerApp = require("./routes/index.js");
 const handlebars = require("express-handlebars");
 const { initializePassport } = require("./passport-jwt/passportConfig.js");
@@ -29,10 +25,7 @@ generateSocketServer(httpServer);
 // server config _______________________________________________________
 
 // handlebars config _______________________________________________________
-app.engine(
-	"handlebars",
-	handlebars.engine({ helpers: { correctThumbnails, getInheritedProperty } })
-);
+app.engine("handlebars", handlebars.engine({ helpers: { correctThumbnails } }));
 app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
@@ -51,10 +44,6 @@ app.use(passport.initialize());
 app.use(cors());
 // app.use(cors({ origin: `http://localhost:${PORT}`, methods: ["GET", "POST", "PUT", "DELETE"] }));
 // cors config _______________________________________________________
-
-// MongoDB config _______________________________________________________
-// objConfig.dbConnection(); // Ya no se usa, xq usamos factory
-// MongoDB config _______________________________________________________
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

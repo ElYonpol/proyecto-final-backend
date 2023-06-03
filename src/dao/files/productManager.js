@@ -5,7 +5,7 @@ class ProductManager {
 		this.path = path;
 	}
 
-	getProducts = async () => {
+	get = async () => {
 		try {
 			if (fs.existsSync(this.path)) {
 				const products = await fs.promises.readFile(this.path, "utf-8");
@@ -28,8 +28,8 @@ class ProductManager {
 		return areFieldsMissing;
 	};
 
-	getProductByID = async (id) => {
-		const products = await this.getProducts();
+	getByID = async (id) => {
+		const products = await this.get();
 
 		const productFound = products.find((product) => product.id === id);
 		if (!productFound) {
@@ -42,8 +42,8 @@ class ProductManager {
 		return productFound;
 	};
 
-	addProduct = async (newProduct) => {
-		const products = await this.getProducts();
+	create = async (newProduct) => {
+		const products = await this.get();
 
 		const { title, description, code, price, status, stock, thumbnails } =
 			newProduct;
@@ -77,8 +77,8 @@ class ProductManager {
 		return newProduct;
 	};
 
-	updateProduct = async (pid,productToUpdate) => {
-		const products = await this.getProducts();
+	update = async (pid,productToUpdate) => {
+		const products = await this.get();
 
 		const productFoundIndex = products.findIndex(
 			(product) => product.id === pid
@@ -101,8 +101,8 @@ class ProductManager {
 		);
 	};
 
-	deleteProduct = async (IdProductToDelete) => {
-		const products = await this.getProducts();
+	delete = async (IdProductToDelete) => {
+		const products = await this.get();
 
 		const productFoundIndex = products.findIndex(
 			(product) => product.id === IdProductToDelete
