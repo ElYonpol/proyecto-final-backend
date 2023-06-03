@@ -7,10 +7,6 @@ require("dotenv").config({
 	path: mode === "development" ? "./.env.development" : "./.env.production",
 });
 
-// //Nota para Tutor: Link de la URL está en el mensaje de la entrega
-// // let URL ="//colocar aquí la URL del mensaje de la entrega";
-// let URL = process.env.DB_HOST;
-
 const objConfig = {
 	persistence: process.env.PERSISTENCE,
 	gmail_mail_user: process.env.GMAIL_MAIL_USER,

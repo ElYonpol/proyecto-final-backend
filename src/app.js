@@ -10,9 +10,10 @@ const cors = require("cors");
 // const { processFunction } = require("./utils/process.js");
 
 const app = express();
+
 // server config _______________________________________________________
-const PORT = process.env.PORT //|| 8080;
-const SERVER_URL = process.env.SERVER_URL //|| "http://localhost:";
+const PORT = process.env.PORT || 8080;
+const SERVER_URL = process.env.SERVER_URL || "http://localhost:";
 const httpServer = app.listen(PORT, (err) => {
 	if (err) {
 		console.error("Error al iniciar el servidor (app.js)");
