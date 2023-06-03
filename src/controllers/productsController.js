@@ -1,4 +1,4 @@
-const { productService } = require("../service/index.js");
+const { productService } = require("../service/service.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
 
 class ProductController {

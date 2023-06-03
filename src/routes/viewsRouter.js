@@ -4,7 +4,7 @@ const {
 	orderService,
 	cartService,
 	userService,
-} = require("../service/index.js");
+} = require("../service/service.js");
 const { uploader } = require("../utils/uploader.js");
 
 const router = Router();

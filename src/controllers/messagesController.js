@@ -1,4 +1,4 @@
-const { messageService } = require("../service/index.js");
+const { messageService } = require("../service/service.js");
 
 class MessageController {
 	getMessages = async (req, res) => {
@@ -16,7 +16,7 @@ class MessageController {
 		}
 	};
 
-    getMessageById = async (req, res) => {
+	getMessageById = async (req, res) => {
 		try {
 			const mid = req.params.mid;
 			const resp = await messageService.getMessageById(mid);

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userService } = require("../service/index.js");
+const { userService } = require("../service/service.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");

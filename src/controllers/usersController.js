@@ -1,4 +1,4 @@
-const { userService } = require("../service/index.js");
+const { userService } = require("../service/service.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
 const UserDto = require("../dto/userDto.js");
 
@@ -6,15 +6,15 @@ class UserController {
 	getUsers = async (req, res) => {
 		try {
 			const { page = 1, limit = 10, sort = null } = req.query;
-			
+
 			const query = req.query.query ? JSON.parse(req.query.query) : {};
-			
+
 			const specs = sort
 				? { limit, page, sort: { first_name: sort }, lean: true }
 				: { limit, page, lean: true };
-			
+
 			const resp = await userService.getItems(query, specs);
-			
+
 			const currPage = resp.page;
 			const prevPage = resp.prevPage;
 			const nextPage = resp.nextPage;

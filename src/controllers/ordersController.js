@@ -1,10 +1,10 @@
-const { orderService } = require("../service");
+const { orderService } = require("../service/service");
 
 class OrderController {
 	async getOrders(req, res) {
 		try {
-			const query = {}
-			const specs = {}
+			const query = {};
+			const specs = {};
 			let orders = await orderService.getItems(query, specs);
 			res.status(200).send({ status: "success", payload: orders });
 		} catch (error) {

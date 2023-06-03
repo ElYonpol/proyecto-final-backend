@@ -1,17 +1,17 @@
-const { cartService } = require("../service/index.js");
+const { cartService } = require("../service/service.js");
 
 class CartController {
 	getCarts = async (req, res) => {
 		try {
 			const filters = req.query.filters ? JSON.parse(req.query.filters) : {};
-			
+
 			const resp = await cartService.getItems(filters);
-			
+
 			const limit = req.query.limit;
-			
+
 			let limitedCarts = [];
 			if (limit) limitedCarts = resp.slice(0, limit);
-			
+
 			res
 				.status(200)
 				.json({ status: "success", payload: limit ? limitedCarts : resp });
@@ -47,7 +47,7 @@ class CartController {
 			});
 		}
 	};
-	
+
 	deleteCart = async (req, res) => {
 		try {
 			const cid = req.params.cid;
@@ -131,7 +131,6 @@ class CartController {
 			});
 		}
 	};
-
 }
 
 module.exports = CartController;

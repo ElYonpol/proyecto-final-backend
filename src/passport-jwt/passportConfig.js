@@ -1,5 +1,5 @@
 const passport = require("passport");
-const { userService } = require("../service/index.js");
+const { userService } = require("../service/service.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
@@ -24,7 +24,7 @@ const initializePassport = () => {
 			},
 			async (req, email, password, done) => {
 				try {
-					const { first_name, last_name, username, role} = req.body;
+					const { first_name, last_name, username, role } = req.body;
 					// buscar el usuario en la base de datos
 					const user = await userService.getUserByEmail(email);
 					console.log({ user });
