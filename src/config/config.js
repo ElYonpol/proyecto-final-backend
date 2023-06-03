@@ -1,7 +1,6 @@
 const { connect } = require("mongoose");
 const { commander } = require("../utils/commander.js");
 const MongoSingleton = require("../utils/MongoSingleton.js");
-
 const { mode } = commander.opts();
 
 require("dotenv").config({
@@ -14,6 +13,8 @@ require("dotenv").config({
 
 const objConfig = {
 	persistence: process.env.PERSISTENCE,
+	gmail_mail_user: process.env.GMAIL_MAIL_USER,
+	gmail_pass: process.env.GOOGLE_APPLICATION_PASSWORD,
 	dbConnection: async () => MongoSingleton.getInstance(),
 	
 	// connectDB: async () => {
