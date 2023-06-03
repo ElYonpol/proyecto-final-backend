@@ -16,15 +16,6 @@ const objConfig = {
 	twilio_phone_number: process.env.TWILIO_PHONE_NUMBER,
 	twilio_my_phone_number: process.env.TWILIO_MY_PHONE_NUMBER,
 	dbConnection: async () => MongoSingleton.getInstance(),
-	
-	// connectDB: async () => {
-	// 	try {
-	// 		await connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
-	// 		console.log("Base de datos Mongo conectada (config.js)");
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// },
 };
 
 module.exports = { objConfig };
