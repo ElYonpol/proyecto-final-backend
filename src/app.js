@@ -18,7 +18,7 @@ const httpServer = app.listen(PORT, (err) => {
 		console.error("Error al iniciar el servidor (app.js)");
 	}
 	console.log(
-		`Servidor iniciado en el puerto ${PORT}. ${SERVER_URL}:${PORT} (app.js)`
+		`Servidor iniciado en el puerto ${PORT}. (${SERVER_URL}:${PORT}) (app.js)`
 	);
 });
 generateSocketServer(httpServer);
