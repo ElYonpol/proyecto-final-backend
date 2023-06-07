@@ -12,6 +12,9 @@ cartsRouter.get("/", getCarts);
 // GET http://localhost:8080/api/carts/:cid
 cartsRouter.get("/:cid", getCart);
 
+// GET http://localhost:8080/api/carts/:cid/purchase
+//cartsRouter.get("/:cid/purchase", getCarts); //Debe finalizar el proceso de compra (clase 16 - slide 47)
+
 // POST http://localhost:8080/api/carts
 cartsRouter.post("/", createCart);
 
