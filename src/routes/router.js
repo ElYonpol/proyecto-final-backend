@@ -41,7 +41,9 @@ class ClassRouter {
 
 		const token = authHeader.split(" ")[1];
 
-		let user = jwt.verify(token, "secretJPPE");
+		const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "";
+
+		let user = jwt.verify(token, JWT_SECRET_KEY);
 		if (!policies.includes(user.role.toUpperCase()))
 			return res.status(403).send({ status: "error", error: "No permissions" });
 
