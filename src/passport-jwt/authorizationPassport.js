@@ -7,7 +7,7 @@ const authorization = (role) => {
 			return res.status(401).send({ status: "error", error: "Unauthorized" });
 		// pregunta por el role
 		if (req.user.role === role)
-			return res.status(403).send({ status: "eror", error: "No Permissions" });
+			return res.status(403).send({ status: "error", error: "No Permissions" });
 		next();
 	};
 };
