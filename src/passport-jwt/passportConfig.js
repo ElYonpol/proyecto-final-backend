@@ -26,7 +26,7 @@ const initializePassport = () => {
 				try {
 					const { first_name, last_name, username, role } = req.body;
 					// buscar el usuario en la base de datos
-					const user = await userService.getUserByEmail(email);
+					const user = await userService.getByEmail(email);
 					console.log({ user });
 					// done si  hay usuario
 					if (user) {
@@ -63,7 +63,7 @@ const initializePassport = () => {
 			},
 			async (email, password, done) => {
 				try {
-					const user = await userService.getUserByEmail(email);
+					const user = await userService.getByEmail(email);
 					if (!user) {
 						return done(null, false);
 					}
@@ -97,7 +97,7 @@ const initializePassport = () => {
 			async (accessToken, refreshToken, profile, done) => {
 				try {
 					console.log({ email: profile.emails[0].value });
-					const user = await userService.getUserByEmail({
+					const user = await userService.getByEmail({
 						email: profile.emails[0].value,
 					});
 					if (!user) {

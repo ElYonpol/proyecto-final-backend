@@ -65,7 +65,7 @@ Content-Type: application/json
 }
 
 ####
-POST http://localhost:8080/api/sessions/login
+POST http://localhost:8080/sessions/login
 Content-Type: application/json
 
 {
@@ -74,5 +74,5 @@ Content-Type: application/json
 }
 
 ####
-GET http://localhost:8080/api/sessions/current
+GET http://localhost:8080/sessions/current
 

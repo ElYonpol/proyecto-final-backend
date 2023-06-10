@@ -6,15 +6,15 @@ const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
 
 const sessionsRouter = Router();
 
-// GET http://localhost:8080/api/sessions
+// GET http://localhost:8080/sessions
 sessionsRouter.get("/", (req, res) => {
 	res.render("login", {});
 });
 
-// POST http://localhost:8080/api/sessions/login
+// POST http://localhost:8080/sessions/login
 sessionsRouter.post("/login", async (req, res) => {
 	const { username, password } = req.body;
-	const users = await userService.getUserByUsername(username);
+	const users = await userService.getByUsername(username);
 	const user = users.find(
 		(user) => user.username === username && user.password === password
 	);
@@ -25,11 +25,12 @@ sessionsRouter.post("/login", async (req, res) => {
 	const accessToken = generateToken(user);
 	res.send({
 		status: "success",
-		payload: accessToken,
+		message: "Login successful",
+		token: accessToken,
 	});
 });
 
-// GET http://localhost:8080/api/sessions/current
+// GET http://localhost:8080/sessions/current
 sessionsRouter.get("/current", authToken, (req, res) => {
 	res.send({
 		status: "success",
@@ -37,12 +38,12 @@ sessionsRouter.get("/current", authToken, (req, res) => {
 	});
 });
 
-// GET http://localhost:8080/api/sessions/register
+// GET http://localhost:8080/sessions/register
 sessionsRouter.get("/register", (req, res) => {
 	res.render("register");
 });
 
-// POST http://localhost:8080/api/sessions/register
+// POST http://localhost:8080/sessions/register
 sessionsRouter.post("/register", async (req, res) => {
 	const {
 		username,
@@ -52,7 +53,7 @@ sessionsRouter.post("/register", async (req, res) => {
 		password,
 		role = "user",
 	} = req.body;
-	const users = await userService.getUserByEmail(email);
+	const users = await userService.getByEmail(email);
 	const userExist = users.find((user) => user.email === email);
 	if (userExist)
 		return res
@@ -78,7 +79,7 @@ sessionsRouter.post("/register", async (req, res) => {
 	});
 });
 
-// GET http://localhost:8080/api/sessions/github
+// GET http://localhost:8080/sessions/github
 sessionsRouter.get("/github", passport.authenticate("github"));
 
 sessionsRouter.get(
@@ -93,15 +94,15 @@ sessionsRouter.get(
 	}
 );
 
-// GET http://localhost:8080/api/sessions/failregister
+// GET http://localhost:8080/sessions/failregister
 sessionsRouter.get("/failregister", (req, res) => {
 	res.send({ status: "error", message: "Error al crear el usuario" });
 });
 
-// PUT http://localhost:8080/api/sessions/recoverypass
+// PUT http://localhost:8080/sessions/recoverypass
 sessionsRouter.put("/recoverypass", async (req, res) => {
 	const { email, password } = req.body;
-	const user = await userService.getUserByEmail(email);
+	const user = await userService.getByEmail(email);
 	if (!user)
 		return res
 			.status(401)
@@ -111,7 +112,7 @@ sessionsRouter.put("/recoverypass", async (req, res) => {
 	res.send({ status: "success", message: "Contraseña actualizada" });
 });
 
-// GET http://localhost:8080/api/sessions/logout
+// GET http://localhost:8080/sessions/logout
 sessionsRouter.get("/logout", (req, res) => {
 	req.session.destroy((err) => {
 		if (err) return res.send({ status: "Logout error", message: err });

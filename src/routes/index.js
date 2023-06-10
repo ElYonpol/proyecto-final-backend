@@ -22,7 +22,7 @@ router.use("/pruebas", pruebasRouter)
 
 
 // _________________________________ cookies y session________________________
-router.use("/api/sessions", sessionRouter);
+router.use("/sessions", sessionRouter);
 router.use(cookieParser("CookieJPP3"));
 router.use("/cookie", cookieRouter);
 // _________________________________ cookies y session________________________
