@@ -72,7 +72,6 @@ const initializePassport = () => {
 						password: hashedPassword,
 					};
 					const result = await userService.createItem(newUser);
-
 					// done con el usuario
 					return done(null, result);
 				} catch (error) {
