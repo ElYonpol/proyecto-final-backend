@@ -125,7 +125,7 @@ const initializePassport = () => {
 	});
 	passport.deserializeUser(async (uid, done) => {
 		try {
-			const user = await userService.getUserByID(uid);
+			const user = await userService.getItem(uid);
 			done(null, user);
 		} catch (error) {
 			done(error);
