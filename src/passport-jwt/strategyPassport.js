@@ -15,7 +15,7 @@ const cookieExtractor = (req) => {
 //Estrategia de passport
 const initializePassport = () => {
 	passport.use(
-		"jwt", // Es el nombre de la estrategia
+		 , // Es el nombre de la estrategia
 		new JWTStrategy(
 			{
 				jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
