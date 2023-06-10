@@ -109,4 +109,8 @@ router.get("/orders", async (req, res) => {
 	});
 });
 
+router.get("*", async (req, res) => {
+	res.render("notFound", {});
+})
+
 module.exports = router;

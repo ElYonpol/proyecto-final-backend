@@ -117,6 +117,15 @@ header {
 	margin: 0px;
 }
 
+.col--main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+    padding: 5px;
+	padding: 5px;
+}
+
 .logo {
 	width: auto;
 }
