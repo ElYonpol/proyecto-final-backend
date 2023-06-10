@@ -5,7 +5,7 @@ const {
 } = require("../validation/productsValidation.js");
 const ProductController = require("../controllers/productsController.js");
 const { productsValidation } = require("../middleware/validator.js");
-const { authSession, authRole } = require("../middleware/auth.middleware.js");
+const { authRole } = require("../middleware/authMiddleware.js");
 const { authPassport } = require("../passport-jwt/authPassport.js");
 
 const productsRouter = Router();

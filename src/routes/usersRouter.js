@@ -5,7 +5,7 @@ const {
 } = require("../validation/usersValidation.js");
 const UserController = require("../controllers/usersController.js");
 const { usersValidation } = require("../middleware/validator.js");
-const { authSession, authRole } = require("../middleware/auth.middleware.js");
+const { authRole } = require("../middleware/authMiddleware.js");
 const { authPassport } = require("../passport-jwt/authPassport.js");
 const { authToken } = require("../utils/jsonwebtoken.js");
 

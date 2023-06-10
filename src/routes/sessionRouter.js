@@ -4,7 +4,7 @@ const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
 const { authPassport } = require("../passport-jwt/authPassport.js");
-const { authRole } = require("../middleware/auth.middleware.js");
+const { authRole } = require("../middleware/authMiddleware.js");
 
 const sessionsRouter = Router();
 
@@ -42,7 +42,11 @@ sessionsRouter.post("/login", async (req, res) => {
 });
 
 // GET http://localhost:8080/sessions/current
-sessionsRouter.get("/current", authPassport("jwt"), authRole("user"), (req, res) => {
+sessionsRouter.get(
+	"/current",
+	authPassport("jwt"),
+	authRole("user"),
+	(req, res) => {
 		res.send({
 			status: "success",
 			payload: req.user,
