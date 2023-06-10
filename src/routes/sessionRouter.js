@@ -42,11 +42,7 @@ sessionsRouter.post("/login", async (req, res) => {
 });
 
 // GET http://localhost:8080/sessions/current
-sessionsRouter.get(
-	"/current",
-	authPassport("jwt"),
-	authRole("user"),
-	(req, res) => {
+sessionsRouter.get("/current", authPassport("jwt"), authRole("user"), (req, res) => {
 		res.send({
 			status: "success",
 			payload: req.user,

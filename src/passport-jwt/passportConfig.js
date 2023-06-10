@@ -44,7 +44,7 @@ const initializePassport = () => {
 	);
 
 	passport.use(
-		"register", // Acá va el nombre de la estrategia
+		"register",
 		new LocalStrategy(
 			{
 				passReqToCallback: true, // acceso al req
@@ -72,7 +72,6 @@ const initializePassport = () => {
 						password: hashedPassword,
 					};
 					const result = await userService.createItem(newUser);
-					// done con el usuario
 					return done(null, result);
 				} catch (error) {
 					console.log(error);
@@ -113,9 +112,6 @@ const initializePassport = () => {
 		"github",
 		new GitHubStrategy(
 			{
-				//Nota para Tutor: Link en el mensaje de la entrega
-				//clientID: colocar aquí el clientSecret pasado en la entrega
-				//clientSecret: colocar aquí el clientID pasado en la entrega
 				clientID: GITHUB_CLIENT_ID,
 				clientSecret: GITHUB_CLIENT_SECRET,
 				callbackURL: "http://localhost:8080/session/githubcallback",

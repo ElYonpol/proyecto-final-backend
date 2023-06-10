@@ -14,8 +14,8 @@ const { getProducts, getProduct, createProduct, updateProduct, deleteProduct } =
 	new ProductController();
 
 // GET http://localhost:8080/api/products
-// productsRouter.get("/", authPassport("jwt"), authorization("admin"), getProducts);
-productsRouter.get("/", getProducts);
+productsRouter.get("/", authPassport("jwt"), authRole("admin"), getProducts);
+// productsRouter.get("/", getProducts);
 
 // GET http://localhost:8080/api/products/:pid
 productsRouter.get("/:pid", getProduct);
