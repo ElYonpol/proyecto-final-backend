@@ -1,6 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
+const { Strategy, ExtractJwt } = require("passport-jwt");
 const { userService } = require("../service/service.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const { commander } = require("../utils/commander.js");
@@ -14,7 +15,34 @@ require("dotenv").config({
 let GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 let GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
+const JWTStrategy = Strategy;
+const ExtractJWT = ExtractJwt;
+
+const cookieExtractor = (req) => {
+	let token = null;
+	if (req && req.cookies) {
+		token = req.cookies(process.env.COOKIE_NAME);
+	}
+	return token;
+};
 const initializePassport = () => {
+	passport.use(
+		"jwt", // Es el nombre de la estrategia
+		new JWTStrategy(
+			{
+				jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+				secretOrKey: process.env.JWT_SECRET_KEY,
+			},
+			async (jwt_payload, done) => {
+				try {
+					return done(null, jwt_payload);
+				} catch (error) {
+					return done(error);
+				}
+			}
+		)
+	);
+
 	passport.use(
 		"register", // Acá va el nombre de la estrategia
 		new LocalStrategy(
@@ -133,6 +161,4 @@ const initializePassport = () => {
 	});
 };
 
-module.exports = {
-	initializePassport,
-};
+module.exports = { initializePassport };
