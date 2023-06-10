@@ -1,6 +1,9 @@
 const { userService } = require("../service/service.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
 const UserDto = require("../dto/userDto.js");
+const CustomError = require("../utils/errors/CustomError.js");
+const generateUserErrorInfo = require("../utils/errors/info.js");
+const EErrors = require("../utils/errors/EErrors.js");
 
 class UserController {
 	getUsers = async (req, res) => {
@@ -62,13 +65,30 @@ class UserController {
 
 	addUser = async (req, res) => {
 		try {
+			// // Prueba Clase 17 ----------------------------------------------------------------
+			// const users = [];
+			// let { first_name, last_name, email, edad } = req.body;
+			// if (!first_name || !last_name || !email) {
+			// 	CustomError.createError({
+			// 		name: "User creation error",
+			// 		cause: generateUserErrorInfo({ first_name, last_name, email }),
+			// 		message: "Error trying to create user.",
+			// 		code: EErrors.INVALID_TYPE_ERROR,
+			// 	});
+			// }
+
+			// let userAgregado = users.push({ first_name, last_name });
+			// console.log(`Usuario ${first_name} ${last_name} agregado`);
+			// console.log("Array users es: ",users)
+			// // Prueba Clase 17 ----------------------------------------------------------------
+
 			const newUserRaw = req.body;
 			const newUser = new UserDto(newUserRaw);
 			const resp = await userService.createItem(newUser);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error trycatch",
 				payload: { error: error, message: error.message },
 			});
 		}

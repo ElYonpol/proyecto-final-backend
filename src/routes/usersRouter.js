@@ -20,6 +20,7 @@ usersRouter.get("/:uid", getUserByID);
 
 // POST http://localhost:8080/api/users/register
 usersRouter.post("/register", usersValidation(usersCreationSchema), addUser);
+// usersRouter.post("/register", addUser);
 
 // PUT http://localhost:8080/api/users/:uid
 usersRouter.put("/:uid", usersValidation(usersUpdatingSchema), updateUser);

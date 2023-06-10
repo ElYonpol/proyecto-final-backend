@@ -23,7 +23,7 @@ pruebasRouter.get("/complejaNoBlock", (req, res) => {
 	});
 });
 
-// Prueba de envío de mail y SMS Clase 16
+// Prueba de envío de mail y SMS Clase 16 ----------------------------------------------------------------
 const sendMailTransport = require("../utils/nodemailer");
 const sendSMS = require("../utils/sendSMSTwilio");
 
@@ -60,8 +60,7 @@ pruebasRouter.get("/user", async (req, res) => {
 	}
 });
 
-// Prueba de compresión Clase 17
-
+// Prueba de compresión Clase 17 ----------------------------------------------------------------
 const compression = require("express-compression");
 
 pruebasRouter.get("/stringLargo", (req, res) => {
@@ -72,9 +71,16 @@ pruebasRouter.get("/stringLargo", (req, res) => {
 	res.send(string);
 });
 
-pruebasRouter.use(compression());
+pruebasRouter.use(
+	compression({
+		brotli: {
+			enabled: true,
+			zlib: {},
+		},
+	})
+);
 
-pruebasRouter.get("/compresion", compression(), (req, res) => {
+pruebasRouter.get("/compresion", (req, res) => {
 	let string = "Hola coders, soy un string ridículamente largo";
 	for (let i = 0; i < 5e4; i++) {
 		string += "Hola coders, soy un string ridículamente largo";

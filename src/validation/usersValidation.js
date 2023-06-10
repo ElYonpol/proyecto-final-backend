@@ -3,6 +3,7 @@ const Joi = require("joi");
 const usersCreationSchema = Joi.object({
 	first_name: Joi.string().required(),
 	last_name: Joi.string().required(),
+	full_name: Joi.string(),
 	email: Joi.string().required(),
 	username: Joi.string().required(),
 	role: Joi.string().required(),
@@ -13,6 +14,7 @@ const usersCreationSchema = Joi.object({
 const usersUpdatingSchema = Joi.object({
 	first_name: Joi.string().required(),
 	last_name: Joi.string().required(),
+	full_name: Joi.string(),
 	email: Joi.string().required(),
 	username: Joi.string().required(),
 	role: Joi.string().required(),
