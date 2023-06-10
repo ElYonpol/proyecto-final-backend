@@ -14,6 +14,7 @@ const app = express();
 // server config _______________________________________________________
 const PORT = process.env.PORT || 8080;
 const SERVER_URL = process.env.SERVER_URL || "http://localhost:";
+
 const httpServer = app.listen(PORT, (err) => {
 	if (err) {
 		console.error("Error al iniciar el servidor (app.js)");
@@ -43,7 +44,7 @@ app.use(passport.initialize());
 
 // cors config _______________________________________________________
 app.use(cors());
-// app.use(cors({ origin: `http://localhost:${PORT}`, methods: ["GET", "POST", "PUT", "DELETE"] }));
+// app.use(cors({ origin: `${SERVER_URL}:${PORT}`, methods: ["GET", "POST", "PUT", "DELETE"] }));
 // cors config _______________________________________________________
 
 app.use(express.json());
