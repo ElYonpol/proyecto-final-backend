@@ -4,7 +4,7 @@ const cookieRouter = Router();
 
 cookieRouter.get("/set", (req, res) => {
 	res
-		.cookie(process.env.COOKIE_SECRET_KEY, "Este es el valor de la cookie", {
+		.cookie(process.env.COOKIE_NAME, "Este es el valor de la cookie", {
 			maxAge: 60 * 60 * 1000 * 24,
 			httpOnly: true,
 		})
@@ -34,7 +34,7 @@ cookieRouter.get("/getSigned", (req, res) => {
 });
 
 cookieRouter.get("/delete", (req, res) => {
-	res.clearCookie(process.env.COOKIE_SECRET_KEY).send("Cookie removed");
+	res.clearCookie(process.env.COOKIE_NAME).send("Cookie removed");
 });
 
 module.exports = cookieRouter;

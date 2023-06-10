@@ -1,8 +1,8 @@
 const passport = require("passport");
-const { userService } = require("../service/service.js");
-const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
+const { userService } = require("../service/service.js");
+const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const { commander } = require("../utils/commander.js");
 
 const { mode } = commander.opts();

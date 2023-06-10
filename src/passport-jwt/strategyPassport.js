@@ -4,10 +4,10 @@ const { Strategy, ExtractJwt } = require("passport-jwt");
 const JWTStrategy = Strategy;
 const ExtractJWT = ExtractJwt;
 
-let cookieExtractor = (req) => {
+const cookieExtractor = (req) => {
 	let token = null;
 	if (req && req.cookies) {
-		token = req.cookies(process.env.COOKIE_SECRET_KEY);
+		token = req.cookies(process.env.COOKIE_NAME);
 	}
 	return token;
 };
