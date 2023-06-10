@@ -4,8 +4,9 @@ const cookieRouter = Router();
 
 cookieRouter.get("/set", (req, res) => {
 	res
-		.cookie("CookieJPP3", "Este es el valor de la cookie", {
-			maxAge: 50000000,
+		.cookie(process.env.COOKIE_SECRET_KEY, "Este es el valor de la cookie", {
+			maxAge: 60 * 60 * 1000 * 24,
+			httpOnly: true,
 		})
 		.send("Cookie set");
 });
@@ -33,7 +34,7 @@ cookieRouter.get("/getSigned", (req, res) => {
 });
 
 cookieRouter.get("/delete", (req, res) => {
-	res.clearCookie("CookieJPP3").send("Cookie removed");
+	res.clearCookie(process.env.COOKIE_SECRET_KEY).send("Cookie removed");
 });
 
 module.exports = cookieRouter;

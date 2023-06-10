@@ -18,16 +18,25 @@ sessionsRouter.post("/login", async (req, res) => {
 	const user = users.find(
 		(user) => user.username === username && user.password === password
 	);
+
 	if (!user)
 		return res
 			.status(400)
 			.send({ status: "error", message: "Revisar usuario y contraseña" });
+
 	const accessToken = generateToken(user);
-	res.send({
-		status: "success",
-		message: "Login successful",
-		token: accessToken,
-	});
+
+	res
+		.cookie("cookieToken", accessToken, {
+			maxAge: 60 * 60 * 1000 * 24,
+			httpOnly: true,
+		})
+		.status(200)
+		.send({
+			status: "success",
+			message: "Login successful",
+			token: accessToken,
+		});
 });
 
 // GET http://localhost:8080/sessions/current

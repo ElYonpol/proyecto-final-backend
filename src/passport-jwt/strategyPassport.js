@@ -7,7 +7,7 @@ const ExtractJWT = ExtractJwt;
 let cookieExtractor = (req) => {
 	let token = null;
 	if (req && req.cookies) {
-		token = req.cookies("CookieJPP3");
+		token = req.cookies(process.env.COOKIE_SECRET_KEY);
 	}
 	return token;
 };
@@ -19,7 +19,7 @@ const initializePassport = () => {
 		new JWTStrategy(
 			{
 				jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-				secretOrKey: process.env.JWT_SECRET_KEY || "secretJPPE",
+				secretOrKey: process.env.JWT_SECRET_KEY,
 			},
 			async (jwt_payload, done) => {
 				try {
