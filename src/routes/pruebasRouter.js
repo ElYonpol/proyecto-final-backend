@@ -60,4 +60,26 @@ pruebasRouter.get("/user", async (req, res) => {
 	}
 });
 
+// Prueba de compresión Clase 17
+
+const compression = require("express-compression");
+
+pruebasRouter.get("/stringLargo", (req, res) => {
+	let string = "Hola coders, soy un string ridículamente largo";
+	for (let i = 0; i < 5e4; i++) {
+		string += "Hola coders, soy un string ridículamente largo";
+	}
+	res.send(string);
+});
+
+pruebasRouter.use(compression());
+
+pruebasRouter.get("/compresion", compression(), (req, res) => {
+	let string = "Hola coders, soy un string ridículamente largo";
+	for (let i = 0; i < 5e4; i++) {
+		string += "Hola coders, soy un string ridículamente largo";
+	}
+	res.send(string);
+});
+
 module.exports = pruebasRouter;
