@@ -48,13 +48,13 @@ const initializePassport = () => {
 		new LocalStrategy(
 			{
 				passReqToCallback: true, // acceso al req
-				usernameField: "email",
+				// usernameField: "email",
 			},
 			async (req, username, password, done) => {
+				const { first_name, last_name, email } = req.body;
 				try {
-					const { username, first_name, last_name, email, password } = req.body;
 					// buscar el usuario en la base de datos
-					const user = await userService.getByUsername(username); //
+					let user = await userService.getByUsername(username); //
 					console.log({ user });
 					// done si  hay usuario
 					if (user) {
@@ -75,11 +75,11 @@ const initializePassport = () => {
 						password: hashedPassword,
 						cart,
 					};
-					const result = await userService.createItem(newUser);
+					let result = await userService.createItem(newUser);
 					return done(null, result);
 				} catch (error) {
 					console.log(error);
-					return done(error);
+					return done("Error al generar el usuario: " + error);
 				}
 			}
 		)
@@ -89,7 +89,8 @@ const initializePassport = () => {
 		"login",
 		new LocalStrategy(
 			{
-				usernameField: "email",
+				passReqToCallback: true,
+				// usernameField: "email",
 			},
 			async (username, password, done) => {
 				try {
@@ -107,7 +108,7 @@ const initializePassport = () => {
 					done(null, user);
 				} catch (error) {
 					console.log(error);
-					return done(error);
+					return done("Error al hacer el login: " + error);
 				}
 			}
 		)
@@ -151,6 +152,7 @@ const initializePassport = () => {
 	passport.serializeUser((user, done) => {
 		done(null, user._id);
 	});
+
 	passport.deserializeUser(async (uid, done) => {
 		try {
 			const user = await userService.getItem(uid);
