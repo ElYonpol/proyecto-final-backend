@@ -22,19 +22,20 @@ sessionsRouter.get("/login", (req, res) => {
 sessionsRouter.post(
 	"/login",
 	objectsValidation(usersLoginSchema),
-	passport.authenticate("login", { failureRedirect: "/api/sessions/faillogin" }),
 	async (req, res) => {
 		try {
-			if (!req.user)
-				return res.status(400).json({
-					status: "error",
-					payload: {
-						error: "Credenciales inválidas",
-						message: "Revisar usuario y/o contraseña",
-					},
-				});
+			const { username, password } = req.body;
+			const users = await userService.getByUsername(username);
+			const user = users.find(
+				(user) => user.username === username && user.password === password
+			);
 
-			const accessToken = generateToken(req.user);
+			if (!user)
+				return res
+					.status(400)
+					.send({ status: "error", message: "Revisar usuario y contraseña" });
+
+			const accessToken = generateToken(user);
 
 			res
 				.cookie("cookieToken", accessToken, {
@@ -50,7 +51,7 @@ sessionsRouter.post(
 			// .redirect("/products"); No funciona
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error trycatch login",
 				payload: {
 					error: error,
 					message: error.message,
@@ -82,11 +83,50 @@ sessionsRouter.get("/register", (req, res) => {
 sessionsRouter.post(
 	"/register",
 	objectsValidation(usersRegisterSchema),
-	passport.authenticate("register", {
-		failureRedirect: "/api/sessions/failregister",
-	}),
 	async (req, res) => {
-		return res.status(307).redirect("/login");
+		try {
+			const {
+				username,
+				first_name,
+				last_name,
+				email,
+				password,
+				role = "user",
+			} = req.body;
+			const users = await userService.getByEmail(email);
+			const userExist = users.find((user) => user.email === email);
+			if (userExist)
+				return res
+					.status(400)
+					.send({ status: "error", message: "El usuario ya existe" });
+			const newUser = {
+				username,
+				first_name,
+				last_name,
+				email,
+				password,
+				role,
+			};
+
+			const resp = await userService.createItem(newUser);
+
+			const accessToken = generateToken(newUser);
+
+			res.send({
+				status: "success",
+				message: "Usuario creado",
+				accessToken,
+			});
+			// return res.status(307).redirect("/login");
+		} catch (error) {
+			res.status(404).json({
+				status: "error trycatch register",
+				payload: {
+					error: error,
+					message: error.message,
+				},
+			});
+		}
 	}
 );
 

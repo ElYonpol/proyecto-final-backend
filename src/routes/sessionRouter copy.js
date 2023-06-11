@@ -5,7 +5,10 @@ const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
 const { authPassport } = require("../passport-jwt/authPassport.js");
 const { authRole } = require("../middleware/authMiddleware.js");
-const { usersLoginSchema, usersRegisterSchema } = require("../validation/sessionsValidation.js");
+const {
+	usersLoginSchema,
+	usersRegisterSchema,
+} = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
 
 const sessionsRouter = Router();
@@ -16,33 +19,37 @@ sessionsRouter.get("/login", (req, res) => {
 });
 
 // POST http://localhost:8080/sessions/login
-sessionsRouter.post("/login", objectsValidation(usersLoginSchema), async (req, res) => {
-	const { username, password } = req.body;
-	const users = await userService.getByUsername(username);
-	const user = users.find(
-		(user) => user.username === username && user.password === password
-	);
+sessionsRouter.post(
+	"/login",
+	objectsValidation(usersLoginSchema),
+	async (req, res) => {
+		const { username, password } = req.body;
+		const users = await userService.getByUsername(username);
+		const user = users.find(
+			(user) => user.username === username && user.password === password
+		);
 
-	if (!user)
-		return res
-			.status(400)
-			.send({ status: "error", message: "Revisar usuario y contraseña" });
+		if (!user)
+			return res
+				.status(400)
+				.send({ status: "error", message: "Revisar usuario y contraseña" });
 
-	const accessToken = generateToken(user);
+		const accessToken = generateToken(user);
 
-	res
-		.cookie("cookieToken", accessToken, {
-			maxAge: 60 * 60 * 1000 * 24,
-			httpOnly: true,
-		})
-		.status(200)
-		.send({
-			status: "success",
-			message: "Login successful",
-			token: accessToken,
-		})
+		res
+			.cookie("cookieToken", accessToken, {
+				maxAge: 60 * 60 * 1000 * 24,
+				httpOnly: true,
+			})
+			.status(200)
+			.send({
+				status: "success",
+				message: "Login successful",
+				token: accessToken,
+			});
 		// .redirect("/products"); No funciona
-});
+	}
+);
 
 // GET http://localhost:8080/sessions/current
 sessionsRouter.get(
