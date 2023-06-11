@@ -5,10 +5,7 @@ const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
 const { authPassport } = require("../passport-jwt/authPassport.js");
 const { authRole } = require("../middleware/authMiddleware.js");
-const {
-	usersLoginSchema,
-	usersRegisterSchema,
-} = require("../validation/sessionsValidation.js");
+const { usersLoginSchema, usersRegisterSchema } = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
 
 const sessionsRouter = Router();
@@ -19,46 +16,33 @@ sessionsRouter.get("/login", (req, res) => {
 });
 
 // POST http://localhost:8080/sessions/login
-sessionsRouter.post(
-	"/login",
-	objectsValidation(usersLoginSchema),
-	passport.authenticate("login", { failureRedirect: "/sessions/faillogin" }),
-	async (req, res) => {
-		try {
-			if (!req.user)
-				return res.status(400).json({
-					status: "error",
-					payload: {
-						error: "Credenciales inválidas",
-						message: "Revisar usuario y/o contraseña",
-					},
-				});
+sessionsRouter.post("/login", objectsValidation(usersLoginSchema), async (req, res) => {
+	const { username, password } = req.body;
+	const users = await userService.getByUsername(username);
+	const user = users.find(
+		(user) => user.username === username && user.password === password
+	);
 
-			const accessToken = generateToken(req.user);
+	if (!user)
+		return res
+			.status(400)
+			.send({ status: "error", message: "Revisar usuario y contraseña" });
 
-			res
-				.cookie("cookieToken", accessToken, {
-					maxAge: 60 * 60 * 1000 * 24,
-					httpOnly: true,
-				})
-				.status(200)
-				.send({
-					status: "success",
-					message: "Login successful",
-					token: accessToken,
-				});
-			// .redirect("/products"); No funciona
-		} catch (error) {
-			res.status(404).json({
-				status: "error",
-				payload: {
-					error: error,
-					message: error.message,
-				},
-			});
-		}
-	}
-);
+	const accessToken = generateToken(user);
+
+	res
+		.cookie("cookieToken", accessToken, {
+			maxAge: 60 * 60 * 1000 * 24,
+			httpOnly: true,
+		})
+		.status(200)
+		.send({
+			status: "success",
+			message: "Login successful",
+			token: accessToken,
+		})
+		// .redirect("/products"); No funciona
+});
 
 // GET http://localhost:8080/sessions/current
 sessionsRouter.get(
@@ -79,16 +63,40 @@ sessionsRouter.get("/register", (req, res) => {
 });
 
 // POST http://localhost:8080/sessions/register
-sessionsRouter.post(
-	"/register",
-	objectsValidation(usersRegisterSchema),
-	passport.authenticate("register", {
-		failureRedirect: "/sessions/failregister",
-	}),
-	async (req, res) => {
-		return res.status(307).redirect("/login");
-	}
-);
+sessionsRouter.post("/register", async (req, res) => {
+	const {
+		username,
+		first_name,
+		last_name,
+		email,
+		password,
+		role = "user",
+	} = req.body;
+	const users = await userService.getByEmail(email);
+	const userExist = users.find((user) => user.email === email);
+	if (userExist)
+		return res
+			.status(400)
+			.send({ status: "error", message: "El usuario ya existe" });
+	const newUser = {
+		username,
+		first_name,
+		last_name,
+		email,
+		password,
+		role,
+	};
+
+	const resp = await userService.createItem(newUser);
+
+	const accessToken = generateToken(newUser);
+
+	res.send({
+		status: "success",
+		message: "Usuario creado",
+		accessToken,
+	});
+});
 
 // GET http://localhost:8080/sessions/github
 sessionsRouter.get("/github", passport.authenticate("github"));
@@ -108,11 +116,6 @@ sessionsRouter.get(
 // GET http://localhost:8080/sessions/failregister
 sessionsRouter.get("/failregister", (req, res) => {
 	res.send({ status: "error", message: "Error al crear el usuario" });
-});
-
-// GET http://localhost:8080/sessions/faillogin
-sessionsRouter.get("/faillogin", (req, res) => {
-	res.send({ status: "error", message: "Error al realizar el login" });
 });
 
 // PUT http://localhost:8080/sessions/recoverypass

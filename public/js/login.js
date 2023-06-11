@@ -2,7 +2,7 @@ console.log("Este es js de login.handlebars");
 
 const loginForm = document.querySelector("#loginForm");
 
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
 	const data = new FormData(loginForm);
@@ -13,7 +13,7 @@ loginForm.addEventListener("submit", (event) => {
 	});
 	console.log("obj es: ", obj);
 
-	fetch("http://localhost:8080/sessions/login", {
+	await fetch("http://localhost:8080/sessions/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

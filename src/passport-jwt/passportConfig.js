@@ -2,7 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
 const { Strategy, ExtractJwt } = require("passport-jwt");
-const { userService } = require("../service/service.js");
+const { userService, cartService } = require("../service/service.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const { commander } = require("../utils/commander.js");
 
@@ -50,19 +50,22 @@ const initializePassport = () => {
 				passReqToCallback: true, // acceso al req
 				usernameField: "email",
 			},
-			async (req, email, password, done) => {
+			async (req, username, password, done) => {
 				try {
-					const { first_name, last_name, username, role } = req.body;
+					const { username, first_name, last_name, email, password } = req.body;
 					// buscar el usuario en la base de datos
-					const user = await userService.getByEmail(email);
+					const user = await userService.getByUsername(username); //
 					console.log({ user });
 					// done si  hay usuario
 					if (user) {
-						done(null, false, { message: "El usuario ya existe" });
+						done(null, false, { message: "El nombre de usuario ya existe" });
 					}
 					// hash password
 					const hashedPassword = createHash(password);
-					// crear usuario
+					// crear usuario y carrito
+					let cart = await cartService.createItem();
+					console.log("cart es: ", cart);
+
 					const newUser = {
 						first_name,
 						last_name,
@@ -70,6 +73,7 @@ const initializePassport = () => {
 						username,
 						role,
 						password: hashedPassword,
+						cart,
 					};
 					const result = await userService.createItem(newUser);
 					return done(null, result);
@@ -87,19 +91,20 @@ const initializePassport = () => {
 			{
 				usernameField: "email",
 			},
-			async (email, password, done) => {
+			async (username, password, done) => {
 				try {
-					const user = await userService.getByEmail(email);
+					const user = await userService.getByUsername(username);
 					if (!user) {
+						console.log("Revisar usuario y contraseña");
 						return done(null, false);
 					}
 					const isValidPassword = checkValidPassword({
-						hashedPassword: user.password,
+						hashedPassword: user.password, //hashedPassword: user[0].password,
 						password,
 					});
-					if (!isValidPassword) {
-						done(null, false);
-					}
+					if (!isValidPassword) return done(null, false);
+
+					done(null, user);
 				} catch (error) {
 					console.log(error);
 					return done(error);

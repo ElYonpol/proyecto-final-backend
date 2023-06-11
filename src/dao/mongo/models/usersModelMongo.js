@@ -3,49 +3,53 @@ const mongoosePaginate = require("mongoose-paginate-v2");
 
 const collection = "users";
 
-const UserSchema = new Schema({
-	full_name: {
-		type: String,
+const UserSchema = new Schema(
+	{
+		full_name: {
+			type: String,
+		},
+		first_name: {
+			type: String,
+			index: true,
+			required: true,
+		},
+		last_name: {
+			type: String,
+			required: true,
+		},
+		email: {
+			type: String,
+			unique: true,
+			required: true,
+		},
+		username: {
+			type: String,
+			unique: true,
+			required: true,
+		},
+		role: {
+			type: String,
+			default: "user",
+			unique: true,
+			required: true,
+		},
+		password: {
+			type: String,
+			required: true,
+		},
+		status: {
+			type: Boolean,
+			default: true,
+			required: false,
+		},
+		cart: {
+			type: Schema.Types.ObjectId,
+			ref: "carts",
+			unique: true,
+		},
 	},
-	first_name: {
-		type: String,
-		index: true,
-		required: true,
-	},
-	last_name: {
-		type: String,
-		required: true,
-	},
-	email: {
-		type: String,
-		unique: true,
-		required: true,
-	},
-	username: {
-		type: String,
-		unique: true,
-		required: true,
-	},
-	role: {
-		type: String,
-		default: "user",
-		unique: true,
-		required: true,
-	},
-	password: {
-		type: String,
-		required: true,
-	},
-	status: {
-		type: Boolean,
-		default: true,
-		required: false,
-	},
-	cid: {
-		type: Schema.Types.ObjectId,
-		ref: "carts",
-	},
-}, { versionKey: false });
+	{ versionKey: false }
+);
 
 UserSchema.plugin(mongoosePaginate);
 

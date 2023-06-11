@@ -4,7 +4,7 @@ const {
 	productsUpdatingSchema,
 } = require("../validation/productsValidation.js");
 const ProductController = require("../controllers/productsController.js");
-const { productsValidation } = require("../middleware/validator.js");
+const { objectsValidation } = require("../middleware/validator.js");
 const { authRole } = require("../middleware/authMiddleware.js");
 const { authPassport } = require("../passport-jwt/authPassport.js");
 
@@ -23,14 +23,14 @@ productsRouter.get("/:pid", getProduct);
 // POST http://localhost:8080/api/products
 productsRouter.post(
 	"/",
-	productsValidation(productsCreationSchema),
+	objectsValidation(productsCreationSchema),
 	createProduct
 );
 
 // PUT http://localhost:8080/api/products/:pid
 productsRouter.put(
 	"/:pid",
-	productsValidation(productsUpdatingSchema),
+	objectsValidation(productsUpdatingSchema),
 	updateProduct
 );
 

@@ -26,10 +26,8 @@ router.use("/pruebas", pruebasRouter);
 router.use("/sessions", sessionRouter);
 router.use(cookieParser(process.env.JWT_SECRET_KEY));
 router.use("/cookie", cookieRouter);
-// _________________________________ cookies y session________________________
 
 // _________________________________ manejo de errores________________________
 router.use(errorHandler);
-// _________________________________ manejo de errores________________________
 
 module.exports = router;
