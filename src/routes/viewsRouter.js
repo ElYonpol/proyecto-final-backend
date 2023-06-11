@@ -78,11 +78,11 @@ router.get("/chat", async (req, res) => {
 });
 
 router.get("/sessions/login", async (req, res) => {
-	res.render("login", { style: "index.css" });
+	res.render("login");
 });
 
 router.get("/sessions/register", async (req, res) => {
-	res.render("register", { style: "index.css" });
+	res.render("register");
 });
 
 //Listar usuarios con formato tabla

@@ -62,16 +62,12 @@ sessionsRouter.post(
 );
 
 // GET http://localhost:8080/api/sessions/current
-sessionsRouter.get(
-	"/current",
-	authToken,
-	(req, res) => {
-		res.send({
-			status: "success",
-			payload: req.user,
-		});
-	}
-);
+sessionsRouter.get("/current", authToken, (req, res) => {
+	res.send({
+		status: "success",
+		payload: req.user,
+	});
+});
 
 // GET http://localhost:8080/api/sessions/register
 sessionsRouter.get("/register", (req, res) => {
@@ -90,32 +86,55 @@ sessionsRouter.post(
 				last_name,
 				email,
 				password,
+				confirm_password,
 				role = "user",
 			} = req.body;
+
+			errors = [];
+
+			if (password !== confirm_password) {
+				errors.push({ text: "Las contraseñas no coinciden" });
+			}
+
 			const users = await userService.getByEmail(email);
 			const userExist = users.find((user) => user.email === email);
-			if (userExist)
-				return res
-					.status(400)
-					.send({ status: "error", message: "El usuario ya existe" });
-			const newUser = {
-				username,
-				first_name,
-				last_name,
-				email,
-				password,
-				role,
-			};
+			if (userExist) {
+				// return res
+				// 	.status(400)
+				// 	.send({ status: "error", message: "El usuario ya existe" });
+				errors.push({ text: "El usuario ya existe" });
+			}
 
-			const resp = await userService.createItem(newUser);
+			if (errors.length > 0) {
+				res.render("register", {
+					errors,
+					username,
+					first_name,
+					last_name,
+					email,
+					password,
+					style: "index.css",
+				});
+			} else {
+				const newUser = {
+					username,
+					first_name,
+					last_name,
+					email,
+					password,
+					role,
+				};
 
-			const accessToken = generateToken(newUser);
+				const resp = await userService.createItem(newUser);
 
-			res.send({
-				status: "success",
-				message: "Usuario creado",
-				accessToken,
-			});
+				const accessToken = generateToken(newUser);
+
+				res.send({
+					status: "success",
+					message: "Usuario creado",
+					accessToken,
+				});
+			}
 		} catch (error) {
 			res.status(404).json({
 				status: "error trycatch register",
