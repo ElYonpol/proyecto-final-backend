@@ -9,7 +9,7 @@ const CartController = require("../controllers/cartsController.js");
 // const {
 // 	getMessages,
 // 	getMessageById,
-// 	addMessage,
+// 	createMessage,
 // 	updateMessage,
 // 	deleteMessage,
 // } = new MessageController();

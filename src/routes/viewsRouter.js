@@ -6,6 +6,7 @@ const {
 	userService,
 } = require("../service/service.js");
 const { uploader } = require("../utils/uploader.js");
+const sendMailTransport = require("../utils/nodemailer.js");
 
 const router = Router();
 
@@ -17,10 +18,10 @@ router.get("/", (req, res) => {
 router.get("/products", async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
-	const spec = sort
+	const specs = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await productService.getItems(query, spec);
+	const { docs, ...rest } = await productService.getItems(query, specs);
 	const categories = await productService.getProductCategories();
 
 	res.render("products", {
@@ -35,10 +36,10 @@ router.get("/products", async (req, res) => {
 router.get("/realtimeproducts", async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
-	const spec = sort
+	const specs = sort
 		? { limit, page, sort: { price: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await productService.getItems(query, spec);
+	const { docs, ...rest } = await productService.getItems(query, specs);
 	const categories = await productService.getProductCategories();
 
 	res.render("realTimeProducts", {
@@ -84,10 +85,10 @@ router.get("/register", async (req, res) => {
 router.get("/users", async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
-	const spec = sort
+	const specs = sort
 		? { limit, page, sort: { first_name: sort }, lean: true }
 		: { limit, page, lean: true };
-	const { docs, ...rest } = await userService.getItems(query, spec);
+	const { docs, ...rest } = await userService.getItems(query, specs);
 	const roles = await userService.getUserRoles();
 
 	res.render("users", {
@@ -107,6 +108,23 @@ router.get("/orders", async (req, res) => {
 		style: "index.css",
 		orders: orders,
 	});
+});
+
+//Prueba envío de emails
+router.get("/api/emails", async (req, res) => {
+	try {
+		const emails = await sendMailTransport();
+		res.render("emails", {
+			style: "index.css",
+			message: "El email ha sido enviado con éxito."
+		});
+		
+	} catch (error) {
+		res.status(404).json({
+			status: "error",
+			payload: { error: error, message: error.message },
+		});
+	}
 });
 
 router.get("*", async (req, res) => {

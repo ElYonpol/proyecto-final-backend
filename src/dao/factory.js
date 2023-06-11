@@ -6,6 +6,7 @@ let UsersDaos;
 let OrdersDaos;
 let CartsDaos;
 let MessagesDaos;
+let EmailsDaos;
 let ContactsDaos;
 
 switch (objConfig.persistence) {
@@ -25,6 +26,9 @@ switch (objConfig.persistence) {
 
 		const { MessageDaoMongo } = require("./mongo/managers/messagesMongo.js");
 		MessagesDaos = MessageDaoMongo;
+
+		const { EmailDaoMongo } = require("./mongo/managers/emailsMongo.js");
+		EmailsDaos = EmailDaoMongo;
 
 		//Falta agregar el de carts, orders, contact en todos los case
 		break;
@@ -50,4 +54,5 @@ module.exports = {
 	OrdersDaos,
 	CartsDaos,
 	MessagesDaos,
+	EmailsDaos,
 };

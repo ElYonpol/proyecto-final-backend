@@ -13,21 +13,22 @@ const transport = createTransport({
 
 const sendMailTransport = async () => {
 	await transport.sendMail({
-		from: `Coder test <${objConfig.gmail_mail_user}>`,
+		from: `Portas Esquivel & Asociados - Odontología <${objConfig.gmail_mail_user}>`,
 		to: "jppe@yahoo.com.ar",
-		subject: "Mail de Prueba",
+		subject: "Portas Esquivel & Asociados - Odontología de Excelencia",
 		html: `
         <div>
             <h1>Mensaje de prueba</h1>
+			<p>Este es un mensaje de prueba enviado automáticamente...</p>
         </div>
         `,
 		attachments: [
 			{
-				filename: "protesis.webp",
+				filename: "icon_pe.jpg",
 				path:
 					dirname(dirname(__dirname)) +
-					"/public/assets/images/logo_gmail.png",
-				cid: "logo_gmail.png",
+					"/public/assets/icons/icon_pe.jpg",
+				cid: "icon_pe.jpg",
 			},
 		],
 	});

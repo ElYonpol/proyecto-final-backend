@@ -11,7 +11,7 @@ const { authToken } = require("../utils/jsonwebtoken.js");
 
 const usersRouter = Router();
 
-const { getUsers, getUserByID, addUser, updateUser, deleteUser } =
+const { getUsers, getUserByID, createUser, updateUser, deleteUser } =
 	new UserController();
 
 // GET http://localhost:8080/api/users
@@ -22,8 +22,8 @@ usersRouter.get("/", authToken, getUsers); // El user/pass debe ser jppe y el ro
 usersRouter.get("/:uid", getUserByID);
 
 // POST http://localhost:8080/api/users/register
-usersRouter.post("/register", usersValidation(usersCreationSchema), addUser);
-// usersRouter.post("/register", addUser);
+usersRouter.post("/register", usersValidation(usersCreationSchema), createUser);
+// usersRouter.post("/register", createUser);
 
 // PUT http://localhost:8080/api/users/:uid
 usersRouter.put("/:uid", usersValidation(usersUpdatingSchema), updateUser);

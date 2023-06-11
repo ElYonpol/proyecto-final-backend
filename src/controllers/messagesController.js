@@ -33,12 +33,11 @@ class MessageController {
 		}
 	};
 
-	addMessage = async (req, res) => {
+	createMessage = async (req, res) => {
 		try {
 			const newMessage = req.body;
-			const resp = await messageService.addMessage(newMessage);
+			const resp = await messageService.createItem(newMessage);
 			res.status(200).json({ status: "success", payload: resp });
-			// if (resp) io.emit("messageLogs", resp);
 		} catch (error) {
 			res.status(404).json({
 				status: "error",

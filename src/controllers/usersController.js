@@ -32,10 +32,10 @@ class UserController {
 				hasPrevPage: resp.hasPrevPage,
 				hasNextPage: resp.hasNextPage,
 				prevLink: prevPage
-					? `${SERVER_URL}:${PORT}/api/products?limit=${limit}&page=${prevPage}`
+					? `${SERVER_URL}:${PORT}/api/users?limit=${limit}&page=${prevPage}`
 					: null,
 				nextLink: nextPage
-					? `${SERVER_URL}:${PORT}/api/products?limit=${limit}&page=${nextPage}`
+					? `${SERVER_URL}:${PORT}/api/users?limit=${limit}&page=${nextPage}`
 					: null,
 			});
 		} catch (error) {
@@ -63,7 +63,7 @@ class UserController {
 		}
 	};
 
-	addUser = async (req, res) => {
+	createUser = async (req, res) => {
 		try {
 			// // Prueba Clase 17 ----------------------------------------------------------------
 			// const users = [];

@@ -13,14 +13,6 @@ class UserDaoMongo {
 		return await this.userModel.find({ _id: uid }).lean();
 	};
 
-	getByEmail = async (userEmail) => {
-		return await this.userModel.find({ email: userEmail }).lean();
-	};
-
-	getByUsername = async (userUsername) => {
-		return await this.userModel.find({ username: userUsername });
-	};
-
 	create = async (newUser) => {
 		return await this.userModel.create(newUser);
 	};
@@ -35,6 +27,14 @@ class UserDaoMongo {
 
 	getUserRoles = async () => {
 		return await this.userModel.distinct("role");
+	};
+
+	getByEmail = async (userEmail) => {
+		return await this.userModel.find({ email: userEmail }).lean();
+	};
+
+	getByUsername = async (userUsername) => {
+		return await this.userModel.find({ username: userUsername });
 	};
 }
 

@@ -3,14 +3,23 @@ const OrderRepository = require("../repositories/orderRepository.js");
 const ProductRepository = require("../repositories/productRepository.js");
 const CartRepository = require("../repositories/cartRepository.js");
 const MessageRepository = require("../repositories/messageRepository.js");
+const EmailRepository = require("../repositories/emailRepository.js");
 
-const { UsersDaos, OrdersDaos, ProductsDaos, CartsDaos, MessagesDaos } = require("../dao/factory.js");
+const {
+	UsersDaos,
+	OrdersDaos,
+	ProductsDaos,
+	CartsDaos,
+	MessagesDaos,
+	EmailsDaos,
+} = require("../dao/factory.js");
 
 const userService = new UserRepository(new UsersDaos());
 const orderService = new OrderRepository(new OrdersDaos());
 const productService = new ProductRepository(new ProductsDaos());
-const cartService = new CartRepository(new CartsDaos);
-const messageService = new MessageRepository(new MessagesDaos())
+const cartService = new CartRepository(new CartsDaos());
+const messageService = new MessageRepository(new MessagesDaos());
+const emailService = new EmailRepository(new EmailsDaos());
 
 module.exports = {
 	userService,
@@ -18,4 +27,5 @@ module.exports = {
 	productService,
 	cartService,
 	messageService,
+	emailService,
 };

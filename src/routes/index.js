@@ -7,6 +7,7 @@ const usersRouter = require("./usersRouter.js");
 const ordersRouter = require("./ordersRouter.js");
 const sessionRouter = require("./sessionRouter.js");
 const cookieRouter = require("./cookieRouter.js");
+const emailsRouter = require("./emailsRouter.js");
 const pruebasRouter = require("./pruebasRouter.js");
 const errorHandler = require("../middleware/errors/indexError.js");
 
@@ -18,6 +19,7 @@ router.use("/api/products", productsRouter);
 router.use("/api/carts", cartsRouter);
 router.use("/api/users", usersRouter);
 router.use("/api/orders", ordersRouter);
+router.use("/api/emails", emailsRouter);
 router.use("/pruebas", pruebasRouter);
 
 // _________________________________ cookies y session________________________
