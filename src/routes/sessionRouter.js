@@ -117,7 +117,6 @@ sessionsRouter.post(
 				message: "Usuario creado",
 				accessToken,
 			});
-			// return res.status(307).redirect("/login");
 		} catch (error) {
 			res.status(404).json({
 				status: "error trycatch register",

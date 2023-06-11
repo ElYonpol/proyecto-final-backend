@@ -7,7 +7,6 @@ class UserDto {
 		this.username = user.username;
 		this.role = "user";
 		this.password = user.password;
-		// this.edad = calcular edad a partir de fecha de nacimiento
 	}
 }
 

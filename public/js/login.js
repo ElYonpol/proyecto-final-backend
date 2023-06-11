@@ -21,11 +21,10 @@ loginForm.addEventListener("submit", async (event) => {
 		body: JSON.stringify(obj),
 	})
 		.then((response) => {
-			console.log("response es: ", response);
-			return response;
+			return response.json();
 		})
 		.then((response) => {
-			localStorage.setItem("token", response.token);
+			// localStorage.setItem("token", response.token);
 			console.log("token es: ", response.token);
 		})
 		.catch((error) => {
