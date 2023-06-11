@@ -22,7 +22,7 @@ sessionsRouter.get("/login", (req, res) => {
 sessionsRouter.post(
 	"/login",
 	objectsValidation(usersLoginSchema),
-	passport.authenticate("login", { failureRedirect: "/sessions/faillogin" }),
+	passport.authenticate("login", { failureRedirect: "/api/sessions/faillogin" }),
 	async (req, res) => {
 		try {
 			if (!req.user)
@@ -83,7 +83,7 @@ sessionsRouter.post(
 	"/register",
 	objectsValidation(usersRegisterSchema),
 	passport.authenticate("register", {
-		failureRedirect: "/sessions/failregister",
+		failureRedirect: "/api/sessions/failregister",
 	}),
 	async (req, res) => {
 		return res.status(307).redirect("/login");
@@ -96,7 +96,7 @@ sessionsRouter.get("/github", passport.authenticate("github"));
 sessionsRouter.get(
 	"/githubcallback",
 	passport.authenticate("github", {
-		failureRedirect: "/sessions/failregister",
+		failureRedirect: "/api/sessions/failregister",
 		session: false,
 	}),
 	(req, res) => {

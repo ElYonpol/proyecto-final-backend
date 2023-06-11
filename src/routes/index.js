@@ -23,7 +23,7 @@ router.use("/api/emails", emailsRouter);
 router.use("/pruebas", pruebasRouter);
 
 // _________________________________ cookies y session________________________
-router.use("/sessions", sessionRouter);
+router.use("/api/sessions", sessionRouter);
 router.use(cookieParser(process.env.JWT_SECRET_KEY));
 router.use("/cookie", cookieRouter);
 
