@@ -5,7 +5,7 @@ const collection = "users";
 
 const UserSchema = new Schema({
 	full_name: {
-		type: "string",
+		type: String,
 	},
 	first_name: {
 		type: String,
@@ -45,7 +45,7 @@ const UserSchema = new Schema({
 		type: Schema.Types.ObjectId,
 		ref: "carts",
 	},
-});
+}, { versionKey: false });
 
 UserSchema.plugin(mongoosePaginate);
 

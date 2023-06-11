@@ -3,8 +3,17 @@ const CartController = require("../controllers/cartsController.js");
 
 const cartsRouter = Router();
 
-const { getCarts, getCart, createCart, updateProductInCart, updateProductsByCartId, deleteProductFromCart, updateProductFromCart,deleteCart } =
-	new CartController();
+const {
+	getCarts,
+	getCart,
+	createCart,
+	updateProductInCart,
+	updateProductsByCartId,
+	deleteProductFromCart,
+	updateProductFromCart,
+	deleteCart,
+	finalizePurchase,
+} = new CartController();
 
 // GET http://localhost:8080/api/carts
 cartsRouter.get("/", getCarts);
@@ -13,7 +22,7 @@ cartsRouter.get("/", getCarts);
 cartsRouter.get("/:cid", getCart);
 
 // GET http://localhost:8080/api/carts/:cid/purchase
-//cartsRouter.get("/:cid/purchase", getCarts); //Debe finalizar el proceso de compra (clase 16 - slide 47)
+cartsRouter.get("/:cid/purchase", finalizePurchase); //Debe finalizar el proceso de compra (clase 16 - slide 47)
 
 // POST http://localhost:8080/api/carts
 cartsRouter.post("/", createCart);

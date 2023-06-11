@@ -1,0 +1,34 @@
+const { Schema, model } = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
+
+const collection = "tickets";
+
+const TicketSchema = new Schema(
+	{
+		ticketCode: {
+			type: String,
+			index: true,
+			unique: true,
+			required: true,
+		},
+		purchaseDateTime: {
+			type: String,
+			required: true,
+		},
+		totalTicketAmount: {
+			type: Number,
+			required: true,
+		},
+		purchaser: {
+			type: String,
+			required: true,
+		},
+	},
+	{ versionKey: false }
+);
+
+TicketSchema.plugin(mongoosePaginate);
+
+const ticketModel = model(collection, TicketSchema);
+
+module.exports = { ticketModel };

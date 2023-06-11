@@ -131,6 +131,16 @@ class CartController {
 			});
 		}
 	};
+
+	finalizePurchase = async (req, res) => {
+		try {
+		} catch (error) {
+			res.status(404).json({
+				status: "error",
+				payload: { error: error, message: error.message },
+			});
+		}
+	};
 }
 
 module.exports = CartController;
