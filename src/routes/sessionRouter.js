@@ -99,22 +99,11 @@ sessionsRouter.post(
 			const users = await userService.getByEmail(email);
 			const userExist = users.find((user) => user.email === email);
 			if (userExist) {
-				// return res
-				// 	.status(400)
-				// 	.send({ status: "error", message: "El usuario ya existe" });
-				errors.push({ text: "El usuario ya existe" });
+				errors.push({ text: "El usuario ya existe con ese mail" });
 			}
 
 			if (errors.length > 0) {
-				res.render("register", {
-					errors,
-					username,
-					first_name,
-					last_name,
-					email,
-					password,
-					style: "index.css",
-				});
+				return res.status(400).send({ status: "error", payload: errors });
 			} else {
 				const newUser = {
 					username,
