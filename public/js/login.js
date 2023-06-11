@@ -13,7 +13,7 @@ loginForm.addEventListener("submit", async (event) => {
 	});
 	console.log("obj es: ", obj);
 
-	await fetch("http://localhost:8080/sessions/login", {
+	await fetch("http://localhost:8080/api/sessions/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

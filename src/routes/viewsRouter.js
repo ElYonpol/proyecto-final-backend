@@ -77,11 +77,11 @@ router.get("/chat", async (req, res) => {
 	res.render("chat", {});
 });
 
-router.get("/api/sessions/login", async (req, res) => {
+router.get("/sessions/login", async (req, res) => {
 	res.render("login", { style: "index.css" });
 });
 
-router.get("/api/sessions/register", async (req, res) => {
+router.get("/sessions/register", async (req, res) => {
 	res.render("register", { style: "index.css" });
 });
 
