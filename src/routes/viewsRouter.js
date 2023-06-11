@@ -77,7 +77,11 @@ router.get("/chat", async (req, res) => {
 	res.render("chat", {});
 });
 
-router.get("/register", async (req, res) => {
+router.get("/sessions/login", async (req, res) => {
+	res.render("login", { style: "index.css" });
+});
+
+router.get("/sessions/register", async (req, res) => {
 	res.render("register", { style: "index.css" });
 });
 
@@ -111,14 +115,13 @@ router.get("/orders", async (req, res) => {
 });
 
 //Prueba envío de emails
-router.get("/api/emails", async (req, res) => {
+router.get("/emails", async (req, res) => {
 	try {
 		const emails = await sendMailTransport();
 		res.render("emails", {
 			style: "index.css",
-			message: "El email ha sido enviado con éxito."
+			message: "El email ha sido enviado con éxito.",
 		});
-		
 	} catch (error) {
 		res.status(404).json({
 			status: "error",
@@ -129,6 +132,6 @@ router.get("/api/emails", async (req, res) => {
 
 router.get("*", async (req, res) => {
 	res.render("notFound", {});
-})
+});
 
 module.exports = router;

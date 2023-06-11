@@ -8,9 +8,9 @@ const { authRole } = require("../middleware/authMiddleware.js");
 
 const sessionsRouter = Router();
 
-// GET http://localhost:8080/sessions
-sessionsRouter.get("/", (req, res) => {
-	res.render("login", {});
+// GET http://localhost:8080/sessions/login
+sessionsRouter.get("/login", (req, res) => {
+	res.render("login");
 });
 
 // POST http://localhost:8080/sessions/login
@@ -38,7 +38,8 @@ sessionsRouter.post("/login", async (req, res) => {
 			status: "success",
 			message: "Login successful",
 			token: accessToken,
-		});
+		})
+		.redirect("/products");
 });
 
 // GET http://localhost:8080/sessions/current

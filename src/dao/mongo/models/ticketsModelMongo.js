@@ -12,7 +12,8 @@ const TicketSchema = new Schema(
 			required: true,
 		},
 		purchaseDateTime: {
-			type: String,
+			type: Date,
+			default: Date.now(),
 			required: true,
 		},
 		totalTicketAmount: {
