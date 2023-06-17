@@ -92,8 +92,12 @@ sessionsRouter.post(
 
 			errors = [];
 
-			if (password !== confirm_password) {
-				errors.push({ text: "Las contraseñas no coinciden" });
+			if (
+				password.length === 0 ||
+				confirm_password.length === 0 ||
+				password !== confirm_password
+			) {
+				errors.push({ text: "Verifique las contraseñas ingresadas." });
 			}
 
 			const users = await userService.getByEmail(email);
