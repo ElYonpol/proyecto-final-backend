@@ -118,7 +118,7 @@ sessionsRouter.post(
 					role,
 				};
 
-				const resp = await userService.createItem(newUser);
+				const resp = await userService.createItem(newUser); //No entiendo si con passport tengo que crea el usuario acá o en passportConfig.js
 
 				const accessToken = generateToken(newUser);
 
