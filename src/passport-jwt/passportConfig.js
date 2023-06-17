@@ -64,7 +64,7 @@ const initializePassport = () => {
 					const hashedPassword = createHash(password);
 					// crear usuario y carrito
 					let cart = await cartService.createItem();
-					console.log("cart es: ", cart);
+					console.log("El cart creado es: ", cart);
 
 					const newUser = {
 						first_name,
