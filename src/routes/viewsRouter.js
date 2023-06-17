@@ -130,8 +130,8 @@ router.get("/emails", async (req, res) => {
 	}
 });
 
-router.get("*", async (req, res) => {
-	res.render("notFound", {});
-});
+// router.get("*", async (req, res) => {
+// 	res.render("notFound", {});
+// });
 
 module.exports = router;

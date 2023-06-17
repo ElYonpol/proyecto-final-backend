@@ -9,6 +9,7 @@ const sessionRouter = require("./sessionRouter.js");
 const cookieRouter = require("./cookieRouter.js");
 const emailsRouter = require("./emailsRouter.js");
 const pruebasRouter = require("./pruebasRouter.js");
+const mockingRouter = require("./mockingRouter.js");
 const errorHandler = require("../middleware/errors/indexError.js");
 
 const router = Router();
@@ -20,6 +21,7 @@ router.use("/api/carts", cartsRouter);
 router.use("/api/users", usersRouter);
 router.use("/api/orders", ordersRouter);
 router.use("/api/emails", emailsRouter);
+router.use("/api/mockingproducts", mockingRouter);
 router.use("/pruebas", pruebasRouter);
 
 // _________________________________ cookies y session________________________
