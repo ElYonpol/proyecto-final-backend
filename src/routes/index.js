@@ -22,7 +22,7 @@ router.use("/api/users", usersRouter);
 router.use("/api/orders", ordersRouter);
 router.use("/api/emails", emailsRouter);
 router.use("/api/mockingproducts", mockingRouter);
-router.use("/pruebas", pruebasRouter);
+router.use("/api/pruebas", pruebasRouter);
 
 // _________________________________ cookies y session________________________
 router.use("/api/sessions", sessionRouter);

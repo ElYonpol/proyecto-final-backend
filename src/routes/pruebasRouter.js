@@ -88,4 +88,49 @@ pruebasRouter.get("/compresion", (req, res) => {
 	res.send(string);
 });
 
+// Prueba de Artillery: Operación Sencilla y Compleja Clase 18 ----------------------------------------------------------------
+pruebasRouter.get("/sencilla", (req, res) => {
+	let suma = 0;
+	for (let i = 0; i < 1e6; i++) {
+		suma += i;
+	}
+	res.send({ suma });
+});
+pruebasRouter.get("/compleja", (req, res) => {
+	let suma = 0;
+	for (let i = 0; i < 5e8; i++) {
+		suma += i;
+	}
+	res.send({ suma });
+});
+
+// artillery quick --count 40 --num 50 "http://localhost:8080/api/pruebas/sencilla" -o simple.json
+// artillery quick --count 40 --num 50 "http://localhost:8080/api/pruebas/compleja" -o compleja.json
+
+const { faker } = require("@faker-js/faker");
+
+pruebasRouter.get("/test/user", (req, res) => {
+	let first_name = faker.name.firstName();
+	let last_name = faker.name.lastName();
+	let email = faker.internet.email();
+	let username = faker.internet.userName();
+	let password = faker.internet.password();
+	let confirm_password = password;
+	res.send({
+		first_name,
+		last_name,
+		email,
+		username,
+		password,
+		confirm_password,
+	});
+});
+
+// - artillery run config.yml --output testPerformance.json
+// - artillery report testPerformance.json -o testResult.html
+
+
+// artillery quick --count 40 --num 50 "http://localhost:8080/api/pruebas/sencilla" -o simpleF.json
+// artillery quick --count 40 --num 50 "http://localhost:8080/api/pruebas/compleja" -o complejaF.json
+
 module.exports = pruebasRouter;
