@@ -38,7 +38,7 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
 
-// Middlewares _______________________________________________________
+// Middlewares =================================================
 // passport config _______________________________________________________
 initializePassport();
 app.use(passport.initialize());
@@ -61,7 +61,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
-// Middlewares _______________________________________________________
+// Middlewares =================================================
 
 // Routes config _______________________________________________________
 app.use(routerApp);
