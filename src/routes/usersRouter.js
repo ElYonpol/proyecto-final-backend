@@ -15,7 +15,7 @@ const { getUsers, getUserByID, createUser, updateUser, deleteUser } =
 	new UserController();
 
 // GET http://localhost:8080/api/users
-usersRouter.get("/", authToken, getUsers); // El user/pass debe ser jppe y el role admin
+usersRouter.get("/", authToken, authRole("admin"), getUsers); // El user/pass debe ser jppe y el role admin
 // usersRouter.get("/", getUsers); // Opción sin authToken ni authRole
 
 // GET http://localhost:8080/api/users/:uid

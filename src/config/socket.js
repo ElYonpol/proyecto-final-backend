@@ -3,6 +3,7 @@ const { messageMgr } = require("../dao/mongo/managers/messagesMongo.js");
 const { productMgr } = require("../dao/mongo/managers/productsMongo.js");
 const { cartMgr } = require("../dao/mongo/managers/cartsMongo.js");
 const CartController = require("../controllers/cartsController.js");
+const { logger } = require("../utils/logger.js");
 
 // const MessageController = require("../controllers/messagesController.js");
 
@@ -17,10 +18,10 @@ const CartController = require("../controllers/cartsController.js");
 const generateSocketServer = (httpServer) => {
 	const io = new Server(httpServer);
 	io.on("connection", (socket) => {
-		console.log("Nuevo cliente conectado en socket");
+		logger.info("Nuevo cliente conectado en socket");
 
 		// socket.on("disconnect", (data) => {
-		// 	console.log("Cliente desconectado");
+		// 	logger.info("Cliente desconectado");
 		// 	io.emit("disconnect", "Cliente desconectado.");
 		// });
 

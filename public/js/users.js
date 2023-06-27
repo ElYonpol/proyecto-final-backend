@@ -17,8 +17,6 @@ const findIndex = (valueToFind, options) => {
 
 if (searchParams.has("sort")) {
 	sort.selectedIndex = findIndex(searchParams.get("sort"), sort.options);
-	console.log("searchParams.get('sort') es: ", searchParams.get("sort"));
-	console.log("sort.selectedIndex es: ", sort.selectedIndex);
 }
 
 if (searchParams.has("query")) {

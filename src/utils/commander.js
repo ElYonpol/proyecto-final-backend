@@ -1,4 +1,5 @@
 const { Command } = require("commander");
+const { logger } = require("./logger");
 
 const commander = new Command();
 
@@ -10,8 +11,8 @@ commander
 	// .option("-l, --letters [letters...]","Specify the letters")
 	.parse();
 
-// console.log("Options: ",commander.opts())
-// console.log("Remaining Arguments: ", commander.args)
+// logger.info("Options: ",commander.opts())
+// logger.info("Remaining Arguments: ", commander.args)
 
 // node commander -d -p 3000 --mode development -u root --letters a b c
 // node commander -p 3000 --mode development -u root --letters a b c

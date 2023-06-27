@@ -1,4 +1,4 @@
-console.log("Soy el index.js del html");
+console.log("Soy el index.js del html frontend");
 
 const peticion = () => {
 	let url = "http://localhost:8080/api/users";

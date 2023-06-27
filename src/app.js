@@ -7,36 +7,11 @@ const handlebars = require("express-handlebars");
 const { initializePassport } = require("./passport-jwt/passportConfig.js");
 const passport = require("passport");
 const cors = require("cors");
-const { addLogger } = require("./utils/logger.js");
+const { addLogger, logger } = require("./utils/logger.js");
 // const flash = require("connect-flash");
 // const { processFunction } = require("./utils/process.js");
 
 const app = express();
-
-// server config _______________________________________________________
-const PORT = process.env.PORT || 8080;
-const SERVER_URL = process.env.SERVER_URL || "http://localhost:";
-
-exports.initServer = () =>
-	app.listen(PORT, (err) => {
-		if (err) {
-			console.error("Error al iniciar el servidor (app.js)");
-		}
-		console.log(
-			`Servidor iniciado en el puerto ${PORT}. (${SERVER_URL}:${PORT}) (app.js)`
-		);
-	});
-
-// const httpServer = app.listen(PORT, (err) => {
-	// 	if (err) {
-// 		console.error("Error al iniciar el servidor (app.js)");
-// 	}
-// 	console.log(
-// 		`Servidor iniciado en el puerto ${PORT}. (${SERVER_URL}:${PORT}) (app.js)`
-// 	);
-// });
-// generateSocketServer(httpServer);
-// server config _______________________________________________________
 
 // handlebars config _______________________________________________________
 const hbs = handlebars.create({
@@ -50,6 +25,9 @@ app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
 
 // Middlewares =================================================
+// logger config _______________________________________________________
+app.use(addLogger);
+
 // passport config _______________________________________________________
 initializePassport();
 app.use(passport.initialize());
@@ -67,9 +45,6 @@ app.use(passport.initialize());
 app.use(cors());
 // app.use(cors({ origin: `${SERVER_URL}:${PORT}`, methods: ["GET", "POST", "PUT", "DELETE"] }));
 // cors config _______________________________________________________
-
-// logger config _______________________________________________________
-app.use(addLogger);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -89,3 +64,31 @@ app.use(routerApp);
 // });
 // Global Variables _______________________________________________________
 
+// server config _______________________________________________________
+const PORT = process.env.PORT || 8080;
+const SERVER_URL = process.env.SERVER_URL || "http://localhost:";
+
+const initServer = () => {
+	const httpServer = app.listen(PORT, (err) => {
+		if (err) {
+			logger.error("Error al iniciar el servidor (app.js)");
+		}
+		logger.info(
+			`Servidor iniciado en el puerto ${PORT}. (${SERVER_URL}:${PORT}) (app.js)`
+		);
+	});
+	generateSocketServer(httpServer);
+};
+
+// const httpServer = app.listen(PORT, (err) => {
+// 	if (err) {
+// 		logger.error("Error al iniciar el servidor (app.js)");
+// 	}
+// 	logger.info(
+// 		`Servidor iniciado en el puerto ${PORT}. (${SERVER_URL}:${PORT}) (app.js)`
+// 	);
+// });
+// generateSocketServer(httpServer);
+// server config _______________________________________________________
+
+module.exports = { initServer };

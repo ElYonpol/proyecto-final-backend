@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const { fork } = require("child_process");
+const { logger } = require("../utils/logger");
+
 
 const pruebasRouter = Router();
 
@@ -33,7 +35,7 @@ pruebasRouter.get("/email", async (req, res) => {
 		await sendMailTransport();
 		res.send("El email ha sido enviado.");
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 });
 
@@ -42,7 +44,7 @@ pruebasRouter.get("/sms", async (req, res) => {
 		await sendSMS("Esto es un mensaje SMS de prueba...");
 		res.send("El SMS ha sido enviado.");
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 });
 
@@ -56,7 +58,7 @@ pruebasRouter.get("/user", async (req, res) => {
 		}
 		res.send({ status: "success", payload: users });
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 });
 

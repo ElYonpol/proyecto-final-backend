@@ -5,6 +5,7 @@ const { Strategy, ExtractJwt } = require("passport-jwt");
 const { userService, cartService } = require("../service/service.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const { commander } = require("../utils/commander.js");
+const { logger } = require("../utils/logger.js");
 
 const { mode } = commander.opts();
 
@@ -25,6 +26,7 @@ const cookieExtractor = (req) => {
 	}
 	return token;
 };
+
 const initializePassport = () => {
 	passport.use(
 		"jwt", // Es el nombre de la estrategia
@@ -55,7 +57,7 @@ const initializePassport = () => {
 				try {
 					// buscar el usuario en la base de datos
 					let user = await userService.getByUsername(username); //
-					console.log({ user });
+					logger.info({ user });
 					// done si  hay usuario
 					if (user) {
 						done(null, false, { message: "El nombre de usuario ya existe" });
@@ -64,7 +66,7 @@ const initializePassport = () => {
 					const hashedPassword = createHash(password);
 					// crear usuario y carrito
 					let cart = await cartService.createItem();
-					console.log("El cart creado es: ", cart);
+					logger.info("El cart creado es: ", cart);
 
 					const newUser = {
 						first_name,
@@ -78,7 +80,7 @@ const initializePassport = () => {
 					let result = await userService.createItem(newUser);
 					return done(null, result);
 				} catch (error) {
-					console.log(error);
+					logger.error(error);
 					return done("Error al generar el usuario: " + error);
 				}
 			}
@@ -96,7 +98,7 @@ const initializePassport = () => {
 				try {
 					const user = await userService.getByUsername(username);
 					if (!user) {
-						console.log("Revisar usuario y contraseña");
+						logger.warning("Revisar usuario y contraseña");
 						return done(null, false);
 					}
 					const isValidPassword = checkValidPassword({
@@ -107,7 +109,7 @@ const initializePassport = () => {
 
 					done(null, user);
 				} catch (error) {
-					console.log(error);
+					logger.error(error);
 					return done("Error al hacer el login: " + error);
 				}
 			}
@@ -125,7 +127,7 @@ const initializePassport = () => {
 			},
 			async (accessToken, refreshToken, profile, done) => {
 				try {
-					console.log({ email: profile.emails[0].value });
+					logger.info({ email: profile.emails[0].value });
 					const user = await userService.getByEmail({
 						email: profile.emails[0].value,
 					});
@@ -136,7 +138,7 @@ const initializePassport = () => {
 							username: profile.username,
 							email: profile.emails[0].value,
 						};
-						console.log({ newUser });
+						logger.info({ newUser });
 						const result = await userService.createItem(newUser);
 						return done(null, result);
 					} else {

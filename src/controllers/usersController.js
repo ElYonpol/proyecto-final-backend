@@ -4,6 +4,7 @@ const UserDto = require("../dto/userDto.js");
 const CustomError = require("../utils/errors/CustomError.js");
 const generateUserErrorInfo = require("../utils/errors/info.js");
 const EErrors = require("../utils/errors/EErrors.js");
+const { logger } = require("../utils/logger.js");
 
 class UserController {
 	getUsers = async (req, res) => {
@@ -78,8 +79,8 @@ class UserController {
 			// }
 
 			// let userAgregado = users.push({ first_name, last_name });
-			// console.log(`Usuario ${first_name} ${last_name} agregado`);
-			// console.log("Array users es: ",users)
+			// logger.info(`Usuario ${first_name} ${last_name} agregado`);
+			// logger.info("Array users es: ",users)
 			// // Prueba Clase 17 ----------------------------------------------------------------
 
 			const newUserRaw = req.body;

@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { logger } = require("../../utils/logger");
 
 class CartManager {
 	constructor(path) {
@@ -23,7 +24,7 @@ class CartManager {
 		const cartFound = carts.find((cart) => cart.id === cid);
 
 		if (!cartFound) {
-			console.error("Cart not found");
+			logger.error("Cart not found");
 			return null;
 		}
 
@@ -38,7 +39,7 @@ class CartManager {
 
 			const cartFoundIndex = carts.findIndex((cart) => cart.id === cid);
 
-			if (cartFoundIndex === -1) return console.error("Cart not found");
+			if (cartFoundIndex === -1) return logger.error("Cart not found");
 
 			const productFoundIndex = carts[cartFoundIndex].products.findIndex(
 				(prod) => prod.id === pid

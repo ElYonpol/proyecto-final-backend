@@ -1,7 +1,8 @@
 const EErrors = require("../../utils/errors/EErrors");
+const { logger } = require("../../utils/logger");
 
 const indexError = (error, req, res, next) => {
-	console.error(error.cause);
+	logger.error(error.cause);
 	switch (error.code) {
 		case EErrors.INVALID_TYPE_ERROR:
 			res.send({ status: "middleware error", error: error.name });

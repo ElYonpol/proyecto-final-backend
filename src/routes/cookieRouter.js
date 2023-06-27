@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { logger } = require("../utils/logger");
 
 const cookieRouter = Router();
 
@@ -21,7 +22,7 @@ cookieRouter.get("/get", (req, res) => {
 // con firma
 cookieRouter.post("/setSigned", (req, res) => {
 	const { username, password } = req.body;
-	console.log(username, password);
+	logger.info(username, password);
 
 	res
 		.cookie("username", username, { maxAge: 50000000, signed: true })
@@ -29,7 +30,7 @@ cookieRouter.post("/setSigned", (req, res) => {
 });
 
 cookieRouter.get("/getSigned", (req, res) => {
-	console.log(req.signedCookies);
+	logger.info(req.signedCookies);
 	res.send(req.signedCookies);
 });
 

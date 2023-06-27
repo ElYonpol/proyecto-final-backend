@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { logger } = require("../utils/logger");
 
 class ClassRouter {
 	constructor() {
@@ -18,7 +19,7 @@ class ClassRouter {
 			try {
 				await callback.apply(this, params); // el método apply ejecuta la callback
 			} catch (error) {
-				console.log(error);
+				logger.error(error);
 				params[1].status(500).send(error); //p params[1] es res porque es [0,1,2] = (req,res,next)
 			}
 		});

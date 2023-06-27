@@ -1,4 +1,5 @@
 const multer = require("multer");
+const { logger } = require("./logger");
 // path
 const { dirname } = require("path");
 
@@ -14,7 +15,7 @@ const storage = multer.diskStorage({
 const uploader = multer({
 	storage,
 	onError: (err, next) => {
-		console.log(err);
+		logger.error(err);
 		next;
 	},
 });

@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { logger } = require("../../utils/logger");
 
 class ProductManager {
 	constructor(path) {
@@ -33,11 +34,11 @@ class ProductManager {
 
 		const productFound = products.find((product) => product.id === id);
 		if (!productFound) {
-			console.error("Product not found");
+			logger.error("Product not found");
 			return null;
 		}
 
-		console.log(productFound);
+		logger.info(productFound);
 
 		return productFound;
 	};
@@ -57,12 +58,12 @@ class ProductManager {
 		let productExists = products.some((prod) => prod.code === newProduct.code);
 
 		if (areFieldsMissing) {
-			console.log("Debe completar todos los campos");
+			logger.info("Debe completar todos los campos");
 			throw new Error("Debe completar todos los campos");
 		}
 
 		if (productExists) {
-			console.log("El código ingresado ya existe");
+			logger.info("El código ingresado ya existe");
 			throw new Error("El código ingresado ya existe");
 		}
 
@@ -84,7 +85,7 @@ class ProductManager {
 			(product) => product.id === pid
 		);
 		if (productFoundIndex === -1) {
-			console.error("Product not found");
+			logger.error("Product not found");
 			return null;
 		}
 
@@ -92,7 +93,7 @@ class ProductManager {
 			...products[productFoundIndex],
 			...productToUpdate,
 		};
-		console.log("El Producto actualizado es:", products[productFoundIndex]);
+		logger.info("El Producto actualizado es:", products[productFoundIndex]);
 
 		await fs.promises.writeFile(
 			this.path,
@@ -109,11 +110,11 @@ class ProductManager {
 		);
 
 		if (productFoundIndex === -1) {
-			console.error("Product not found");
+			logger.error("Product not found");
 			return null;
 		}
 
-		console.log("El producto a eliminar es:", products[productFoundIndex]);
+		logger.info("El producto a eliminar es:", products[productFoundIndex]);
 		products.splice(productFoundIndex, 1);
 
 		await fs.promises.writeFile(
