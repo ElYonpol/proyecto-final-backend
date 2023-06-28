@@ -13,6 +13,7 @@ const { addLogger, logger } = require("./utils/logger.js");
 
 const app = express();
 
+// Middlewares =================================================
 // handlebars config _______________________________________________________
 const hbs = handlebars.create({
 	helpers: { correctThumbnails },
@@ -24,7 +25,6 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
 // handlebars config _______________________________________________________
 
-// Middlewares =================================================
 // logger config _______________________________________________________
 app.use(addLogger);
 
@@ -46,15 +46,15 @@ app.use(cors());
 // app.use(cors({ origin: `${SERVER_URL}:${PORT}`, methods: ["GET", "POST", "PUT", "DELETE"] }));
 // cors config _______________________________________________________
 
+// Routes config _______________________________________________________
+app.use(routerApp);
+// Routes config _______________________________________________________
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
 // Middlewares =================================================
-
-// Routes config _______________________________________________________
-app.use(routerApp);
-// Routes config _______________________________________________________
 
 // Global Variables _______________________________________________________
 // app.use((req, res, next) => {
