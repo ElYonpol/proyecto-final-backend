@@ -30,6 +30,6 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: DB_HOST
+            - name: MONGO_URL
               value: mongodb+srv://jppe:pepe001@coderexample.sfwkefl.mongodb.net/ecommerce?retryWrites=true&w=majority
           imagePullPolicy: Always

@@ -3,7 +3,7 @@ const { messageService } = require("../service/service.js");
 class MessageController {
 	getMessages = async (req, res) => {
 		try {
-			const resp = await messageService.getMessages();
+			const resp = await messageService.getItems();
 			res.status(200).json({
 				status: "success",
 				payload: resp.docs,
@@ -19,7 +19,7 @@ class MessageController {
 	getMessageById = async (req, res) => {
 		try {
 			const mid = req.params.mid;
-			const resp = await messageService.getMessageById(mid);
+			const resp = await messageService.getItem(mid);
 			if (!resp)
 				return res
 					.status(404)
@@ -50,7 +50,7 @@ class MessageController {
 		try {
 			const mid = req.params.mid;
 			const messageChanges = req.body;
-			const resp = await messageService.updateProduct(mid, messageChanges);
+			const resp = await messageService.updateItem(mid, messageChanges);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -63,7 +63,7 @@ class MessageController {
 	deleteMessage = async (req, res) => {
 		try {
 			const mid = req.params.mid;
-			const resp = await messageService.deleteMessage(mid);
+			const resp = await messageService.deleteItem(mid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

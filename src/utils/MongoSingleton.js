@@ -7,12 +7,12 @@ require("dotenv").config({
 	path: mode === "development" ? "./.env.development" : "./.env.production",
 });
 
-let URL = process.env.DB_HOST;
+let MONGO_URL = process.env.MONGO_URL;
 
 class MongoSingleton {
 	static #instance;
 	constructor() {
-		connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
+		connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 	}
 
 	static getInstance() {

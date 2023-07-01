@@ -45,7 +45,7 @@ class ProductController {
 	getProduct = async (req, res) => {
 		try {
 			const pid = req.params.pid;
-			const resp = await productService.getProductByID(pid);
+			const resp = await productService.getItem(pid);
 			if (!resp)
 				return res
 					.status(404)
@@ -62,7 +62,7 @@ class ProductController {
 	createProduct = async (req, res) => {
 		try {
 			const newProduct = req.body;
-			const resp = await productService.addProduct(newProduct);
+			const resp = await productService.createItem(newProduct);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -76,7 +76,7 @@ class ProductController {
 		try {
 			const pid = req.params.pid;
 			const productToUpdate = req.body;
-			const resp = await productService.updateProduct(pid, productToUpdate);
+			const resp = await productService.updateItem(pid, productToUpdate);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -89,7 +89,7 @@ class ProductController {
 	deleteProduct = async (req, res) => {
 		try {
 			const pid = req.params.pid;
-			const resp = await productService.deleteProduct(pid);
+			const resp = await productService.deleteItem(pid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({

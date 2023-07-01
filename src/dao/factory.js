@@ -12,6 +12,7 @@ let ContactsDaos;
 switch (objConfig.persistence) {
 	case "MONGO":
 		MongoSingleton.getInstance();
+		
 		const { ProductDaoMongo } = require("./mongo/managers/productsMongo.js");
 		ProductsDaos = ProductDaoMongo;
 
