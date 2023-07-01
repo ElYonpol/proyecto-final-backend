@@ -7,3 +7,9 @@ error: Alerta
 error: Alerta
 error: Error de prueba
 error: Error de prueba
+fatal: Mensaje error nivel 0: fatal
+error: Mensaje error nivel 1: error
+warning: Mensaje error nivel 2: warning
+fatal: Mensaje error nivel 0: fatal
+error: Mensaje error nivel 1: error
+warning: Mensaje error nivel 2: warning
