@@ -7,7 +7,7 @@ const transport = createTransport({
 	port: "587",
 	auth: {
 		user: objConfig.gmail_mail_user,
-		pass: objConfig.gmail_pass,
+		pass: objConfig.gmail_app_password,
 	},
 });
 
