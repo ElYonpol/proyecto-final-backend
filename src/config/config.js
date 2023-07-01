@@ -1,6 +1,4 @@
-const { connect } = require("mongoose");
 const { commander } = require("../utils/commander.js");
-const MongoSingleton = require("../utils/MongoSingleton.js");
 const { mode } = commander.opts();
 
 require("dotenv").config({
