@@ -30,7 +30,7 @@ switch (objConfig.persistence) {
 		const { EmailDaoMongo } = require("./mongo/managers/emailsMongo.js");
 		EmailsDaos = EmailDaoMongo;
 
-		//Falta agregar el de carts, orders, contact en todos los case
+		//Falta agregar el de Contact en todos los case
 		break;
 	case "MEMORY":
 		const ProductDaoMemory = require("./memory/productsMemory.js");

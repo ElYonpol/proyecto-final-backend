@@ -9,16 +9,21 @@ class OrderDaoMongo {
 		return await this.orderModel.paginate(filter, specs);
 	};
 
-	async getOrdersById(oid) {
+	getById = async (oid) => {
 		return await this.orderModel.findOne({ _id: oid });
 	}
 
-	async createOrder(newOrder) {
+	create = async (newOrder) => {
 		return await this.orderModel.create(newOrder);
 	}
 
-	async updateOrder(oid) {}
-	async deleteOrder(oid) {}
+	update = async (oid, orderToUpdate) => {
+		return await this.productModel.updateOne({ _id: oid }, orderToUpdate);
+	};
+
+	delete = async (oid) => {
+		return await this.productModel.updateOne({ _id: oid }, { status: false });
+	};
 }
 
 const orderMgr = new OrderDaoMongo();

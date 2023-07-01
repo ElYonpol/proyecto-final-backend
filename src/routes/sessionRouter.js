@@ -48,10 +48,10 @@ sessionsRouter.post(
 					message: "Login successful",
 					token: accessToken,
 				});
-			// .redirect("/products"); No funciona
+			// .redirect("/products"); No funciona al mismo tiempo que send
 		} catch (error) {
 			res.status(404).json({
-				status: "error trycatch login",
+				status: "error trycatch sessions/login",
 				payload: {
 					error: error,
 					message: error.message,

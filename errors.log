@@ -13,3 +13,6 @@ warning: Mensaje error nivel 2: warning
 fatal: Mensaje error nivel 0: fatal
 error: Mensaje error nivel 1: error
 warning: Mensaje error nivel 2: warning
+fatal: Mensaje error nivel 0: fatal
+error: Mensaje error nivel 1: error
+warning: Mensaje error nivel 2: warning
