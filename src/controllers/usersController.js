@@ -121,6 +121,25 @@ class UserController {
 			});
 		}
 	};
+
+	changeUserRoleByID = async (req, res) => {
+		try {
+			const uid = req.params.uid;
+			const user = await userService.getItem(uid);
+
+			if (user.role === "user") {
+				const resp = await userService.updateItem(uid, { role: "premium" });
+			} else if (user.role === "premium") {
+				const resp = await userService.updateItem(uid, { role: "user" });
+			}
+			res.status(200).json({ status: "success", payload: resp });
+		} catch (error) {
+			res.status(404).json({
+				status: "error",
+				payload: { error: error, message: error.message },
+			});
+		}
+	};
 }
 
 module.exports = UserController;

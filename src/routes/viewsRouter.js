@@ -73,7 +73,7 @@ router.post("/upload", uploader.single("myFile"), (req, res) => {
 	res.send("Archivo subido correctamente");
 });
 
-router.get("/chat", async (req, res) => {
+router.get("/chat", async (req, res) => { // Acá hay que bloquear el acceso a esta ruta si el usuario es perfil admin
 	res.render("chat", {});
 });
 

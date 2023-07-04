@@ -11,7 +11,7 @@ const { authToken } = require("../utils/jsonwebtoken.js");
 
 const usersRouter = Router();
 
-const { getUsers, getUserByID, createUser, updateUser, deleteUser } =
+const { getUsers, getUserByID, createUser, updateUser, deleteUser, changeUserRoleByID } =
 	new UserController();
 
 // GET http://localhost:8080/api/users
@@ -20,6 +20,9 @@ usersRouter.get("/", authToken, authRole("admin"), getUsers); // El user/pass de
 
 // GET http://localhost:8080/api/users/:uid
 usersRouter.get("/:uid", getUserByID);
+
+// GET http://localhost:8080/api/users/premium/:uid //Desafío Complementario Clase 19 - PErmite cambiar el rol de un usuario, de “user” a “premium” y viceversa
+usersRouter.get("/premium/:uid", changeUserRoleByID);
 
 // POST http://localhost:8080/api/users/register
 usersRouter.post("/register", usersValidation(usersCreationSchema), createUser);
