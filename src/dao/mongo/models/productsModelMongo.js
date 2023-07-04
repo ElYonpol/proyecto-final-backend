@@ -40,11 +40,17 @@ const ProductSchema = new Schema(
 			type: Number,
 			required: true,
 		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "users",
+			unique: true,
+		},
 	},
 	{ versionKey: false }
 );
 
 ProductSchema.plugin(mongoosePaginate);
+
 const productModel = model(collection, ProductSchema);
 
 module.exports = { productModel };
