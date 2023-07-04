@@ -26,8 +26,8 @@ class CartController {
 	getCart = async (req, res) => {
 		try {
 			const cid = req.params.cid;
-			const respProducts = await cartService.getItem(cid);
-			res.status(200).json({ status: "success", payload: respProducts });
+			const cart = await cartService.getItem(cid);
+			res.status(200).json({ status: "success", payload: cart });
 		} catch (error) {
 			res.status(404).json({
 				status: "error",
@@ -134,6 +134,57 @@ class CartController {
 
 	finalizePurchase = async (req, res) => {
 		try {
+			const cid = req.params.cid;
+			const cart = await cartService.getItem(cid);
+			const productsInPurchase = [];
+			// Verifico stock por producto y armo array de productos a comprar
+			for (const item of cart[0].products) {
+				const product = item.pid;
+				const purchaseQuantity = item.quantity;
+
+				if (product.stock >= purchaseQuantity) {
+					productsInPurchase.push({
+						product: product._id,
+						purchaseQuantity,
+					});
+				}
+			}
+
+			// Proceso la compra
+			if (productsInPurchase.length > 0) {
+				// Actualizo el stock de los productos comprados restando la cantidad comprada del stock actual
+				for (const item of productsInPurchase) {
+					const pid = item.product;
+					const purchaseQuantity = item.purchaseQuantity;
+					const resp = await productService.updateItem(pid, {	$inc: { stock: -purchaseQuantity },
+					});
+				}
+
+				// Genero el ticket
+				const ticket = await TicketService.generateTicket(productsInPurchase);
+
+				// Limpio el carrito
+				const productsToKeep = cart.products.filter((item) => {
+					return !productsInPurchase.find((p) =>
+						p.product.equals(item.product)
+					);
+				});
+				cart.products = productsToKeep;
+				await cart.save();
+
+				// Enviar la respuesta
+				res.status(200).json({ ticket });
+			} else {
+				// No se puede realizar la compra, productos con falta de stock
+				const productIds = cart.products.map((item) => item.product);
+				res
+					.status(400)
+					.json({
+						error:
+							"Error: No se puede realizar la compra en los siguientes productos por falta de stock: ",
+						productIds,
+					});
+			}
 		} catch (error) {
 			res.status(404).json({
 				status: "error",

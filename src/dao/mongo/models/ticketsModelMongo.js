@@ -21,8 +21,14 @@ const TicketSchema = new Schema(
 			required: true,
 		},
 		purchaser: {
-			type: String,
-			required: true,
+			type: Schema.Types.ObjectId,
+			ref: "users",
+			unique: true,
+		},
+		status: {
+			type: Boolean,
+			default: true,
+			required: false,
 		},
 	},
 	{ versionKey: false }

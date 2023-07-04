@@ -1,11 +1,13 @@
 const { objConfig } = require("../config/config.js");
 const MongoSingleton = require("../utils/MongoSingleton.js");
 
+
 let ProductsDaos;
 let UsersDaos;
 let OrdersDaos;
 let CartsDaos;
 let MessagesDaos;
+let TicketDaos;
 let EmailsDaos;
 let ContactsDaos;
 
@@ -27,6 +29,9 @@ switch (objConfig.persistence) {
 
 		const { MessageDaoMongo } = require("./mongo/managers/messagesMongo.js");
 		MessagesDaos = MessageDaoMongo;
+		
+		const { TicketDaoMongo } = require("./mongo/managers/ticketsMongo.js");
+		TicketDaos = TicketDaoMongo;
 
 		const { EmailDaoMongo } = require("./mongo/managers/emailsMongo.js");
 		EmailsDaos = EmailDaoMongo;
@@ -55,5 +60,6 @@ module.exports = {
 	OrdersDaos,
 	CartsDaos,
 	MessagesDaos,
+	TicketDaos,
 	EmailsDaos,
 };

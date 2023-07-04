@@ -1,12 +1,12 @@
-const { orderService } = require("../service/service");
+const { ticketService } = require("../service/service");
 
-class OrderController {
-	async getOrders(req, res) {
+class TicketController {
+	async getTickets(req, res) {
 		try {
 			const query = {};
 			const specs = {};
-			let orders = await orderService.getItems(query, specs);
-			res.status(200).send({ status: "success", payload: orders });
+			let tickets = await ticketService.getItems(query, specs);
+			res.status(200).send({ status: "success", payload: tickets });
 		} catch (error) {
 			res.status(404).json({
 				status: "error",
@@ -14,11 +14,11 @@ class OrderController {
 			});
 		}
 	}
-	async getOrder(req, res) {
+	async getTicket(req, res) {
 		try {
-			const oid = req.params.oid;
-			const order = await orderService.getItem(oid);
-			res.status(200).send({ status: "success", payload: order });
+			const tid = req.params.tid;
+			const ticket = await ticketService.getItem(tid);
+			res.status(200).send({ status: "success", payload: ticket });
 		} catch (error) {
 			res.status(404).json({
 				status: "error",
@@ -26,10 +26,10 @@ class OrderController {
 			});
 		}
 	}
-	async createOrder(req, res) {
+	async createTicket(req, res) {
 		try {
-			const newOrder = req.body;
-			const result = await orderService.createItem(newOrder);
+			const newTicket = req.body;
+			const result = await ticketService.createItem(newTicket);
 			res.status(200).send({ status: "success", payload: result });
 		} catch (error) {
 			res.status(404).json({
@@ -38,11 +38,11 @@ class OrderController {
 			});
 		}
 	}
-	async updateOrder(req, res) {
+	async updateTicket(req, res) {
 		try {
-			const oid = req.params.oid;
-			const orderToUpdate = req.body;
-			const resp = await orderService.updateItem(oid, orderToUpdate);
+			const tid = req.params.tid;
+			const ticketToUpdate = req.body;
+			const resp = await ticketService.updateItem(tid, ticketToUpdate);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -51,10 +51,10 @@ class OrderController {
 			});
 		}
 	}
-	async deleteOrder(req, res) {
+	async deleteTicket(req, res) {
 		try {
-			const oid = req.params.oid;
-			const resp = await orderService.deleteItem(oid);
+			const tid = req.params.tid;
+			const resp = await ticketService.deleteItem(tid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
@@ -65,4 +65,4 @@ class OrderController {
 	}
 }
 
-module.exports = { OrderController };
+module.exports = { TicketController };
