@@ -1,4 +1,4 @@
-const { cartService } = require("../service/service.js");
+const { cartService, ticketService } = require("../service/service.js");
 
 class CartController {
 	getCarts = async (req, res) => {
@@ -156,34 +156,33 @@ class CartController {
 				for (const item of productsInPurchase) {
 					const pid = item.product;
 					const purchaseQuantity = item.purchaseQuantity;
-					const resp = await productService.updateItem(pid, {	$inc: { stock: -purchaseQuantity },
+					const resp = await productService.updateItem(pid, {
+						$inc: { stock: -purchaseQuantity },
 					});
 				}
 
-				// Genero el ticket
-				const ticket = await TicketService.generateTicket(productsInPurchase);
+				// Genero el ticket - PENDIENTE AGREGAR ticketCode, totalTicketAmount, purchaser
+				const ticket = await ticketService.createItem(productsInPurchase);
 
 				// Limpio el carrito
-				const productsToKeep = cart.products.filter((item) => {
+				const productsToKeepInCart = cart[0].products.filter((item) => {
 					return !productsInPurchase.find((p) =>
 						p.product.equals(item.product)
 					);
 				});
-				cart.products = productsToKeep;
+				cart[0].products = productsToKeepInCart;
 				await cart.save();
 
 				// Enviar la respuesta
 				res.status(200).json({ ticket });
 			} else {
 				// No se puede realizar la compra, productos con falta de stock
-				const productIds = cart.products.map((item) => item.product);
-				res
-					.status(400)
-					.json({
-						error:
-							"Error: No se puede realizar la compra en los siguientes productos por falta de stock: ",
-						productIds,
-					});
+				const productIds = cart[0].products.map((item) => item.product);
+				res.status(400).json({
+					error:
+						"Error: No se puede realizar la compra en los siguientes productos por falta de stock: ",
+					productIds,
+				});
 			}
 		} catch (error) {
 			res.status(404).json({
