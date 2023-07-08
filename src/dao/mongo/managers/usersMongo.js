@@ -34,7 +34,7 @@ class UserDaoMongo {
 	};
 
 	getByUsername = async (userUsername) => {
-		return await this.userModel.find({ username: userUsername });
+		return await this.userModel.find({ username: userUsername }).lean();
 	};
 }
 

@@ -10,7 +10,7 @@ class ProductDaoMongo {
 	};
 
 	getById = async (pid) => {
-		return await this.productModel.find({ _id: pid });
+		return await this.productModel.find({ _id: pid }).lean();
 	};
 
 	create = async (newProduct) => {
