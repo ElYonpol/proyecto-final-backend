@@ -6,4 +6,16 @@ const generateUserErrorInfo = (user) => {
     email      : necesita ser string, y se recibió ${user.email}`;
 };
 
-module.exports = generateUserErrorInfo;
+const generateCartPurchasingErrorInfo = () => {
+	return "El producto no se pudo agregar al carrito por falta de stock suficiente.";
+};
+
+const generateCartEmptyErrorInfo = () => {
+	return "El carrito de compras está vacío o alguno de los productos elegidos son inválidos.";
+};
+
+module.exports = {
+	generateUserErrorInfo,
+	generateCartEmptyErrorInfo,
+	generateCartPurchasingErrorInfo,
+};

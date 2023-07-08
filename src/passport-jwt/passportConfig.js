@@ -50,33 +50,33 @@ const initializePassport = () => {
 		new LocalStrategy(
 			{
 				passReqToCallback: true, // acceso al req
-				// usernameField: "email",
+				usernameField: "email",
 			},
 			async (req, username, password, done) => {
-				const { first_name, last_name, email } = req.body;
 				try {
+					const { first_name, last_name } = req.body;
 					// buscar el usuario en la base de datos
-					let user = await userService.getByUsername(username); //
+					let user = await userService.getByEmail(username); //
 					logger.info({ user });
 					// done si  hay usuario
 					if (user) {
-						done(null, false, { message: "El nombre de usuario ya existe" });
+						logger.error("El usuario ya existe");
+						return done(null, false);
 					}
 					// hash password
 					const hashedPassword = createHash(password);
 					// crear usuario y carrito
-					let cart = await cartService.createItem();
-					logger.info("El cart creado es: ", cart);
-
-					const newUser = {
+					let newUser = {
 						first_name,
 						last_name,
-						email,
+						email: username,
 						username,
-						role,
 						password: hashedPassword,
 						cart,
 					};
+					let cart = await cartService.createItem();
+					logger.info("El cart creado es: ", cart);
+
 					let result = await userService.createItem(newUser);
 					return done(null, result);
 				} catch (error) {
@@ -90,23 +90,23 @@ const initializePassport = () => {
 	passport.use(
 		"login",
 		new LocalStrategy(
-			{
-				passReqToCallback: true,
-				// usernameField: "email",
-			},
+			// {
+			// 	passReqToCallback: true,
+			// 	usernameField: "email",
+			// },
 			async (username, password, done) => {
 				try {
-					const user = await userService.getByUsername(username);
+					let user = await userService.getByEmail(username);
 					if (!user) {
 						logger.warning("Revisar usuario y contraseña");
 						return done(null, false);
 					}
 					const isValidPassword = checkValidPassword({
-						hashedPassword: user.password, //hashedPassword: user[0].password,
+						// hashedPassword: user.password,
+						hashedPassword: user[0].password,
 						password,
 					});
 					if (!isValidPassword) return done(null, false);
-
 					done(null, user);
 				} catch (error) {
 					logger.error(error);
@@ -127,19 +127,18 @@ const initializePassport = () => {
 			},
 			async (accessToken, refreshToken, profile, done) => {
 				try {
-					logger.info({ email: profile.emails[0].value });
-					const user = await userService.getByEmail({
-						email: profile.emails[0].value,
-					});
+					let user = await userService.getByEmail(profile.emails[0].value);
 					if (!user) {
-						const newUser = {
-							first_name: profile._json.name,
-							last_name: profile._json.name,
-							username: profile.username,
+						let cart = await cartService.createItem();
+						let newUser = {
+							first_name: profile._json.name ?? "Desconocido",
+							last_name: profile._json.name ?? "Desconocido",
 							email: profile.emails[0].value,
+							username: profile.username,
+							password: "Desconocido",
+							cart,
 						};
-						logger.info({ newUser });
-						const result = await userService.createItem(newUser);
+						let result = await userService.createItem(newUser);
 						return done(null, result);
 					} else {
 						return done(null, user);

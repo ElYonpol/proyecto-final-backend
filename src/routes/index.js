@@ -12,14 +12,16 @@ const pruebasRouter = require("./pruebasRouter.js");
 const mockingRouter = require("./mockingRouter.js");
 const loggerRouter = require("./loggerRouter.js");
 const errorHandler = require("../middleware/errors/indexError.js");
+const { authRole } = require("../middleware/authMiddleware.js");
 
 const router = Router();
 
 router.use("/", viewsRouter);
 
 router.use("/api/products", productsRouter);
-router.use("/api/carts", cartsRouter);
+router.use("/api/carts", authRole("user"), cartsRouter);
 router.use("/api/users", usersRouter);
+// router.use("/api/users", authRole("admin"), usersRouter);
 router.use("/api/orders", ordersRouter);
 router.use("/api/emails", emailsRouter);
 router.use("/api/mockingproducts", mockingRouter);

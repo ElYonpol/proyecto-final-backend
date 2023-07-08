@@ -2,7 +2,7 @@ const { userService } = require("../service/service.js");
 const { SERVER_URL, PORT } = require("../config/setups.js");
 const UserDto = require("../dto/userDto.js");
 const CustomError = require("../utils/errors/CustomError.js");
-const generateUserErrorInfo = require("../utils/errors/info.js");
+const {generateUserErrorInfo} = require("../utils/errors/info.js");
 const EErrors = require("../utils/errors/EErrors.js");
 const { logger } = require("../utils/logger.js");
 
@@ -126,16 +126,19 @@ class UserController {
 		try {
 			const uid = req.params.uid;
 			const user = await userService.getItem(uid);
+			console.log(user)
+			req.logger.info(`User es ${user[0].first_name} ${user[0].last_name}`)
 
-			if (user.role === "user") {
+			if (user[0].role === "user") {
 				const resp = await userService.updateItem(uid, { role: "premium" });
-			} else if (user.role === "premium") {
+				res.status(200).json({ status: "success", payload: resp });
+			} else if (user[0].role === "premium") {
 				const resp = await userService.updateItem(uid, { role: "user" });
+				res.status(200).json({ status: "success", payload: resp });
 			}
-			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error changeUserRoleByID",
 				payload: { error: error, message: error.message },
 			});
 		}

@@ -1,9 +1,9 @@
 class CustomError {
-	static createError({ name = "Error", cause, message, code = 1 }) {
+	static createError({ name = "Error", cause, message, code }) {
 		let error = new Error(message);
 		error.name = name;
 		error.code = code;
-        error.cause = cause;
+		error.cause = cause;
 		throw error;
 	}
 }
