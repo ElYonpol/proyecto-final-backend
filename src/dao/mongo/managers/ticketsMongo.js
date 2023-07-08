@@ -10,7 +10,7 @@ class TicketDaoMongo {
 	};
 
 	getById = async (tid) => {
-		return await this.ticketModel.find({ _id: tid });
+		return await this.ticketModel.find({ _id: tid }).lean();
 	};
 
 	create = async (newTicket) => {
