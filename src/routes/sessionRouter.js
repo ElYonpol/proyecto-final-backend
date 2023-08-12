@@ -19,7 +19,8 @@ sessionsRouter.get("/login", (req, res) => {
 
 // POST http://localhost:8080/api/sessions/login
 sessionsRouter.post("/login", objectsValidation(usersLoginSchema), authPassport("login"), (req,res) => {
-	res.json({user: req.user})
+	// res.json({user: req.user})
+	res.redirect("/products")
 })
 
 
