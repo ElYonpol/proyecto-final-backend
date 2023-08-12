@@ -1,0 +1,149 @@
+<script defer src="/socket.io/socket.io.js"></script>
+<script defer src="/static/js/realTimeProducts.js"></script>
+
+<h1 class="display-1">
+	<div class="display-1--intro">RealTime Products</div>
+</h1>
+
+<form id="newProductForm">
+	<fieldset>
+		<legend><span class="number">1</span>Datos del producto a crear</legend>
+		<label for="newProductCode">Código:</label>
+		<input
+			type="text"
+			id="newProductCode"
+			name="newProductCode"
+			placeholder="Código del producto"
+		/>
+
+		<label for="newProductCategory">Categoría:</label>
+		<select id="newProductCategory" name="newProductCategory">
+			<option value="Estética">Estética</option>
+			<option value="Prótesis">Prótesis</option>
+			<option value="Rehabilitación">Rehabilitación</option>
+		</select>
+
+		<label for="newProductTitle">Título:</label>
+		<input
+			type="text"
+			id="newProductTitle"
+			name="newProductTitle"
+			placeholder="Nombre del producto"
+		/>
+
+		<label for="newProductDescription">Descripción:</label>
+		<input
+			type="text"
+			id="newProductDescription"
+			name="newProductDescription"
+			placeholder="Descripción del producto"
+		/>
+
+		<label for="newProductPrice">Precio:</label>
+		<input
+			type="number"
+			id="newProductPrice"
+			name="newProductPrice"
+			placeholder="Precio del producto"
+		/>
+
+		<label for="newProductStock">Stock:</label>
+		<input
+			type="number"
+			id="newProductStock"
+			name="newProductStock"
+			placeholder="Stock del producto"
+		/>
+
+		<button class="btn--submit__contact" type="submit">Crear Producto</button>
+	</fieldset>
+</form>
+
+<div class="display-1--description">
+	<span><strong>Productos:</strong> {{paginate.totalDocs}}</span>
+	|
+	<span><strong>Página:</strong>
+		{{paginate.page}}
+		de
+		{{paginate.totalPages}}</span>
+</div>
+<div class="display-1--description">
+	<label for="status"><strong>Disponibilidad:</strong></label>
+	<select name="query" id="status" onchange="changeOptions(this)">
+		<option value="none">Todos</option>
+		<option value="true">Disponibles</option>
+		<option value="false">No Disponibles</option>
+	</select>
+	<label for="category"><strong>Categorías:</strong></label>
+	<select name="query" id="category" onchange="changeOptions(this)">
+		<option value="none">Todas</option>
+		{{#each categories}}
+			<option value="{{this}}">{{this}}</option>
+		{{/each}}
+	</select>
+	<label for="sort"><strong>Ordenar:</strong></label>
+	<select name="sort" id="sort" onchange="changeOptions(this)">
+		<option value="none">-</option>
+		<option value="asc">Precio ascendente</option>
+		<option value="desc">Precio descendente</option>
+	</select>
+</div>
+<div class="display-1--description">
+	{{#if paginate.hasPrevPage}}
+		<button
+			class="button-cart"
+			title="Primera página"
+			alt="Primera página"
+			onclick="changePage(1)"
+		>&#8676;</button>
+		<button
+			class="button-cart"
+			title="Página anterior"
+			alt="Página anterior"
+			onclick="changePage({{paginate.prevPage}})"
+		>&#8810;</button>
+	{{/if}}
+	{{#if paginate.hasNextPage}}
+		<button
+			class="button-cart"
+			title="Página siguiente"
+			alt="Página siguiente"
+			onclick="changePage({{paginate.nextPage}})"
+		>&#8811;</button>
+		<button
+			class="button-cart"
+			title="Última página"
+			alt="Última página"
+			onclick="changePage({{paginate.totalPages}})"
+		>&#8677;</button>
+	{{/if}}
+</div>
+
+<div class="userCart display-1--description" id={{userData.cart._id}}>--</div>
+
+<div id="cartCards--list" class="cartCards--container">
+	{{#each products}}
+		<div class="cartCard">
+			<div class="cartCard-image">
+				<img
+					class="image"
+					style="height: 350px;"
+					src="{{correctThumbnails thumbnails}}"
+					alt="Imagen del producto"
+				/>
+			</div>
+			<div class="cartCard-content">
+				<p class="cartCard-content__title">{{title}}</p>
+				<p class="cartCard-content__body">{{description}}</p>
+				<p class="cartCard-content__body">Precio: ${{price}}</p>
+				<p class="cartCard-content__body">Categoría: {{category}}</p>
+				{{#if status}}
+					<p class="cartCard-content__body">Stock: {{stock}}</p>
+				{{else}}
+					<p class="cartCard-content__body">No disponible</p>
+				{{/if}}
+				<button class="addToCart button-cart" data-id={{id}}>Añadir al 🛒</button>
+			</div>
+		</div>
+	{{/each}}
+</div>

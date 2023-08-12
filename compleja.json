@@ -1,0 +1,166 @@
+{
+  "aggregate": {
+    "counters": {
+      "vusers.created_by_name.0": 40,
+      "vusers.created": 40,
+      "http.requests": 50,
+      "http.codes.200": 10,
+      "http.responses": 10,
+      "http.downloaded_bytes": 270,
+      "errors.ETIMEDOUT": 40,
+      "vusers.failed": 40
+    },
+    "rates": {
+      "http.request_rate": 14
+    },
+    "firstCounterAt": 1687622728807,
+    "firstHistogramAt": 1687622729445,
+    "lastCounterAt": 1687622748083,
+    "lastHistogramAt": 1687622738071,
+    "firstMetricAt": 1687622728807,
+    "lastMetricAt": 1687622748083,
+    "period": 1687622740000,
+    "summaries": {
+      "http.response_time": {
+        "min": 611,
+        "max": 9041,
+        "count": 10,
+        "p50": 3011.6,
+        "median": 3011.6,
+        "p75": 4965.3,
+        "p90": 7709.8,
+        "p95": 7709.8,
+        "p99": 7709.8,
+        "p999": 7709.8
+      }
+    },
+    "histograms": {
+      "http.response_time": {
+        "min": 611,
+        "max": 9041,
+        "count": 10,
+        "p50": 3011.6,
+        "median": 3011.6,
+        "p75": 4965.3,
+        "p90": 7709.8,
+        "p95": 7709.8,
+        "p99": 7709.8,
+        "p999": 7709.8
+      }
+    }
+  },
+  "intermediate": [
+    {
+      "counters": {
+        "vusers.created_by_name.0": 40,
+        "vusers.created": 40,
+        "http.requests": 41,
+        "http.codes.200": 1,
+        "http.responses": 1,
+        "http.downloaded_bytes": 27
+      },
+      "rates": {
+        "http.request_rate": 41
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1687622728807,
+      "firstHistogramAt": 1687622729445,
+      "lastCounterAt": 1687622729779,
+      "lastHistogramAt": 1687622729445,
+      "firstMetricAt": 1687622728807,
+      "lastMetricAt": 1687622729779,
+      "period": "1687622720000",
+      "summaries": {
+        "http.response_time": {
+          "min": 611,
+          "max": 611,
+          "count": 1,
+          "p50": 608,
+          "median": 608,
+          "p75": 608,
+          "p90": 608,
+          "p95": 608,
+          "p99": 608,
+          "p999": 608
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 611,
+          "max": 611,
+          "count": 1,
+          "p50": 608,
+          "median": 608,
+          "p75": 608,
+          "p90": 608,
+          "p95": 608,
+          "p99": 608,
+          "p999": 608
+        }
+      }
+    },
+    {
+      "counters": {
+        "http.codes.200": 9,
+        "http.responses": 9,
+        "http.downloaded_bytes": 243,
+        "http.requests": 9,
+        "errors.ETIMEDOUT": 31,
+        "vusers.failed": 31
+      },
+      "rates": {
+        "http.request_rate": 1
+      },
+      "http.request_rate": null,
+      "firstCounterAt": 1687622730049,
+      "firstHistogramAt": 1687622730049,
+      "lastCounterAt": 1687622739780,
+      "lastHistogramAt": 1687622738071,
+      "firstMetricAt": 1687622730049,
+      "lastMetricAt": 1687622739780,
+      "period": "1687622730000",
+      "summaries": {
+        "http.response_time": {
+          "min": 1216,
+          "max": 9041,
+          "count": 9,
+          "p50": 3605.5,
+          "median": 3605.5,
+          "p75": 6312.2,
+          "p90": 7709.8,
+          "p95": 7709.8,
+          "p99": 7709.8,
+          "p999": 7709.8
+        }
+      },
+      "histograms": {
+        "http.response_time": {
+          "min": 1216,
+          "max": 9041,
+          "count": 9,
+          "p50": 3605.5,
+          "median": 3605.5,
+          "p75": 6312.2,
+          "p90": 7709.8,
+          "p95": 7709.8,
+          "p99": 7709.8,
+          "p999": 7709.8
+        }
+      }
+    },
+    {
+      "counters": {
+        "errors.ETIMEDOUT": 9,
+        "vusers.failed": 9
+      },
+      "rates": {},
+      "firstCounterAt": 1687622740062,
+      "lastCounterAt": 1687622748083,
+      "firstMetricAt": 1687622740062,
+      "lastMetricAt": 1687622748083,
+      "period": "1687622740000",
+      "summaries": {},
+      "histograms": {}
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+[
+	{
+		"pid": 1,
+		"code": "blanquea",
+		"category": "Estética",
+		"thumbnails": ["/static/assets/images/cartCard--1.webp"],
+		"title": "Blanqueamiento",
+		"description": "Tratamientos especializados para lograr una sonrisa radiante y sana.",
+		"price": 1000,
+		"status": true,
+		"stock": 10
+	},
+	{
+		"pid": 2,
+		"code": "protcomp",
+		"category": "Prótesis",
+		"thumbnails": ["/static/assets/images/cartCard--2.webp"],
+		"title": "Prótesis Completa",
+		"description": "La solución completa a cada caso que se presenta para poder disfrutar de una masticación adecuada.",
+		"price": 2000,
+		"status": true,
+		"stock": 10
+	},
+	{
+		"pid": 3,
+		"code": "protflex",
+		"category": "Prótesis",
+		"thumbnails": ["/static/assets/images/cartCard--3.webp"],
+		"title": "Prótesis Flexible",
+		"description": "La solución flexible a cada caso que se presenta para poder disfrutar de una masticación adecuada.",
+		"price": 3000,
+		"status": true,
+		"stock": 10
+	},
+	{
+		"pid": 4,
+		"code": "protcrco",
+		"category": "Prótesis",
+		"thumbnails": ["/static/assets/images/cartCard--4.webp"],
+		"title": "Prótesis Cromo-Cobalto",
+		"description": "La solución en Cromo-Cobalto a cada caso que se presenta para poder disfrutar de una masticación adecuada.",
+		"price": 4000,
+		"status": true,
+		"stock": 10
+	},
+	{
+		"pid": 5,
+		"code": "ortbraqt",
+		"category": "Estética",
+		"thumbnails": ["/static/assets/images/cartCard--5.webp"],
+		"title": "Ortodoncia convencional (braquets)",
+		"description": "La ortodoncia es una rama de la odontología que estudia, previene y corrige anomalías de posición tanto óseas como dentales.",
+		"price": 5000,
+		"status": true,
+		"stock": 10
+	},
+	{
+		"pid": 6,
+		"code": "implycor",
+		"category": "Rehabilitación",
+		"thumbnails": ["/static/assets/images/cartCard--6.webp"],
+		"title": "Implante y Corona",
+		"description": "La solución en implantes y coronas a cada caso que se presenta para poder disfrutar de una masticación adecuada.",
+		"price": 6000,
+		"status": true,
+		"stock": 10
+	},
+	{
+		"pid": 7,
+		"code": "placamre",
+		"category": "Rehabilitación",
+		"thumbnails": ["/static/assets/images/cartCard--7.webp"],
+		"title": "Placa Miorelajante",
+		"description": "La solución en tratamientos activos de eliminación de los efectos del bruxismo.",
+		"price": 7000,
+		"status": true,
+		"stock": 10
+	}
+]

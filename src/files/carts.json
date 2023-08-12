@@ -1,0 +1,109 @@
+[
+	{
+		"_id": "645fabcf312d608e72f626e5",
+		"products": [
+			{
+				"pid": {
+					"_id": "6444333583e4902e8424e857",
+					"pid": 1,
+					"code": "blanquea",
+					"category": "Estética",
+					"thumbnails": ["/static/assets/images/cartCard--1.webp"],
+					"title": "Blanqueamiento",
+					"description": "Tratamientos especializados para lograr una sonrisa radiante y sana.",
+					"price": 1000,
+					"status": true,
+					"stock": 10
+				},
+				"quantity": 1
+			}
+		]
+	},
+	{
+		"_id": "645fbad1522dd81eb91f00d0",
+		"products": [
+			{
+				"pid": {
+					"_id": "6444333583e4902e8424e857",
+					"pid": 1,
+					"code": "blanquea",
+					"category": "Estética",
+					"thumbnails": ["/static/assets/images/cartCard--1.webp"],
+					"title": "Blanqueamiento",
+					"description": "Tratamientos especializados para lograr una sonrisa radiante y sana.",
+					"price": 1000,
+					"status": true,
+					"stock": 10
+				},
+				"quantity": 1,
+				"_id": "645fbad1522dd81eb91f00d3"
+			},
+			{
+				"pid": {
+					"_id": "6444333583e4902e8424e858",
+					"pid": 2,
+					"code": "protcomp",
+					"category": "Prótesis",
+					"thumbnails": ["/static/assets/images/cartCard--2.webp"],
+					"title": "Prótesis Completa",
+					"description": "La solución completa a cada caso que se presenta para poder disfrutar de una masticación adecuada.",
+					"price": 2000,
+					"status": true,
+					"stock": 10
+				},
+				"quantity": 2,
+				"_id": "645fbae1522dd81eb91f00d8"
+			}
+		],
+		"__v": 0
+	},
+	{
+		"_id": "645fc012522dd81eb91f00e2",
+		"products": [
+			{
+				"pid": {
+					"_id": "6444333583e4902e8424e859",
+					"pid": 3,
+					"code": "protflex",
+					"category": "Prótesis",
+					"thumbnails": ["/static/assets/images/cartCard--3.webp"],
+					"title": "Prótesis Flexible",
+					"description": "La solución flexible a cada caso que se presenta para poder disfrutar de una masticación adecuada.",
+					"price": 3000,
+					"status": true,
+					"stock": 10
+				},
+				"quantity": 3,
+				"_id": "645fc013522dd81eb91f00e5"
+			}
+		],
+		"__v": 0
+	},
+	{
+		"_id": "645fc032522dd81eb91f00f5",
+		"products": [
+			{
+				"pid": {
+					"_id": "6444333583e4902e8424e85c",
+					"pid": 6,
+					"code": "implycor",
+					"category": "Rehabilitación",
+					"thumbnails": ["/static/assets/images/cartCard--6.webp"],
+					"title": "Implante y Corona",
+					"description": "La solución en implantes y coronas a cada caso que se presenta para poder disfrutar de una masticación adecuada.",
+					"price": 6000,
+					"status": true,
+					"stock": 10
+				},
+				"quantity": 1,
+				"_id": "645fc033522dd81eb91f00f8"
+			}
+		],
+		"__v": 0
+	},
+	{
+		"_id": "645fe9ea6cb70fcbadd73e5c",
+		"products": [],
+		"__v": 0
+	}
+]

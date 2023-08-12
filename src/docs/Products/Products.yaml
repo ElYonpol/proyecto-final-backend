@@ -1,0 +1,153 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos correctamente.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          description: Error interno del server, usualmente generado por una query defectuosa o un fallo en la DB.
+    post:
+      summary: Crea un nuevo producto en la DB
+      tags:
+        - Products
+      responses:
+        "201":
+        description: El producto fue generado correctamente.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+
+  /api/products/{pid}/:
+    get:
+      summary: Obtiene un producto de la BD mediante un ID
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: El id del producto que se desea solicitar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: El producto fue obtenido correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+    put:
+      summary: Actualiza un campo de un producto existente en la DB
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+    delete:
+      summary: Inhabilita un producto existente en la DB
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/requestBodies/updateProduct"
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado por mongo
+        code:
+          type: string
+          description: El código del producto, campo indexado
+        category:
+          type: string
+          description: La categoría del producto
+        thumbnails:
+          type: array
+          description: La imagen del producto
+        description:
+          type: string
+          description: La descripción del producto
+        price:
+          type: number
+          description: El precio del producto
+        status:
+          type: boolean
+          description: El status del producto (activo / inactivo)
+        stock:
+          type: number
+          description: El stock del producto
+        owner:
+          type: object
+          description: El creador del producto, campo único
+      example:
+        _id: ObjectId("asdlshdgñhrsg903485")
+        code: abc123
+        category: Prótesis
+        thumbnails: [imagen1.jpg]
+        title: Prótesis Completa
+        description: La solución completa a cada caso que se presenta para poder disfrutar de una masticación adecuada.
+        price: 2000
+        status: true
+        stock: 10
+        owner: ObjectId("asdlshdgñhrsg903485")
+
+  requestBodies:
+    updateProduct:
+      type: object
+      properties:
+        code:
+          type: string
+          description: El código del producto, campo indexado
+        category:
+          type: string
+          description: La categoría del producto
+        thumbnails:
+          type: array
+          description: La imagen del producto
+        description:
+          type: string
+          description: La descripción del producto
+        price:
+          type: number
+          description: El precio del producto
+        status:
+          type: boolean
+          description: El status del producto (activo / inactivo)
+        stock:
+          type: number
+          description: El stock del producto
+        owner:
+          type: object
+          description: El creador del producto, campo único
+      example:
+        code: abc123212
+        category: Prótesis
+        thumbnails: ["https://picsum.photos/300/200"]
+        title: Producto Nuevo 1
+        description: Descripción nuevo producto
+        price: 1500
+        stock: 13

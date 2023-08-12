@@ -1,0 +1,19 @@
+<script
+	defer
+	src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js "
+></script>
+<script defer src="/socket.io/socket.io.js"></script>
+<script defer src="/static/js/chat.js"></script>
+
+<h1 class="display-1">
+	<div class="display-1--intro">Chat</div>
+</h1>
+<div>
+	<p class="display-1--subtitle">Historial de mensajes</p>
+	<div id="messageLog"></div>
+</div>
+<div>
+	<p class="display-1--subtitle">Escribe un mensaje</p>
+	<input type="text" id="chatBox" />
+	<button id="submitMessage" type="submit">Enviar</button>
+</div>

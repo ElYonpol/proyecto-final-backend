@@ -1,0 +1,9 @@
+const EErrors = {
+	CART_PURCHASING_ERROR: 1,
+	CART_EMPTY_ERROR: 2,
+	ROUTING_ERROR: 3,
+	INVALID_TYPE_ERROR: 4,
+	DATABASE_ERROR: 5,
+};
+
+module.exports = EErrors;
