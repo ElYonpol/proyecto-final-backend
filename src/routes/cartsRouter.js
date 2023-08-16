@@ -8,9 +8,7 @@ const {
 	getCart,
 	createCart,
 	addProductToCartbyId,
-	updateProductsByCartId,
 	deleteProductFromCart,
-	updateProductFromCart,
 	deleteCart,
 	finalizePurchase,
 } = new CartController();
@@ -27,14 +25,8 @@ cartsRouter.post("/", createCart);
 // POST http://localhost:8080/api/carts/:cid/products/:pid
 cartsRouter.post("/:cid/products/:pid", addProductToCartbyId);
 
-// PUT http://localhost:8080/api/carts/:cid
-cartsRouter.put("/:cid", updateProductsByCartId);
-
 // DELETE http://localhost:8080/api/carts/:cid/products/:pid
 cartsRouter.delete("/:cid/products/:pid", deleteProductFromCart);
-
-// PUT http://localhost:8080/api/carts/:cid/products/:pid
-cartsRouter.put("/:cid/products/:pid", updateProductFromCart);
 
 // DELETE http://localhost:8080/api/carts/:cid
 cartsRouter.delete("/:cid", deleteCart);

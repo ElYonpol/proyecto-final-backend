@@ -55,7 +55,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#components/requestBodies/updateProductsByCartId"
+              $ref: "#components/requestBodies/addProductToCartbyId"
     delete:
       summary: Borra un carrito existente en la DB
       tags:
@@ -134,7 +134,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#components/requestBodies/updateProductsByCartId"
+              $ref: "#components/requestBodies/addProductToCartbyId"
     delete:
       summary: Borra un producto de un carrito existente en la DB
       tags:
@@ -182,15 +182,15 @@ components:
         quantity: 1
 
   requestBodies:
-    updateProductsByCartId:
+    addProductToCartbyId:
       type: object
       properties:
-        pid:
+        cid:
           type: string
-          description: El ID de cada producto en el carrito
-        quantity:
-          type: number
-          description: La cantidad de cada producto en el carrito
+          description: El ID del carrito
+        products:
+          type: array
+          description: El ID de los productos a agregar al carrito
       example:
-        pid: ObjectId("asdsgdhhdgñhrsg45565")
-        quantity: 2
+        cid: ObjectId("asdsgdhhdgñhrsg45565")
+        products: [ObjectId("asdsgdhhdgñhrsg45565"), ObjectId("asdsgdhhdgñhrsg65598"), ...]

@@ -103,35 +103,6 @@ class CartController {
 		}
 	};
 
-	updateProductsByCartId = async (req, res) => {
-		try {
-			const cid = req.params.cid;
-			const newProducts = req.body;
-			const resp = await cartService.updateProductsByCartId(cid, newProducts);
-			res.status(201).json({ status: "success", payload: resp });
-		} catch (error) {
-			res.status(404).json({
-				status: "error",
-				payload: { error: error, message: error.message },
-			});
-		}
-	};
-
-	updateProductFromCart = async (req, res) => {
-		try {
-			const cid = req.params.cid;
-			const pid = req.params.pid;
-			const { quantity } = req.body;
-			const resp = await cartService.updateProductFromCart(cid, pid, quantity);
-			res.status(201).json({ status: "success", payload: resp });
-		} catch (error) {
-			res.status(404).json({
-				status: "error",
-				payload: { error: error, message: error.message },
-			});
-		}
-	};
-
 	finalizePurchase = async (req, res) => {
 		try {
 			const cid = req.params.cid;
