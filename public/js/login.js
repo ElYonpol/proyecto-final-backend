@@ -6,12 +6,10 @@ loginForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
 	const data = new FormData(loginForm);
-	console.log("data es: ", data);
 	const obj = {};
 	data.forEach((value, key) => {
 		obj[key] = value;
 	});
-	console.log("obj es: ", obj);
 
 	await fetch("http://localhost:8080/api/sessions/login", {
 		method: "POST",
@@ -24,8 +22,9 @@ loginForm.addEventListener("submit", async (event) => {
 			return response.json();
 		})
 		.then((response) => {
+			console.log("response es:", response);
 			// localStorage.setItem("token", response.token);
-			console.log("token es: ", response.token);
+			// console.log("token es: ", response.token);
 		})
 		.catch((error) => {
 			return console.error(error);
