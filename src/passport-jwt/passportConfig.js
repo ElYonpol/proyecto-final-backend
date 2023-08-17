@@ -3,10 +3,10 @@ const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
 const { Strategy, ExtractJwt } = require("passport-jwt");
 const { userService, cartService } = require("../service/service.js");
+const { cartMgr } = require("../dao/mongo/managers/cartsManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const { commander } = require("../utils/commander.js");
 const { logger } = require("../utils/logger.js");
-
 const { mode } = commander.opts();
 
 require("dotenv").config({
@@ -50,31 +50,36 @@ const initializePassport = () => {
 		new LocalStrategy(
 			{
 				passReqToCallback: true, // acceso al req
-				usernameField: "email",
+				usernameField: "email", //el campo username será el email
 			},
 			async (req, username, password, done) => {
 				try {
 					const { first_name, last_name } = req.body;
 					// buscar el usuario en la base de datos
-					let user = await userService.getByEmail(username); //
-					logger.info({ user });
-					// done si  hay usuario
-					if (user) {
+					console.log(
+						"Nombre y Apellido + email:",
+						first_name,
+						last_name,
+						username
+					);
+					let user = await userService.getByEmail(username);
+					logger.info("El usuario es:", user[0]);
+					if (user.length) {
 						logger.error("El usuario ya existe");
 						return done(null, false);
 					}
 					// hash password
 					const hashedPassword = await createHash(password);
 					// crear carrito y usuario
-					let cart = await cartService.createItem();
-					logger.info("El cart creado es: ", cart);
+					 let emptyCart = await cartMgr.create({ products: []});
+					logger.info("El cart creado es: ", emptyCart[0]);
 					let newUser = {
 						first_name,
 						last_name,
 						email: username,
 						username,
 						password: hashedPassword,
-						cart,
+						cart: emptyCart._id,
 					};
 
 					let result = await userService.createItem(newUser);
@@ -89,31 +94,25 @@ const initializePassport = () => {
 
 	passport.use(
 		"login",
-		new LocalStrategy(
-			{
-				// passReqToCallback: true,
-				// usernameField: "email",
-			},
-			async (username, password, done) => {
-				try {
-					let user = await userService.getByUsername(username);
-					console.log("user es:", user)
-					if (!user[0]) {
-						logger.warning("Revisar usuario y contraseña");
-						return done(null, false);
-					}
-					// const isValidPassword = await checkValidPassword({
-					// 	hashedPassword: user[0].password,
-					// 	password,
-					// });
-					// if (!isValidPassword) return done(null, false);
-					done(null, user[0]);
-				} catch (error) {
-					logger.error(error);
-					return done("Error al hacer el login: " + error);
+		new LocalStrategy(async (username, password, done) => {
+			try {
+				let user = await userService.getByUsername(username);
+				console.log("user es:", user);
+				if (!user[0]) {
+					logger.warning("Revisar usuario y contraseña");
+					return done(null, false);
 				}
+				// const isValidPassword = await checkValidPassword({
+				// 	hashedPassword: user[0].password,
+				// 	password,
+				// });
+				// if (!isValidPassword) return done(null, false);
+				done(null, user[0]);
+			} catch (error) {
+				logger.error(error);
+				return done("Error al hacer el login: " + error);
 			}
-		)
+		})
 	);
 
 	passport.use(

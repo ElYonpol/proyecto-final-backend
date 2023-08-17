@@ -3,7 +3,6 @@ const {	productsCreationSchema,	productsUpdatingSchema } = require("../validatio
 const ProductController = require("../controllers/productsController.js");
 const { objectsValidation } = require("../middleware/validator.js");
 const { authRole } = require("../middleware/authMiddleware.js");
-const { authPassport } = require("../passport-jwt/authPassport.js");
 
 const productsRouter = Router();
 

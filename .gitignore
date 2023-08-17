@@ -4,3 +4,4 @@
 .env.production
 .env.zip
 kubeproyectofinal010723.yaml
+errors.log

@@ -1,13 +1,10 @@
 const { Router } = require("express");
 const { userService } = require("../service/service.js");
+const { userMgr } = require("../dao/mongo/managers/usersManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
-const { authPassport } = require("../passport-jwt/authPassport.js");
-const {
-	usersLoginSchema,
-	usersRegisterSchema,
-} = require("../validation/sessionsValidation.js");
+const {	usersLoginSchema, usersRegisterSchema } = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
 
 const sessionsRouter = Router();
@@ -18,11 +15,20 @@ sessionsRouter.get("/login", (req, res) => {
 });
 
 // POST http://localhost:8080/api/sessions/login
-sessionsRouter.post("/login", objectsValidation(usersLoginSchema), authPassport("login"), (req,res) => {
-	// res.json({user: req.user})
-	res.redirect("/products")
-})
-
+sessionsRouter.post(
+	"/login",
+	objectsValidation(usersLoginSchema),
+	passport.authenticate("login", {
+		failureRedirect: "/api/sessions/faillogin",
+	}),
+	async (req, res) => {
+		const presentDate = Date.now();
+		const uid = req.user[0]._id;
+		const userToUpdate = { last_connection: presentDate };
+		await userMgr.update(uid, userToUpdate);
+		res.redirect("/products");
+	}
+);
 
 // GET http://localhost:8080/api/sessions/current
 sessionsRouter.get("/current", (req, res) => {
@@ -48,25 +54,10 @@ sessionsRouter.get("/register", (req, res) => {
 sessionsRouter.post(
 	"/register",
 	objectsValidation(usersRegisterSchema),
-	authPassport("register", (req, res) => {
-		try {
-			res.status(200).json({ status: "success", payload: req.user });
-			// return res.redirect("/login");
-		} catch (error) {
-			res.status(404).json({
-				status: "error session register",
-				payload: {
-					error: error,
-					message: error.message,
-				},
-			});
-		}
-	}
-	// {
-	// 	successRedirect: "/login",
-	// 	failureRedirect: "/api/sessions/failregister",
-	// }
-	)
+	passport.authenticate("register", {
+		successRedirect: "/login",
+		failureRedirect: "/api/sessions/failregister",
+	})
 );
 
 // GET http://localhost:8080/api/sessions/logout

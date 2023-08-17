@@ -49,15 +49,17 @@ const UserSchema = new Schema(
 			unique: true,
 		},
 		last_connection: {
-			type: String,
+			type: Date,
 			required: false,
 		},
-		documents: [
-			{
-				name: String,
-				reference: String,
-			},
-		],
+		documents: {
+			type: [
+				{
+					name: String,
+					reference: String,
+				},
+			],
+		},
 	},
 	{ versionKey: false }
 );

@@ -3,7 +3,6 @@ const {	usersCreationSchema, usersUpdatingSchema } = require("../validation/user
 const UserController = require("../controllers/usersController.js");
 const { usersValidation } = require("../middleware/validator.js");
 const { authRole } = require("../middleware/authMiddleware.js");
-const { authPassport } = require("../passport-jwt/authPassport.js");
 const { authToken } = require("../utils/jsonwebtoken.js");
 
 const usersRouter = Router();

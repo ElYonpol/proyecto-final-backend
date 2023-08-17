@@ -13,7 +13,7 @@ class CartDaoMongo {
 		return await this.cartModel.find({ _id: cid }).lean();
 	};
 
-	create = async () => {
+	create = async (_) => {
 		return await cartModel.create({});
 	};
 
