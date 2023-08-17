@@ -4,7 +4,7 @@ const { userMgr } = require("../dao/mongo/managers/usersManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
 const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
-const {	usersLoginSchema, usersRegisterSchema } = require("../validation/sessionsValidation.js");
+const { usersLoginSchema, usersRegisterSchema } = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
 
 const sessionsRouter = Router();
@@ -23,7 +23,9 @@ sessionsRouter.post(
 	}),
 	async (req, res) => {
 		const presentDate = Date.now();
+		console.log("presentDate:", presentDate);
 		const uid = req.user[0]._id;
+		console.log("uid:", uid);
 		const userToUpdate = { last_connection: presentDate };
 		await userMgr.update(uid, userToUpdate);
 		res.redirect("/products");

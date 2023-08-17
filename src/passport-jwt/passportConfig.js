@@ -71,7 +71,7 @@ const initializePassport = () => {
 					// hash password
 					const hashedPassword = await createHash(password);
 					// crear carrito y usuario
-					 let emptyCart = await cartMgr.create({ products: []});
+					let emptyCart = await cartMgr.create({ products: [] });
 					logger.info("El cart creado es: ", emptyCart[0]);
 					let newUser = {
 						first_name,
@@ -97,8 +97,8 @@ const initializePassport = () => {
 		new LocalStrategy(async (username, password, done) => {
 			try {
 				let user = await userService.getByUsername(username);
-				console.log("user es:", user);
-				if (!user[0]) {
+				console.log("user es:", user[0]);
+				if (!user.length) {
 					logger.warning("Revisar usuario y contraseña");
 					return done(null, false);
 				}
@@ -107,9 +107,9 @@ const initializePassport = () => {
 				// 	password,
 				// });
 				// if (!isValidPassword) return done(null, false);
-				done(null, user[0]);
+				done(null, user);
 			} catch (error) {
-				logger.error(error);
+				logger.error("Error al hacer el login: ", error);
 				return done("Error al hacer el login: " + error);
 			}
 		})
