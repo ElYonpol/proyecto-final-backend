@@ -19,12 +19,11 @@ loginForm.addEventListener("submit", async (event) => {
 		body: JSON.stringify(obj),
 	})
 		.then((response) => {
-			return response.json();
-		})
-		.then((response) => {
-			console.log("response es:", response);
-			// localStorage.setItem("token", response.token);
-			// console.log("token es: ", response.token);
+			if (response.status === 200 && response.redirected) {
+				window.location.replace("/products");
+			} else {
+				console.log(response);
+			}
 		})
 		.catch((error) => {
 			return console.error(error);

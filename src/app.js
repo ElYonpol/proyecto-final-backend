@@ -8,6 +8,7 @@ const { initializePassport } = require("./passport-jwt/passportConfig.js");
 const passport = require("passport");
 const cors = require("cors");
 const { addLogger, logger } = require("./utils/logger.js");
+const session = require("express-session");
 // const { processFunction } = require("./utils/process.js");
 
 const app = express();
@@ -27,11 +28,6 @@ app.set("view engine", "handlebars");
 app.use(addLogger);
 // logger config _______________________________________________________
 
-// passport config _______________________________________________________
-initializePassport();
-app.use(passport.initialize());
-// passport config _______________________________________________________
-
 // process config _______________________________________________________
 // processFunction()
 // process config _______________________________________________________
@@ -44,6 +40,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
+// passport y session config _______________________________________________________
+initializePassport();
+app.use(passport.initialize());
+app.use(
+	session({
+		secret: "secret_key",
+		resave: true,
+		saveUninitialized: true,
+	})
+);
+// passport y session config _______________________________________________________
 
 // Routes config _______________________________________________________
 app.use(routerApp);

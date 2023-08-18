@@ -1,7 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github2");
-const { Strategy, ExtractJwt } = require("passport-jwt");
 const { userService, cartService } = require("../service/service.js");
 const { cartMgr } = require("../dao/mongo/managers/cartsManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
@@ -16,30 +15,34 @@ require("dotenv").config({
 let GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 let GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
-const JWTStrategy = Strategy;
-const ExtractJWT = ExtractJwt;
-
-const cookieExtractor = (req) => {
-	let token = null;
-	if (req && req.cookies) {
-		token = req.cookies(process.env.COOKIE_NAME);
-	}
-	return token;
-};
-
 const initializePassport = () => {
 	passport.use(
-		"jwt", // Es el nombre de la estrategia
-		new JWTStrategy(
+		"login",
+		new LocalStrategy(
 			{
-				jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-				secretOrKey: process.env.JWT_SECRET_KEY,
+				passReqToCallback: true, // acceso al req
 			},
-			async (jwt_payload, done) => {
+			async (req, username, password, done) => {
 				try {
-					return done(null, jwt_payload);
+					let user = await userService.getByUsername(username);
+					if (!user.length) {
+						logger.warning("Revisar usuario y contraseña");
+						return done(null, false);
+					}
+					// const isValidPassword = await checkValidPassword({
+					// 	hashedPassword: user[0].password,
+					// 	password,
+					// });
+					// if (!isValidPassword) {
+					// 	logger.warning("Revisar usuario y contraseña");
+					// 	return done(null, false)
+					// };
+					console.log("Estoy acá");
+					return done(null, user);
 				} catch (error) {
-					return done(error);
+					console.log({ error });
+					logger.error(error);
+					// return done("Error al hacer el login: " + error);
 				}
 			}
 		)
@@ -63,7 +66,7 @@ const initializePassport = () => {
 						username
 					);
 					let user = await userService.getByEmail(username);
-					logger.info("El usuario es:", user[0]);
+					logger.info("El usuario es:", user);
 					if (user.length) {
 						logger.error("El usuario ya existe");
 						return done(null, false);
@@ -71,8 +74,9 @@ const initializePassport = () => {
 					// hash password
 					const hashedPassword = await createHash(password);
 					// crear carrito y usuario
-					let emptyCart = await cartMgr.create({ products: [] });
-					logger.info("El cart creado es: ", emptyCart[0]);
+					let emptyCart = await cartMgr.create();
+					console.log("El cart creado es: ", emptyCart);
+
 					let newUser = {
 						first_name,
 						last_name,
@@ -83,6 +87,7 @@ const initializePassport = () => {
 					};
 
 					let result = await userService.createItem(newUser);
+					console.log("Result es:", result);
 					return done(null, result);
 				} catch (error) {
 					logger.error(error);
@@ -90,29 +95,6 @@ const initializePassport = () => {
 				}
 			}
 		)
-	);
-
-	passport.use(
-		"login",
-		new LocalStrategy(async (username, password, done) => {
-			try {
-				let user = await userService.getByUsername(username);
-				console.log("user es:", user[0]);
-				if (!user.length) {
-					logger.warning("Revisar usuario y contraseña");
-					return done(null, false);
-				}
-				// const isValidPassword = await checkValidPassword({
-				// 	hashedPassword: user[0].password,
-				// 	password,
-				// });
-				// if (!isValidPassword) return done(null, false);
-				done(null, user);
-			} catch (error) {
-				logger.error("Error al hacer el login: ", error);
-				return done("Error al hacer el login: " + error);
-			}
-		})
 	);
 
 	passport.use(

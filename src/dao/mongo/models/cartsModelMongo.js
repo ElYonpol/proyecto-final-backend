@@ -10,10 +10,12 @@ const CartSchema = new Schema(
 				pid: {
 					type: Schema.Types.ObjectId,
 					ref: "products",
-					unique: true,
+					required: true,
+					// unique: true,
 				},
 				quantity: {
 					type: Number,
+					required: true,
 					default: 1,
 				},
 			},

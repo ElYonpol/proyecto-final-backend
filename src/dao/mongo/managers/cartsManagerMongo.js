@@ -13,16 +13,16 @@ class CartDaoMongo {
 		return await this.cartModel.find({ _id: cid }).lean();
 	};
 
-	create = async (_) => {
-		return await cartModel.create({});
+	create = async () => {
+		return await this.cartModel.create({ products: [] });
 	};
 
 	delete = async (cid) => {
-		return await cartModel.deleteOne({ _id: cid });
+		return await this.cartModel.deleteOne({ _id: cid });
 	};
 
 	addProductToCartbyId = async (cid, products) => {
-		return await cartModel.updateOne({ _id: cid }, { products: products });
+		return await this.cartModel.updateOne({ _id: cid }, { products: products });
 	};
 
 	deleteProductFromCart = async (cid, pid) => {
