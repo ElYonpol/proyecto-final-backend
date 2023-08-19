@@ -24,19 +24,23 @@ const initializePassport = () => {
 			},
 			async (req, username, password, done) => {
 				try {
-					let user = await userService.getByUsername(username);
-					if (!user.length) {
+					let userArray = await userService.getByEmail(username);
+					let user = userArray[0]
+					console.log("user es:", user);
+					if (!user) {
 						logger.warning("Revisar usuario y contraseña");
 						return done(null, false);
 					}
+					console.log("user.password:", user.password);
 					const isValidPassword = await checkValidPassword({
-						hashedPassword: user.password,
 						password,
+						hashedPassword: user.password,
 					});
+					console.log("isValidPassword es:", isValidPassword);
 					if (!isValidPassword) {
 						logger.warning("Revisar usuario y contraseña");
-						return done(null, false)
-					};
+						return done(null, false);
+					}
 					return done(null, user);
 				} catch (error) {
 					logger.error(error);

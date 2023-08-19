@@ -29,7 +29,7 @@ sessionsRouter.post(
 			console.log("Ingreso a async");
 			const presentDate = Date.now();
 			console.log("presentDate:", presentDate);
-			const uid = req.user[0]._id;
+			const uid = req.user._id;
 			console.log("uid:", uid);
 			const userToUpdate = { last_connection: presentDate };
 			console.log("userToUpdate:", userToUpdate);

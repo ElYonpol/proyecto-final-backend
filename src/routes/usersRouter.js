@@ -10,8 +10,8 @@ const usersRouter = Router();
 const { getUsers, getUserByID, createUser, updateUser, deleteUser, changeUserRoleByID, uploadFiles } = new UserController();
 
 // GET http://localhost:8080/api/users
-usersRouter.get("/", authRole(["admin"]), getUsers); // El user/pass debe ser jppe y el role admin
-// usersRouter.get("/", authToken, authRole(["admin"]), getUsers); // El user/pass debe ser jppe y el role admin
+usersRouter.get("/", authRole(["admin"]), getUsers); // El email deber ser admin@admin.com y el pass admin
+// usersRouter.get("/", authToken, authRole(["admin"]), getUsers); // El email deber ser admin@admin.com y el pass admin
 // usersRouter.get("/", getUsers); // Opción sin authToken ni authRole
 
 // GET http://localhost:8080/api/users/:uid
