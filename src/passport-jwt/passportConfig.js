@@ -29,20 +29,18 @@ const initializePassport = () => {
 						logger.warning("Revisar usuario y contraseña");
 						return done(null, false);
 					}
-					// const isValidPassword = await checkValidPassword({
-					// 	hashedPassword: user[0].password,
-					// 	password,
-					// });
-					// if (!isValidPassword) {
-					// 	logger.warning("Revisar usuario y contraseña");
-					// 	return done(null, false)
-					// };
-					console.log("Estoy acá");
+					const isValidPassword = await checkValidPassword({
+						hashedPassword: user.password,
+						password,
+					});
+					if (!isValidPassword) {
+						logger.warning("Revisar usuario y contraseña");
+						return done(null, false)
+					};
 					return done(null, user);
 				} catch (error) {
-					console.log({ error });
 					logger.error(error);
-					// return done("Error al hacer el login: " + error);
+					return done("Error al hacer el login: " + error);
 				}
 			}
 		)
@@ -59,14 +57,7 @@ const initializePassport = () => {
 				try {
 					const { first_name, last_name } = req.body;
 					// buscar el usuario en la base de datos
-					console.log(
-						"Nombre y Apellido + email:",
-						first_name,
-						last_name,
-						username
-					);
 					let user = await userService.getByEmail(username);
-					logger.info("El usuario es:", user);
 					if (user.length) {
 						logger.error("El usuario ya existe");
 						return done(null, false);
@@ -75,7 +66,6 @@ const initializePassport = () => {
 					const hashedPassword = await createHash(password);
 					// crear carrito y usuario
 					let emptyCart = await cartMgr.create();
-					console.log("El cart creado es: ", emptyCart);
 
 					let newUser = {
 						first_name,
@@ -87,7 +77,6 @@ const initializePassport = () => {
 					};
 
 					let result = await userService.createItem(newUser);
-					console.log("Result es:", result);
 					return done(null, result);
 				} catch (error) {
 					logger.error(error);
