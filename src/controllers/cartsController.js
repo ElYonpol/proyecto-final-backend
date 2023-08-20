@@ -1,4 +1,8 @@
-const { cartService, ticketService } = require("../service/service.js");
+const {
+	cartService,
+	ticketService,
+	productService,
+} = require("../service/service.js");
 
 class CartController {
 	getCarts = async (req, res) => {
@@ -115,34 +119,36 @@ class CartController {
 		try {
 			const cid = req.params.cid;
 			const { userEmail } = req.user[0];
+			let productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
 			const productsInPurchase = [];
 			const productsToKeepInCart = [];
 			const totalTicketAmount = 0;
 			// Verifico stock por producto y armo array de productos a comprar
-			for (const item of cart[0].products) {
-				const product = item.pid;
-				const purchaseQuantity = item.quantity;
+			for (let i = 0; i < productsInCart.length; i++) {
+				const product = productsInCart[i];
+				const productInfo = await productService.getItem(product.pid._id);
+				const productStock = productInfo[0].stock;
+				const purchaseQuantity = product.quantity;
 
-				if (product.stock >= purchaseQuantity) {
-					totalTicketAmount += product.pid.price * product.quantity
-					productsInPurchase.push({
-						product: product._id,
-						purchaseQuantity,
+				if (productStock >= purchaseQuantity) {
+					totalTicketAmount += product.price * product.quantity;
+					productsInPurchase.push(product);
+					// Actualizo el stock del producto comprado restando la cantidad comprada del stock actual
+					updatedProductStock = productStock - purchaseQuantity;
+					await productService.updateItem(product.pid._id, {
+						stock: updatedProductStock,
 					});
+				} else {
+					productsToKeepInCart.push(product);
 				}
 			}
+			// Actualizo el carrito con los productos que quedan por falta de stock
+			await cartService.updateCartById(cart[0]._id, productsToKeepInCart);
 
 			// Proceso la compra
 			if (productsInPurchase.length > 0) {
-				// Actualizo el stock de los productos comprados restando la cantidad comprada del stock actual
-				for (const item of productsInPurchase) {
-					const pid = item.product;
-					const purchaseQuantity = item.purchaseQuantity;
-					await productService.updateItem(pid, { $inc: { stock: -purchaseQuantity } });
-				}
-
-				// Genero el ticket - TODO: PENDIENTE AGREGAR ticketCode, totalTicketAmount, purchaser
+				// Genero el ticket de compra
 				const randomTicketNumber = () => {
 					Math.random().toString(36).substring(2, 18);
 				};
@@ -155,15 +161,6 @@ class CartController {
 				};
 				const ticket = await ticketService.createItem(newTicket);
 
-				// Limpio el carrito
-				productsToKeepInCart = cart[0].products.filter((item) => {
-					return !productsInPurchase.find((p) =>
-						p.product.equals(item.product)
-					);
-				});
-				await cartService.updateCartById(cart[0]._id, productsToKeepInCart);
-
-				// Enviar la respuesta
 				res.status(200).json({ status: "success", payload: newTicket });
 			} else {
 				// No se puede realizar la compra, productos con falta de stock
