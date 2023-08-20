@@ -161,11 +161,10 @@ class CartController {
 						p.product.equals(item.product)
 					);
 				});
-				// cart[0].products = productsToKeepInCart;
 				await cartService.updateCartById(cart[0]._id, productsToKeepInCart);
 
 				// Enviar la respuesta
-				res.status(200).json({ ticket });
+				res.status(200).json({ status: "success", payload: newTicket });
 			} else {
 				// No se puede realizar la compra, productos con falta de stock
 				const productIds = cart[0].products.map((item) => item.product);
