@@ -17,7 +17,7 @@ class CartController {
 				.json({ status: "success", payload: limit ? limitedCarts : resp });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error getCarts",
 				payload: { error: error, message: error.message },
 			});
 		}
@@ -30,7 +30,7 @@ class CartController {
 			res.status(200).json({ status: "success", payload: cart });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error getCart",
 				payload: { error: error, message: error.message },
 			});
 		}
@@ -42,7 +42,7 @@ class CartController {
 			res.status(201).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error createCart",
 				payload: { error: error, message: error.message },
 			});
 		}
@@ -55,7 +55,7 @@ class CartController {
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error deleteCart",
 				payload: { error: error, message: error.message },
 			});
 		}
@@ -65,11 +65,13 @@ class CartController {
 		try {
 			const cid = req.params.cid;
 			const pid = req.params.pid;
-			let products = await cartService.getItem(cid);
+			const user = req.user.user;
+			// let arrayProductsInCart = await cartService.getItem(cid);
+			let productsInCart = await cartService.getProductsByCartId(cid);
 			let productExists = false;
 			//Si el producto existe le agrego 1 unidad
-			for (let i = 0; i < products.length; i++) {
-				const product = products[i];
+			for (let i = 0; i < productsInCart.length; i++) {
+				const product = productsInCart[i];
 				if (product.pid._id.toString() === pid) {
 					product.quantity += 1;
 					productExists = true;
@@ -77,13 +79,19 @@ class CartController {
 				}
 			}
 
-			if (!productExists) products = [...products, { pid: pid, quantity: 1 }];
-			const resp = await cartService.addProductToCartbyId(cid, products);
+			if (!productExists)
+				productsInCart = [...productsInCart, { pid: pid, quantity: 1 }];
+
+			const resp = await cartService.addProductToCartbyId(
+				cid,
+				productsInCart,
+				user
+			);
 
 			res.status(201).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error addProductToCartbyId",
 				payload: { error: error, message: error.message },
 			});
 		}
@@ -97,7 +105,7 @@ class CartController {
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error deleteProductFromCart",
 				payload: { error: error, message: error.message },
 			});
 		}
@@ -106,14 +114,18 @@ class CartController {
 	finalizePurchase = async (req, res) => {
 		try {
 			const cid = req.params.cid;
+			const { userEmail } = req.user[0];
 			const cart = await cartService.getItem(cid);
 			const productsInPurchase = [];
+			const productsToKeepInCart = [];
+			const totalTicketAmount = 0;
 			// Verifico stock por producto y armo array de productos a comprar
 			for (const item of cart[0].products) {
 				const product = item.pid;
 				const purchaseQuantity = item.quantity;
 
 				if (product.stock >= purchaseQuantity) {
+					totalTicketAmount += product.pid.price * product.quantity
 					productsInPurchase.push({
 						product: product._id,
 						purchaseQuantity,
@@ -127,22 +139,30 @@ class CartController {
 				for (const item of productsInPurchase) {
 					const pid = item.product;
 					const purchaseQuantity = item.purchaseQuantity;
-					const resp = await productService.updateItem(pid, {
-						$inc: { stock: -purchaseQuantity },
-					});
+					await productService.updateItem(pid, { $inc: { stock: -purchaseQuantity } });
 				}
 
-				// Genero el ticket - PENDIENTE AGREGAR ticketCode, totalTicketAmount, purchaser
-				const ticket = await ticketService.createItem(productsInPurchase);
+				// Genero el ticket - TODO: PENDIENTE AGREGAR ticketCode, totalTicketAmount, purchaser
+				const randomTicketNumber = () => {
+					Math.random().toString(36).substring(2, 18);
+				};
+				const newTicket = {
+					ticketCode: randomTicketNumber(),
+					purchaseDateTime: Date.now(),
+					totalTicketAmount: totalTicketAmount,
+					purchaser: userEmail,
+					products: productsInPurchase,
+				};
+				const ticket = await ticketService.createItem(newTicket);
 
 				// Limpio el carrito
-				const productsToKeepInCart = cart[0].products.filter((item) => {
+				productsToKeepInCart = cart[0].products.filter((item) => {
 					return !productsInPurchase.find((p) =>
 						p.product.equals(item.product)
 					);
 				});
-				cart[0].products = productsToKeepInCart;
-				await cart.save();
+				// cart[0].products = productsToKeepInCart;
+				await cartService.updateCartById(cart[0]._id, productsToKeepInCart);
 
 				// Enviar la respuesta
 				res.status(200).json({ ticket });

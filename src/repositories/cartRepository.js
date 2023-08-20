@@ -12,6 +12,12 @@ class CartRepository extends RepositoryGeneric {
 	async deleteProductFromCart(cid, pid) {
 		return await this.dao.deleteProductFromCart(cid, pid);
 	}
+	async getProductsByCartId(cid) {
+		return await this.dao.getProductsByCartId(cid);
+	}
+	async updateCartById(cid, products) {
+		return await this.dao.updateCartById(cid, products);
+	}
 }
 
 module.exports = CartRepository;

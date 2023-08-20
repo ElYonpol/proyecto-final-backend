@@ -8,23 +8,23 @@ const TicketSchema = new Schema(
 		ticketCode: {
 			type: String,
 			index: true,
-			unique: true,
-			required: true,
 		},
 		purchaseDateTime: {
 			type: Date,
-			default: Date.now(),
-			required: true,
 		},
 		totalTicketAmount: {
 			type: Number,
-			required: true,
 		},
 		purchaser: {
 			type: Schema.Types.ObjectId,
 			ref: "users",
-			unique: true,
 		},
+		products: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "products",
+			},
+		],
 		status: {
 			type: Boolean,
 			default: true,

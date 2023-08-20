@@ -18,18 +18,18 @@ class CartDaoMongo {
 	};
 
 	delete = async (cid) => {
-		return await this.cartModel.deleteOne({ _id: cid });
+		return await cartModel.updateOne({ _id: cid }, { products: [] });
 	};
 
-	addProductToCartbyId = async (cid, products) => {
+	addProductToCartbyId = async (cid, products, user) => {
 		return await this.cartModel.updateOne({ _id: cid }, { products: products });
 	};
 
 	deleteProductFromCart = async (cid, pid) => {
 		const cart = await this.getById(cid);
-		const products = cart[0].products;
+		const productsInCart = cart[0].products;
 
-		const productFoundIndex = products.findIndex(
+		const productFoundIndex = productsInCart.findIndex(
 			(product) => product.pid._id.toString() === pid
 		);
 
@@ -39,9 +39,9 @@ class CartDaoMongo {
 			);
 		}
 
-		products.splice(productFoundIndex, 1);
+		productsInCart.splice(productFoundIndex, 1);
 
-		return await cartModel.updateOne({ _id: cid }, { products: products });
+		return await cartModel.updateOne({ _id: cid }, { products: productsInCart });
 	};
 
 	getProductsByCartId = async (cid) => {
@@ -49,8 +49,8 @@ class CartDaoMongo {
 		return cart[0].products ?? [];
 	};
 
-	deleteAllProductsByCartId = async (cid) => {
-		return await cartModel.updateOne({ _id: cid }, { products: [] });
+	updateCartById = async (cid, products) => {
+		return await cartModel.updateOne({ _id: cid }, { products: products });
 	};
 }
 
