@@ -24,7 +24,7 @@ const initializePassport = () => {
 			},
 			async (req, username, password, done) => {
 				try {
-					let userArray = await userService.getByEmail(username);
+					let userArray = await userService.getByEmail(username.toLowerCase());
 					let user = userArray[0];
 					if (!user) {
 						logger.warning("Revisar usuario y contraseña");
@@ -58,7 +58,7 @@ const initializePassport = () => {
 				try {
 					const { first_name, last_name } = req.body;
 					// buscar el usuario en la base de datos
-					let user = await userService.getByEmail(username);
+					let user = await userService.getByEmail(username.toLowerCase());
 					if (user.length) {
 						logger.error("El usuario ya existe");
 						return done(null, false);

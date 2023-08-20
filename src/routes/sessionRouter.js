@@ -76,7 +76,7 @@ sessionsRouter.get("/logout", (req, res) => {
 		});
 	} catch (error) {
 		res.status(404).json({
-			status: "error",
+			status: "error en logout",
 			payload: {
 				error: error,
 				message: error.message,

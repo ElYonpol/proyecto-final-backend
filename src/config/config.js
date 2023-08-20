@@ -11,6 +11,7 @@ const objConfig = {
 	adminName: process.env.ADMIN_NAME,
 	adminPassword: process.env.ADMIN_PASSWORD,
 	jwtSecretKey: process.env.JWT_SECRET_KEY,
+	sessionSecretKey: process.env.SESSION_SECRET_KEY,
 	cookieName: process.env.COOKIE_NAME,
 	persistence: process.env.PERSISTENCE,
 	github_client_ID: process.env.GITHUB_CLIENT_ID,

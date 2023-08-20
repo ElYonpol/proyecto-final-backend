@@ -9,8 +9,10 @@ const passport = require("passport");
 const cors = require("cors");
 const { addLogger, logger } = require("./utils/logger.js");
 const session = require("express-session");
+const pkg = require("connect-mongo")
+const { create } = pkg;
+const { objConfig } = require("./config/config.js");
 // const { processFunction } = require("./utils/process.js");
-
 const app = express();
 
 // MIDDLEWARES START =================================================
@@ -41,15 +43,31 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
 // passport y session config _______________________________________________________
-initializePassport();
-app.use(passport.initialize());
+// app.use(
+// 	session({
+// 		secret: process.env.SESSION_SECRET_KEY,
+// 		resave: true,
+// 		saveUninitialized: true,
+// 	})
+// );
 app.use(
 	session({
-		secret: process.env.SESSION_SECRET_KEY,
+		store: create({
+			mongoUrl: objConfig.mongoURL,
+			mongoOptions: {
+				useNewUrlParser: true,
+				useUnifiedTopology: true,
+			},
+			ttl: 100000000 * 24,
+		}),
+		secret: objConfig.sessionSecretKey,
 		resave: true,
 		saveUninitialized: true,
 	})
 );
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 // passport y session config _______________________________________________________
 
 // Routes config _______________________________________________________
