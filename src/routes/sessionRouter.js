@@ -26,13 +26,9 @@ sessionsRouter.post(
 	}),
 	async (req, res) => {
 		try {
-			console.log("Ingreso a async");
 			const presentDate = Date.now();
-			console.log("presentDate:", presentDate);
 			const uid = req.user._id;
-			console.log("uid:", uid);
 			const userToUpdate = { last_connection: presentDate };
-			console.log("userToUpdate:", userToUpdate);
 			await userMgr.update(uid, userToUpdate);
 			res.redirect("/products");
 		} catch (error) {

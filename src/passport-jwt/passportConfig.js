@@ -25,18 +25,15 @@ const initializePassport = () => {
 			async (req, username, password, done) => {
 				try {
 					let userArray = await userService.getByEmail(username);
-					let user = userArray[0]
-					console.log("user es:", user);
+					let user = userArray[0];
 					if (!user) {
 						logger.warning("Revisar usuario y contraseña");
 						return done(null, false);
 					}
-					console.log("user.password:", user.password);
 					const isValidPassword = await checkValidPassword({
 						password,
 						hashedPassword: user.password,
 					});
-					console.log("isValidPassword es:", isValidPassword);
 					if (!isValidPassword) {
 						logger.warning("Revisar usuario y contraseña");
 						return done(null, false);
