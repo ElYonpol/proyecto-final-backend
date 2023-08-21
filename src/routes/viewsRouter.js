@@ -164,8 +164,4 @@ router.get("/passwordReset/:uid", async (req, res) => {
 	}
 });
 
-// router.get("*", async (req, res) => {
-// 	res.render("notFound", {});
-// });
-
 module.exports = router;

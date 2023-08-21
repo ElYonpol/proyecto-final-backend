@@ -122,7 +122,7 @@ header {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-    padding: 5px;
+	padding: 5px;
 	padding: 5px;
 }
 
@@ -147,12 +147,24 @@ header {
 	font-weight: bold;
 }
 
-a.nav__link:hover {
+.btn--transparent {
+	background-color: transparent;
+	text-transform: uppercase;
+	font-weight: bold;
+	width: fit-content;
+	border: none;
+	color: #fff7ef;
+	padding: 0;
+	text-shadow: 2px 2px 4px black;
+}
+
+a.nav__link:hover,
+.btn--transparent:hover {
 	color: #f85d5a;
 	text-shadow: 2px 2px 4px #6f756b;
 }
 
-#messageLog{
+#messageLog {
 	background: rgba(255, 255, 255, 0.5);
 }
 
@@ -258,6 +270,16 @@ label.light {
 .image {
 	box-shadow: -1px 1px 7px 0px rgba(0, 0, 0, 0.75);
 	border-radius: 4px;
+}
+
+#logoutForm {
+	width: 100%;
+	min-width: 0%;
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border-radius: 0px;
 }
 
 /* Estructura GRID responsive de las tarjetas - COMPRAS*/

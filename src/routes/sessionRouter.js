@@ -75,7 +75,7 @@ sessionsRouter.get("/logout", (req, res) => {
 	try {
 		req.session.destroy((err) => {
 			if (err) return res.send({ status: "Logout error", message: err });
-			res.send("Logout realizado con éxito.");
+			return res.status(307).redirect("/login");
 		});
 	} catch (error) {
 		res.status(404).json({
