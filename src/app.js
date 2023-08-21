@@ -52,7 +52,6 @@ app.use(
 				useNewUrlParser: true,
 				useUnifiedTopology: true,
 			},
-			// ttl: 10000,
 		}),
 		secret: objConfig.sessionSecretKey,
 		cookie: { maxAge: Number(objConfig.sessionCookieMaxAge) },

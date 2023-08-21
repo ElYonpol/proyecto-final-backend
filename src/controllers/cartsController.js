@@ -70,9 +70,15 @@ class CartController {
 			const cid = req.params.cid;
 			const pid = req.params.pid;
 			const user = req.user.user;
-			// let arrayProductsInCart = await cartService.getItem(cid);
+			// Verifico si el producto no fue creado por el usuario intentando agregarlo al carrito
+			const productToAdd = await productService.getItem(pid);
+			if (req.user[0]._id === productToAdd[0].owner) {
+				throw new Error("El producto es de su propiedad");
+			}
+
 			let productsInCart = await cartService.getProductsByCartId(cid);
 			let productExists = false;
+
 			//Si el producto existe le agrego 1 unidad
 			for (let i = 0; i < productsInCart.length; i++) {
 				const product = productsInCart[i];
@@ -118,21 +124,24 @@ class CartController {
 	finalizePurchase = async (req, res) => {
 		try {
 			const cid = req.params.cid;
+			// const cid = req.user.cart;
 			const { userEmail } = req.user[0];
-			let productsInCart = await cartService.getProductsByCartId(cid);
+			const productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
-			const productsInPurchase = [];
-			const productsToKeepInCart = [];
-			const totalTicketAmount = 0;
+			let productsInPurchase = [];
+			let productsToKeepInCart = [];
+			let ticketAmount = 0;
+			let updatedProductStock = 0;
+			let purchaseQuantity = 0;
 			// Verifico stock por producto y armo array de productos a comprar
 			for (let i = 0; i < productsInCart.length; i++) {
 				const product = productsInCart[i];
 				const productInfo = await productService.getItem(product.pid._id);
 				const productStock = productInfo[0].stock;
-				const purchaseQuantity = product.quantity;
+				purchaseQuantity = product.quantity;
 
 				if (productStock >= purchaseQuantity) {
-					totalTicketAmount += product.price * product.quantity;
+					ticketAmount += productInfo[0].price * product.quantity;
 					productsInPurchase.push(product);
 					// Actualizo el stock del producto comprado restando la cantidad comprada del stock actual
 					updatedProductStock = productStock - purchaseQuantity;
@@ -155,14 +164,22 @@ class CartController {
 				const newTicket = {
 					ticketCode: randomTicketNumber(),
 					purchaseDateTime: Date.now(),
-					totalTicketAmount: totalTicketAmount,
+					totalTicketAmount: ticketAmount,
 					purchaser: userEmail,
 					products: productsInPurchase,
 				};
 				const ticket = await ticketService.createItem(newTicket);
+				console.log("Ticket creado:", { ticket });
 
 				res.status(200).json({ status: "success", payload: newTicket });
 			} else {
+				// Carrito vacío
+				if (productsInPurchase.length === 0) {
+					res.status(400).json({
+						error: "Error: El carrito está vacío",
+						productIds,
+					});
+				}
 				// No se puede realizar la compra, productos con falta de stock
 				const productIds = cart[0].products.map((item) => item.product);
 				res.status(400).json({
@@ -173,7 +190,7 @@ class CartController {
 			}
 		} catch (error) {
 			res.status(404).json({
-				status: "error",
+				status: "error finalizePurchase",
 				payload: { error: error, message: error.message },
 			});
 		}
