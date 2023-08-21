@@ -26,6 +26,9 @@ sessionsRouter.post(
 	}),
 	async (req, res) => {
 		try {
+			const sessionCookie = req.session.cookie;
+			const sessionUserId = req.session.passport.user
+
 			const presentDate = Date.now();
 			const uid = req.user._id;
 			const userToUpdate = { last_connection: presentDate };

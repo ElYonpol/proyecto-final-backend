@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const CartController = require("../controllers/cartsController.js");
+const { authRole } = require("../middleware/authMiddleware.js");
 
 const cartsRouter = Router();
 
@@ -14,7 +15,7 @@ const {
 } = new CartController();
 
 // GET http://localhost:8080/api/carts
-cartsRouter.get("/", getCarts);
+cartsRouter.get("/", authRole(["admin"]), getCarts);
 
 // GET http://localhost:8080/api/carts/:cid
 cartsRouter.get("/:cid", getCart);

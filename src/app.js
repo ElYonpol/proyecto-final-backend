@@ -9,7 +9,7 @@ const passport = require("passport");
 const cors = require("cors");
 const { addLogger, logger } = require("./utils/logger.js");
 const session = require("express-session");
-const pkg = require("connect-mongo")
+const pkg = require("connect-mongo");
 const { create } = pkg;
 const { objConfig } = require("./config/config.js");
 // const { processFunction } = require("./utils/process.js");
@@ -42,14 +42,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.resolve(__dirname, "../public")));
+
 // passport y session config _______________________________________________________
-// app.use(
-// 	session({
-// 		secret: process.env.SESSION_SECRET_KEY,
-// 		resave: true,
-// 		saveUninitialized: true,
-// 	})
-// );
 app.use(
 	session({
 		store: create({
@@ -58,11 +52,12 @@ app.use(
 				useNewUrlParser: true,
 				useUnifiedTopology: true,
 			},
-			ttl: 100000000 * 24,
+			// ttl: 10000,
 		}),
 		secret: objConfig.sessionSecretKey,
-		resave: true,
+		cookie: { maxAge: Number(objConfig.sessionCookieMaxAge) },
 		saveUninitialized: true,
+		resave: true,
 	})
 );
 initializePassport();
