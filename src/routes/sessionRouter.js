@@ -3,7 +3,6 @@ const { userService } = require("../service/service.js");
 const { userMgr } = require("../dao/mongo/managers/usersManagerMongo.js");
 const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
 const passport = require("passport");
-const { generateToken, authToken } = require("../utils/jsonwebtoken.js");
 const {
 	usersLoginSchema,
 	usersRegisterSchema,
@@ -26,8 +25,11 @@ sessionsRouter.post(
 	}),
 	async (req, res) => {
 		try {
+			console.log("User en sessionRouter es:", req.user);
+			console.log("user.cart de sessionRouter es:", req.user.cart);
+			console.log("user.email de sessionRouter es:", req.user.email);
 			const sessionCookie = req.session.cookie;
-			const sessionUserId = req.session.passport.user
+			const sessionUserId = req.session.passport.user;
 
 			const presentDate = Date.now();
 			const uid = req.user._id;

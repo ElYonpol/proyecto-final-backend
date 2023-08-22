@@ -124,8 +124,10 @@ class CartController {
 	finalizePurchase = async (req, res) => {
 		try {
 			const cid = req.params.cid;
-			// const cid = req.user.cart;
-			const { userEmail } = req.user[0];
+			const cidUser = req.user.cart;
+			console.log("cid en cartController:", cid, "cidUser en cartController:", cidUser)
+			const userEmail = req.user.email;
+			console.log("userEmail en cartController:", userEmail)
 			const productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
 			let productsInPurchase = [];

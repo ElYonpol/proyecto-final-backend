@@ -38,6 +38,9 @@ const initializePassport = () => {
 						logger.warning("Revisar usuario y contraseña");
 						return done(null, false);
 					}
+					console.log("User de passportConfig es:", user);
+					console.log("user.cart de passportConfig es:", user.cart)
+					console.log("user.email de passportConfig es:", user.email)
 					return done(null, user);
 				} catch (error) {
 					logger.error(error);
