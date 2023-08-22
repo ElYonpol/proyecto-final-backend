@@ -29,7 +29,8 @@ class CartController {
 
 	getCart = async (req, res) => {
 		try {
-			const cid = req.params.cid;
+			// const cid = req.params.cid;
+			const cid = req.user[0].cart.toString();
 			const cart = await cartService.getItem(cid);
 			res.status(200).json({ status: "success", payload: cart });
 		} catch (error) {
@@ -54,7 +55,8 @@ class CartController {
 
 	deleteCart = async (req, res) => {
 		try {
-			const cid = req.params.cid;
+			// const cid = req.params.cid;
+			const cid = req.user[0].cart.toString();
 			const resp = await cartService.deleteItem(cid);
 			res.status(200).json({ status: "success", payload: resp });
 		} catch (error) {
@@ -67,9 +69,10 @@ class CartController {
 
 	addProductToCartbyId = async (req, res) => {
 		try {
-			const cid = req.params.cid;
+			// const cid = req.params.cid;
+			const cid = req.user[0].cart.toString();
 			const pid = req.params.pid;
-			const user = req.user.user;
+			const user = req.user[0]
 			// Verifico si el producto no fue creado por el usuario intentando agregarlo al carrito
 			const productToAdd = await productService.getItem(pid);
 			if (req.user[0]._id === productToAdd[0].owner) {
@@ -109,7 +112,8 @@ class CartController {
 
 	deleteProductFromCart = async (req, res) => {
 		try {
-			const cid = req.params.cid;
+			// const cid = req.params.cid;
+			const cid = req.user[0].cart.toString();
 			const pid = req.params.pid;
 			const resp = await cartService.deleteProductFromCart(cid, pid);
 			res.status(200).json({ status: "success", payload: resp });
@@ -123,11 +127,12 @@ class CartController {
 
 	finalizePurchase = async (req, res) => {
 		try {
-			const cid = req.params.cid;
-			const cidUser = req.user.cart;
-			console.log("cid en cartController:", cid, "cidUser en cartController:", cidUser)
-			const userEmail = req.user.email;
-			console.log("userEmail en cartController:", userEmail)
+			// console.log("req.user en cartController:", req.user);
+			// const cid = req.params.cid;
+			const cid = req.user[0].cart.toString();
+			// console.log("cid en cartController:", cid, "cidUser en cartController:", cidUser);
+			const userEmail = req.user[0].email;
+			// console.log("userEmail en cartController:", userEmail);
 			const productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
 			let productsInPurchase = [];

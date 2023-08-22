@@ -62,7 +62,8 @@ router.get("/carts", async (req, res) => {
 });
 
 router.get("/carts/:cid", async (req, res) => {
-	const cid = req.params.cid;
+	// const cid = req.params.cid;
+	const cid = req.user[0].cart.toString();
 	const products = await cartService.getItem(cid);
 	res.render("carts", {
 		style: "index.css",
