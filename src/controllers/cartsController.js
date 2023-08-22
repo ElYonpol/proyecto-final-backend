@@ -72,7 +72,7 @@ class CartController {
 			// const cid = req.params.cid;
 			const cid = req.user[0].cart.toString();
 			const pid = req.params.pid;
-			const user = req.user[0]
+			const user = req.user[0];
 			// Verifico si el producto no fue creado por el usuario intentando agregarlo al carrito
 			const productToAdd = await productService.getItem(pid);
 			if (req.user[0]._id === productToAdd[0].owner) {
@@ -127,12 +127,9 @@ class CartController {
 
 	finalizePurchase = async (req, res) => {
 		try {
-			// console.log("req.user en cartController:", req.user);
-			// const cid = req.params.cid;
 			const cid = req.user[0].cart.toString();
-			// console.log("cid en cartController:", cid, "cidUser en cartController:", cidUser);
 			const userEmail = req.user[0].email;
-			// console.log("userEmail en cartController:", userEmail);
+			const userId = req.user[0]._id;
 			const productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
 			let productsInPurchase = [];
@@ -168,11 +165,14 @@ class CartController {
 				const randomTicketNumber = () => {
 					Math.random().toString(36).substring(2, 18);
 				};
+				let newTicketCode = randomTicketNumber();
+				console.log("newTicketCode:", newTicketCode);
+
 				const newTicket = {
-					ticketCode: randomTicketNumber(),
+					ticketCode: newTicketCode,
 					purchaseDateTime: Date.now(),
 					totalTicketAmount: ticketAmount,
-					purchaser: userEmail,
+					purchaser: userId,
 					products: productsInPurchase,
 				};
 				const ticket = await ticketService.createItem(newTicket);
