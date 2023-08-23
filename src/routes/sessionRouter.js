@@ -8,6 +8,7 @@ const {
 	usersRegisterSchema,
 } = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
+const Swal = require("sweetalert2");
 
 const sessionsRouter = Router();
 
@@ -25,17 +26,17 @@ sessionsRouter.post(
 	}),
 	async (req, res) => {
 		try {
-			console.log("User en sessionRouter es:", req.user);
-			console.log("user.cart de sessionRouter es:", req.user.cart);
-			console.log("user.email de sessionRouter es:", req.user.email);
 			const sessionCookie = req.session.cookie;
 			const sessionUserId = req.session.passport.user;
+			console.log(`Usuario ${req.user.first_name} ha iniciado sesión.`);
 
 			const presentDate = Date.now();
 			const uid = req.user._id;
 			const userToUpdate = { last_connection: presentDate };
 			await userMgr.update(uid, userToUpdate);
-			res.redirect("/products");
+			res.json({ success: true, username: req.user.first_name })
+			// El redireccionamiento lo genero desde el front con el sweet alert del login.js
+			// res.redirect("/products");
 		} catch (error) {
 			console.log({ error });
 		}

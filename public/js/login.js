@@ -18,19 +18,20 @@ loginForm.addEventListener("submit", async (event) => {
 		},
 		body: JSON.stringify(obj),
 	})
+		.then((response) => response.json())
 		.then((response) => {
-			if (response.status === 200 && response.redirected) {
+			if (response.success) {
 				Swal.fire({
-					text: "Login exitoso, redirigiendo a productos",
-					toast: true,
-					position: "top-right",
 					icon: "success",
+					title: `¡Bienvenido ${response.username}! Login exitoso, redirigiendo a productos`,
 					showConfirmButton: false,
-					timer: 1500,
+					timer: 2000,
+					willClose: () => {
+						// Redirige al usuario a la página de productos
+						window.location.href = "/products";
+					},
 				});
-				window.location.replace("/products");
 			} else {
-				console.log(response);
 				Swal.fire({
 					text: "Por favor verifique el usuario y contraseña ingresados",
 					toast: true,
@@ -45,7 +46,7 @@ loginForm.addEventListener("submit", async (event) => {
 			Swal.fire({
 				icon: "error",
 				title: "Ocurrió un error",
-				text: `Ocurrió un error: ${error} ${error.message}`,
+				text: `Ocurrió un error al realizar el login: ${error} ${error.message}`,
 			});
 		});
 });
