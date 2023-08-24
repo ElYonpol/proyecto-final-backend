@@ -17,7 +17,7 @@ logoutForm.addEventListener("submit", async (event) => {
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			if (response.status === 307) {
+			if (response.success) {
 				Swal.fire({
 					icon: "success",
 					title: "Logout exitoso",
