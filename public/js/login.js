@@ -2,7 +2,6 @@ console.log("Este es js de login.handlebars");
 
 const loginForm = document.querySelector("#loginForm");
 
-
 loginForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
@@ -21,17 +20,28 @@ loginForm.addEventListener("submit", async (event) => {
 	})
 		.then((response) => response.json())
 		.then((response) => {
-
 			if (response.success) {
+				let windowRedirectUrl = "";
+				let windowRedirectMessage = "";
+
+				if (response.userInfo.role === "admin") {
+					windowRedirectUrl = "/";
+					windowRedirectMessage = "inicio";
+				} else {
+					windowRedirectUrl = "/products";
+					windowRedirectMessage = "productos";
+				}
+				
 				Swal.fire({
 					icon: "success",
 					title: `¡Bienvenido ${response.userInfo.first_name}!`,
-					text: "Login exitoso, redirigiendo a productos",
+					text: `Login exitoso, redirigiendo a ${windowRedirectMessage}`,
 					showConfirmButton: false,
 					timer: 2000,
 					willClose: () => {
-						// Redirige al usuario a la página de productos
-						window.location.href = "/products";
+						// Redirige al usuario a la página de inicio si es ADMIN,
+						// o a la página de productos si es USER o PREMIUM
+						window.location.href = windowRedirectUrl;
 					},
 				});
 			} else {

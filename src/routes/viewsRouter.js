@@ -46,7 +46,7 @@ viewsRouter.get("/products", authRole(["user", "premium"]), async (req, res) => 
 });
 
 //Listar productos con tabla con formato y socket
-viewsRouter.get("/realtimeproducts", async (req, res) => {
+viewsRouter.get("/realtimeproducts", authRole(["premium", "admin"]), async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
 	const specs = sort

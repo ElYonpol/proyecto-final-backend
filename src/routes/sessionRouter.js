@@ -8,6 +8,7 @@ const {
 	usersRegisterSchema,
 } = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
+const { logger } = require("../utils/logger.js");
 
 const sessionsRouter = Router();
 
@@ -27,7 +28,7 @@ sessionsRouter.post(
 		try {
 			const sessionCookie = req.session.cookie;
 			const sessionUserId = req.session.passport.user;
-			console.log(`Usuario ${req.user.first_name} ha iniciado sesión.`);
+			logger.info(`Usuario ${req.user.first_name} ha iniciado sesión.`);
 
 			// Traigo la información del usuario logueado
 			let { first_name, last_name, role, email, cart } = req.user;
@@ -89,8 +90,8 @@ sessionsRouter.post(
 sessionsRouter.get("/logout", (req, res) => {
 	try {
 		req.session.destroy((err) => {
-			if (err) return res.json({ status: "Error en logout", message: err });
-			res.json({ status: true });
+			if (err) return res.send({ status: "Error en logout", message: err });
+			res.json({ success: true });
 		});
 	} catch (error) {
 		res.status(404).json({
