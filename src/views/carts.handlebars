@@ -1,16 +1,15 @@
 <script defer src="/static/js/carts.js"></script>
 
 <h1 class="display-1">
-	<div class="display-1--intro">Carrito</div>
+	<div class="display-1--intro">Carrito de {{userInfo.full_name}}</div>
 </h1>
 
-<div class="userCart display-1--description" id={{userInfo.isCartEmpty}}>{{userInfo.full_name}}
-	{{#if status}}
-					<p class="cartCard-content__body">Stock: {{stock}}</p>
-				{{else}}
-					<p class="cartCard-content__body">No disponible</p>
-				{{/if}}
-				<button class="addToCart button-cart" id={{_id}}>Añadir al carrito</button>
+<div class="userCart display-1--description" id={{userInfo.isCartEmpty}}>
+	{{#if userInfo.isCartEmpty}}
+		<button class="button-cart" id="PrimeraCompra">¡Comprar un producto!</button>
+	{{else}}
+		<button class="button-cart" id="SeguirComprando">Seguir comprando</button>
+	{{/if}}
 </div>
 
 <div id="divProdTable" class="table-responsive align-self-center w-100">
@@ -29,23 +28,19 @@
 			</tr>
 		</thead>
 		<tbody class="productList">
-			{{!-- Las columnas no me funcionan cuando el carrito tiene más de un producto --}}
-			{{!-- En la primera columna debería repetir el N° de carrito anterior --}}
-			{{#each carts}}
-					<tr>
-						<th scope="row">{{_id}}</th>
-				{{#each products}}
-						<th scope="row">{{pid.title}}</th>
-						<td><img
-								src="{{correctThumbnails pid.thumbnails}}"
-								alt="product image"
-							/></td>
-						<td>${{pid.price}}</td>
-						<td>{{pid.category}}</td>
-						<td>{{quantity}}</td>
-					</tr>
-				{{/each}}
-			{{/each}}
+		{{#each products}}
+			<tr>
+				<th scope="row">{{cid}}</th>
+				<th scope="row">{{pid.title}}</th>
+				<td><img
+						src="{{correctThumbnails pid.thumbnails}}"
+						alt="product image"
+					/></td>
+				<td>${{pid.price}}</td>
+				<td>{{pid.category}}</td>
+				<td>{{quantity}}</td>
+			</tr>
+		{{/each}}
 		</tbody>
 	</table>
 </div>

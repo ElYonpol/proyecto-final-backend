@@ -8,15 +8,16 @@ const {
 const { uploader } = require("../utils/uploader.js");
 const sendMailTransport = require("../utils/nodemailer.js");
 const { TokensDaos } = require("../dao/factory.js");
+const { authRole } = require("../middleware/authMiddleware.js");
 
-const router = Router();
+const viewsRouter = Router();
 
-router.get("/", (req, res) => {
+viewsRouter.get("/", (req, res) => {
 	res.render("index", { style: "index.css" });
 });
 
 //Listar productos con tabla con formato
-router.get("/products", async (req, res) => {
+viewsRouter.get("/products", authRole(["user", "premium"]), async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
 	const specs = sort
@@ -45,7 +46,7 @@ router.get("/products", async (req, res) => {
 });
 
 //Listar productos con tabla con formato y socket
-router.get("/realtimeproducts", async (req, res) => {
+viewsRouter.get("/realtimeproducts", async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
 	const specs = sort
@@ -62,7 +63,7 @@ router.get("/realtimeproducts", async (req, res) => {
 	});
 });
 
-router.get("/carts", async (req, res) => {
+viewsRouter.get("/carts", authRole(["admin"]), async (req, res) => {
 	const query = {};
 	const specs = {};
 	const carts = await cartService.getItems(query, specs);
@@ -72,11 +73,14 @@ router.get("/carts", async (req, res) => {
 	});
 });
 
-router.get("/carts/:cid", async (req, res) => {
+viewsRouter.get("/carts/:cid", async (req, res) => {
 	const cid = req.user[0].cart.toString();
-	const products = await cartService.getItem(cid);
+	const productsInCart = await cartService.getProductsByCartId(cid);
+	console.log("productsInCart es:", productsInCart);
+	console.log("productsInCart.length es:", productsInCart.length);
+
 	let isCartEmpty = false;
-	if (products.length === 0) {
+	if (productsInCart.length === 0) {
 		isCartEmpty = true;
 	}
 
@@ -91,34 +95,34 @@ router.get("/carts/:cid", async (req, res) => {
 		email,
 		cart,
 		isCartEmpty,
+		cid,
 	};
 
 	res.render("carts", {
 		style: "index.css",
-		carts: cid,
-		products: products,
 		userInfo,
+		products: productsInCart,
 	});
 });
 
-router.post("/upload", uploader.single("myFile"), (req, res) => {
+viewsRouter.post("/upload", uploader.single("myFile"), (req, res) => {
 	res.send("Archivo subido correctamente");
 });
 
-router.get("/chat", async (req, res) => {
-	res.render("chat", {});
+viewsRouter.get("/chat", async (req, res) => {
+	res.render("chat", { style: "index.css" });
 });
 
-router.get("/login", async (req, res) => {
-	res.render("login");
+viewsRouter.get("/login", async (req, res) => {
+	res.render("login", { style: "index.css" });
 });
 
-router.get("/register", async (req, res) => {
+viewsRouter.get("/register", async (req, res) => {
 	res.render("register", { style: "index.css" });
 });
 
 //Listar usuarios con formato tabla
-router.get("/users", async (req, res) => {
+viewsRouter.get("/users", authRole(["admin"]), async (req, res) => {
 	const { limit = 10, page = 1, sort = null } = req.query;
 	const query = req.query.query ? JSON.parse(req.query.query) : {};
 	const specs = sort
@@ -136,7 +140,7 @@ router.get("/users", async (req, res) => {
 });
 
 //Listar ordenes con formato tabla
-router.get("/orders", async (req, res) => {
+viewsRouter.get("/orders", async (req, res) => {
 	const query = {};
 	const specs = {};
 	const orders = await orderService.getItems(query, specs);
@@ -147,7 +151,7 @@ router.get("/orders", async (req, res) => {
 });
 
 //Prueba envío de emails
-router.get("/emails", async (req, res) => {
+viewsRouter.get("/emails", async (req, res) => {
 	try {
 		const emails = await sendMailTransport();
 		res.render("emails", {
@@ -162,13 +166,13 @@ router.get("/emails", async (req, res) => {
 	}
 });
 
-router.get("/passwordForgotten", async (req, res) => {
+viewsRouter.get("/passwordForgotten", async (req, res) => {
 	res.render("passwordForgotten", {
 		style: "index.css",
 	});
 });
 
-router.get("/passwordReset/:uid", async (req, res) => {
+viewsRouter.get("/passwordReset/:uid", async (req, res) => {
 	try {
 		const userToken = req.query.token;
 		const presentDate = new Date();
@@ -195,4 +199,4 @@ router.get("/passwordReset/:uid", async (req, res) => {
 	}
 });
 
-module.exports = router;
+module.exports = viewsRouter;
