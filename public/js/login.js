@@ -2,6 +2,7 @@ console.log("Este es js de login.handlebars");
 
 const loginForm = document.querySelector("#loginForm");
 
+
 loginForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
@@ -20,10 +21,11 @@ loginForm.addEventListener("submit", async (event) => {
 	})
 		.then((response) => response.json())
 		.then((response) => {
+
 			if (response.success) {
 				Swal.fire({
 					icon: "success",
-					title: `¡Bienvenido ${response.username}!`,
+					title: `¡Bienvenido ${response.userInfo.first_name}!`,
 					text: "Login exitoso, redirigiendo a productos",
 					showConfirmButton: false,
 					timer: 2000,

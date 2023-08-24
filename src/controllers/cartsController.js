@@ -144,6 +144,11 @@ class CartController {
 				const productStock = productInfo[0].stock;
 				purchaseQuantity = product.quantity;
 
+				if (productStock === 0) {
+					// Si el producto no tiene stock lo dejo grabado como pendiente en el carrito
+					productsToKeepInCart.push(product);
+				}
+
 				if (productStock >= purchaseQuantity) {
 					ticketAmount += productInfo[0].price * product.quantity;
 					productsInPurchase.push(product);

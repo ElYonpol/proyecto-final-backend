@@ -3,7 +3,10 @@ const { userService } = require("../service/service.js");
 const { userMgr } = require("../dao/mongo/managers/usersManagerMongo.js");
 const { createHash } = require("../utils/bcryptPass.js");
 const passport = require("passport");
-const {	usersLoginSchema, usersRegisterSchema } = require("../validation/sessionsValidation.js");
+const {
+	usersLoginSchema,
+	usersRegisterSchema,
+} = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
 
 const sessionsRouter = Router();
@@ -26,11 +29,24 @@ sessionsRouter.post(
 			const sessionUserId = req.session.passport.user;
 			console.log(`Usuario ${req.user.first_name} ha iniciado sesión.`);
 
+			// Traigo la información del usuario logueado
+			let { first_name, last_name, role, email, cart } = req.user;
+
+			const userInfo = {
+				full_name: first_name + " " + last_name,
+				first_name,
+				last_name,
+				role,
+				email,
+				cart,
+			};
+
 			const presentDate = Date.now();
 			const uid = req.user._id;
 			const userToUpdate = { last_connection: presentDate };
 			await userMgr.update(uid, userToUpdate);
-			res.json({ success: true, username: req.user.first_name })
+
+			res.json({ success: true, userInfo });
 			// El redireccionamiento lo genero desde el front con el sweet alert del login.js
 			// res.redirect("/products");
 		} catch (error) {
@@ -73,12 +89,12 @@ sessionsRouter.post(
 sessionsRouter.get("/logout", (req, res) => {
 	try {
 		req.session.destroy((err) => {
-			if (err) return res.send({ status: "Logout error", message: err });
-			res.json({ success: true,})
+			if (err) return res.json({ status: "Error en logout", message: err });
+			res.json({ status: true });
 		});
 	} catch (error) {
 		res.status(404).json({
-			status: "error en logout",
+			status: "Error en logout",
 			payload: {
 				error: error,
 				message: error.message,

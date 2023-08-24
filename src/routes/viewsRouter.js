@@ -25,11 +25,22 @@ router.get("/products", async (req, res) => {
 	const { docs, ...rest } = await productService.getItems(query, specs);
 	const categories = await productService.getProductCategories();
 
+	// Traigo la información del usuario logueado
+	let { first_name, last_name, role, email, cart } = req.user[0];
+
+	const userInfo = {
+		full_name: first_name + " " + last_name,
+		role,
+		email,
+		cart,
+	};
+
 	res.render("products", {
 		style: "index.css",
 		products: docs,
 		paginate: rest,
 		categories,
+		userInfo,
 	});
 });
 
@@ -62,12 +73,31 @@ router.get("/carts", async (req, res) => {
 });
 
 router.get("/carts/:cid", async (req, res) => {
-	// const cid = req.params.cid;
 	const cid = req.user[0].cart.toString();
 	const products = await cartService.getItem(cid);
+	let isCartEmpty = false;
+	if (products.length === 0) {
+		isCartEmpty = true;
+	}
+
+	// Traigo la información del usuario logueado
+	let { first_name, last_name, role, email, cart } = req.user[0];
+
+	const userInfo = {
+		full_name: first_name + " " + last_name,
+		first_name,
+		last_name,
+		role,
+		email,
+		cart,
+		isCartEmpty,
+	};
+
 	res.render("carts", {
 		style: "index.css",
+		carts: cid,
 		products: products,
+		userInfo,
 	});
 });
 

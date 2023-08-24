@@ -1,6 +1,17 @@
+<script defer src="/static/js/carts.js"></script>
+
 <h1 class="display-1">
-	<div class="display-1--intro">Carritos</div>
+	<div class="display-1--intro">Carrito</div>
 </h1>
+
+<div class="userCart display-1--description" id={{userInfo.isCartEmpty}}>{{userInfo.full_name}}
+	{{#if status}}
+					<p class="cartCard-content__body">Stock: {{stock}}</p>
+				{{else}}
+					<p class="cartCard-content__body">No disponible</p>
+				{{/if}}
+				<button class="addToCart button-cart" id={{_id}}>Añadir al carrito</button>
+</div>
 
 <div id="divProdTable" class="table-responsive align-self-center w-100">
 	<table

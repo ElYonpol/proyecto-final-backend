@@ -8,7 +8,11 @@ let category = document.getElementById("category");
 let state = document.getElementById("status");
 let buttons = document.querySelectorAll(".addToCart");
 let cart = document.querySelector(".userCart");
-let cid;
+let cid = cart.id;
+
+let nav = document.querySelector(".nav__list");
+nav.innerHTML += `<li><a class="nav__link" href="/carts/${cid}">🛒</a></li>`;
+
 
 const findIndex = (valueToFind, options) => {
 	for (let i = 0; i < options.length; i++) {
@@ -94,8 +98,6 @@ const addToCart = async (pid) => {
 			});
 			let data = await response.json();
 			cid = data.payload._id;
-			let nav = document.querySelector(".nav__list");
-			nav.innerHTML += `<li><a class="nav__link" href="/carts/${cid}">🛒</a></li>`;
 		}
 
 		let response = await fetch(`/api/carts/${cid}/products/${pid}`, {
@@ -104,28 +106,29 @@ const addToCart = async (pid) => {
 		});
 
 		let data = await response.json();
-		let statusResp = data.status;
 
-		if (statusResp !== "success") {
+		if (data.status !== "success") {
 			return Swal.fire({
 				icon: "error",
 				title: "Ocurrió un error",
 				text: "No se pudo agregar el producto al carrito.",
 			});
 		}
+
 		Swal.fire({
-			text: "Producto agregado",
+			icon: "success",
+			title: "¡Producto agregado!",
+			text: "Producto agregado correctamente al carrito",
 			toast: true,
 			position: "top-right",
-			icon: "success",
 			showConfirmButton: false,
-			timer: 1000,
+			timer: 1500,
 		});
 	} catch (error) {
 		Swal.fire({
 			icon: "error",
 			title: "Ocurrió un error",
-			text: `Ocurrió un error: ${error} ${error.message}`,
+			text: `El error es: ${error} ${error.message}`,
 		});
 	}
 };
