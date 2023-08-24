@@ -1,14 +1,10 @@
 const { Router } = require("express");
 const { userService } = require("../service/service.js");
 const { userMgr } = require("../dao/mongo/managers/usersManagerMongo.js");
-const { createHash, checkValidPassword } = require("../utils/bcryptPass.js");
+const { createHash } = require("../utils/bcryptPass.js");
 const passport = require("passport");
-const {
-	usersLoginSchema,
-	usersRegisterSchema,
-} = require("../validation/sessionsValidation.js");
+const {	usersLoginSchema, usersRegisterSchema } = require("../validation/sessionsValidation.js");
 const { objectsValidation } = require("../middleware/validator.js");
-const Swal = require("sweetalert2");
 
 const sessionsRouter = Router();
 

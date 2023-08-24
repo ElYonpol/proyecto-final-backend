@@ -1,42 +1,39 @@
-console.log("Este es js de login.handlebars");
-
-const loginForm = document.querySelector("#loginForm");
+const logoutForm = document.querySelector("#logoutForm");
 
 loginForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
-	const data = new FormData(loginForm);
-	const obj = {};
-	data.forEach((value, key) => {
-		obj[key] = value;
-	});
+	// const data = new FormData(logoutForm);
+	// const obj = {};
+	// data.forEach((value, key) => {
+	// 	obj[key] = value;
+	// });
 
-	await fetch("http://localhost:8080/api/sessions/login", {
-		method: "POST",
+	await fetch("http://localhost:8080/api/sessions/logout", {
+		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(obj),
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			if (response.success) {
+			if (response.status === 307) {
 				Swal.fire({
 					icon: "success",
-					title: `¡Bienvenido ${response.username}!`,
-					text: "Login exitoso, redirigiendo a productos",
+					title: "Logout exitoso",
+					text: "Redirigiendo al inicio",
 					showConfirmButton: false,
 					timer: 2000,
 					willClose: () => {
 						// Redirige al usuario a la página de productos
-						window.location.href = "/products";
+						window.location.href = "/";
 					},
 				});
 			} else {
 				Swal.fire({
 					icon: "error",
 					title: "Error",
-					text: "Por favor verifique el usuario y contraseña ingresados",
+					text: "Ocurrió un error al realizar el logout, por favor intente nuevamente",
 					showConfirmButton: false,
 					toast: true,
 					position: "top-right",
