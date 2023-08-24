@@ -1,6 +1,6 @@
 const logoutForm = document.querySelector("#logoutForm");
 
-loginForm.addEventListener("submit", async (event) => {
+logoutForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
 	// const data = new FormData(logoutForm);
