@@ -6,10 +6,13 @@
 
 <div class="userCart display-1--description" id={{userInfo.isCartEmpty}}>
 	{{#if userInfo.isCartEmpty}}
-		<button class="button-cart" id="PrimeraCompra">¡Comprar un producto!</button>
+		<button class="button-cart" id="primeraCompra">¡Comprar un producto!</button>
 	{{else}}
-		<button class="button-cart" id="SeguirComprando">Seguir comprando</button>
+		<button class="button-cart" id="seguirComprando">Seguir comprando</button>
 	{{/if}}
+</div>
+<div class="display-1--description">
+	<button class="button-cart" id="finalizarCompra">Finalizar Compra</button>
 </div>
 
 <div id="divProdTable" class="table-responsive align-self-center w-100">
@@ -19,7 +22,6 @@
 	>
 		<thead class="table-dark">
 			<tr>
-				<th scope="col">Carrito N°</th>
 				<th scope="col">Producto</th>
 				<th scope="col">Imagen</th>
 				<th scope="col">Precio</th>
@@ -30,7 +32,6 @@
 		<tbody class="productList">
 		{{#each products}}
 			<tr>
-				<th scope="row">{{cid}}</th>
 				<th scope="row">{{pid.title}}</th>
 				<td><img
 						src="{{correctThumbnails pid.thumbnails}}"

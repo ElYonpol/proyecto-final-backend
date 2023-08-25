@@ -2,4 +2,9 @@ const correctThumbnails = (array) => {
 	return array[0];
 };
 
-module.exports = { correctThumbnails };
+const concatenateURLCarts = (cid) => {
+	const baseCartURL = "/carts/";
+	return `${baseCartURL}${cid}`;
+};
+
+module.exports = { correctThumbnails, concatenateURLCarts };

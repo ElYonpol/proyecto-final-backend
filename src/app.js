@@ -1,7 +1,7 @@
 const express = require("express");
 const { generateSocketServer } = require("./config/socket.js");
 const path = require("node:path");
-const { correctThumbnails } = require("./config/helpers.js");
+const { correctThumbnails, concatenateURLCarts } = require("./config/helpers.js");
 const routerApp = require("./routes/index.js");
 const handlebars = require("express-handlebars");
 const { initializePassport } = require("./passport-jwt/passportConfig.js");
@@ -18,7 +18,7 @@ const app = express();
 // MIDDLEWARES START =================================================
 // handlebars config _______________________________________________________
 const hbs = handlebars.create({
-	helpers: { correctThumbnails },
+	helpers: { correctThumbnails, concatenateURLCarts },
 	partialsDir: path.join(__dirname, "views/partials"),
 });
 app.engine("handlebars", hbs.engine);

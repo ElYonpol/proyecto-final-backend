@@ -10,9 +10,8 @@ let buttons = document.querySelectorAll(".addToCart");
 let cart = document.querySelector(".userCart");
 let cid = cart.id;
 
-let nav = document.querySelector(".nav__list");
-nav.innerHTML += `<li><a class="nav__link" href="/carts/${cid}">🛒</a></li>`;
-
+// let nav = document.querySelector(".nav__list");
+// nav.innerHTML += `<li><a class="nav__link" href="/carts/${cid}">🛒</a></li>`;
 
 const findIndex = (valueToFind, options) => {
 	for (let i = 0; i < options.length; i++) {

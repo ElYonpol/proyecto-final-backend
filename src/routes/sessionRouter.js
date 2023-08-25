@@ -40,18 +40,23 @@ sessionsRouter.post(
 				role,
 				email,
 				cart,
+				cid: req.user.cart._id.toString(),
 			};
 
 			const presentDate = Date.now();
 			const uid = req.user._id;
 			const userToUpdate = { last_connection: presentDate };
 			await userMgr.update(uid, userToUpdate);
-
+			console.log("userinfo.cart es:", userInfo.cid);
 			res.json({ success: true, userInfo });
-			// El redireccionamiento lo genero desde el front con el sweet alert del login.js
-			// res.redirect("/products");
 		} catch (error) {
-			console.log({ error });
+			res.status(404).json({
+				status: "error",
+				payload: {
+					error: error,
+					message: error.message,
+				},
+			});
 		}
 	}
 );

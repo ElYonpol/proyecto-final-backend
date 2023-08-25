@@ -76,8 +76,36 @@ viewsRouter.get("/carts", authRole(["admin"]), async (req, res) => {
 viewsRouter.get("/carts/:cid", async (req, res) => {
 	const cid = req.user[0].cart.toString();
 	const productsInCart = await cartService.getProductsByCartId(cid);
-	console.log("productsInCart es:", productsInCart);
-	console.log("productsInCart.length es:", productsInCart.length);
+
+	let isCartEmpty = false;
+	if (productsInCart.length === 0) {
+		isCartEmpty = true;
+	}
+
+	// Traigo la información del usuario logueado
+	let { first_name, last_name, role, email, cart } = req.user[0];
+
+	const userInfo = {
+		full_name: first_name + " " + last_name,
+		first_name,
+		last_name,
+		role,
+		email,
+		cart,
+		isCartEmpty,
+		cid,
+	};
+
+	res.render("carts", {
+		style: "index.css",
+		userInfo,
+		products: productsInCart,
+	});
+});
+
+viewsRouter.get("/carts/:cid/purchase", async (req, res) => {
+	const cid = req.user[0].cart.toString();
+	const productsInCart = await cartService.getProductsByCartId(cid);
 
 	let isCartEmpty = false;
 	if (productsInCart.length === 0) {

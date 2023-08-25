@@ -30,8 +30,47 @@ const goShopping = (buttonId) => {
 	});
 };
 
+const finalizePurchase = async (buttonId) => {
+	try {
+		let response = await fetch(`/api/carts/${cid}/purchase`, {
+			method: "GET",
+			headers: { "content-type": "application/json" },
+		});
+
+		let data = await response.json();
+
+		if (data.status !== "success") {
+			return Swal.fire({
+				icon: "error",
+				title: "Ocurrió un error",
+				text: "No se pudo agregar el producto al carrito.",
+			});
+		}
+
+		Swal.fire({
+			icon: "success",
+			title: "¡Producto agregado!",
+			text: "Producto agregado correctamente al carrito",
+			toast: true,
+			position: "top-right",
+			showConfirmButton: false,
+			timer: 1500,
+		});
+	} catch (error) {
+		Swal.fire({
+			icon: "error",
+			title: "Ocurrió un error",
+			text: `El error es: ${error} ${error.message}`,
+		});
+	}
+};
+
 buttons.forEach((button) => {
 	button.addEventListener("click", () => {
-		goShopping(button.id);
+		if (button.id === "finalizarCompra") {
+			finalizePurchase(button.id);
+		} else {
+			goShopping(button.id);
+		}
 	});
 });
