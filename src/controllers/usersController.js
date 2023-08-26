@@ -109,7 +109,6 @@ class UserController {
 		try {
 			const uid = req.params.uid;
 			const user = await userService.getItem(uid);
-			console.log(user)
 			logger.info(`User es ${user[0].first_name} ${user[0].last_name}`)
 
 			if (user[0].role === "user") {

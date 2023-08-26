@@ -113,12 +113,8 @@ viewsRouter.get("/carts/:cid", async (req, res) => {
 });
 
 viewsRouter.get("/purchase/:ticketCode", async (req, res) => {
-	const uid = req.user[0]._id.toString();
-	// const ticketArray = await ticketService.getTicketByUserId(uid)
-	// const ticket = ticketArray[0]
 	const ticketCode = req.params.ticketCode
 	const ticket = await ticketService.getTicketByTicketCode(ticketCode)
-	console.log("ticket es:",ticket);
 
 	let { purchaseDateTime, totalTicketAmount, purchaser, products } =
 		ticket;

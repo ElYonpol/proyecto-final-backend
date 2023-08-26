@@ -1,5 +1,3 @@
-console.log("Este es js de products.handlebars");
-
 let url = window.location.href;
 let urlObj = new URL(url);
 let searchParameters = urlObj.searchParams;

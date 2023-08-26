@@ -172,7 +172,6 @@ class CartController {
 				};
 
 				let newTicketCode = randomTicketNumber();
-				console.log("newTicketCode:", newTicketCode);
 
 				let newTicket = {
 					ticketCode: newTicketCode,
@@ -183,11 +182,8 @@ class CartController {
 				};
 				
 				const ticket = await ticketService.createItem(newTicket);
-				console.log("Ticket creado:", { ticket });
 
 				newTicket._id = ticket._id;
-
-				console.log("Ticket con ID es:", newTicket);
 
 				res.status(200).json({ status: "success", payload: newTicket });
 			} else {

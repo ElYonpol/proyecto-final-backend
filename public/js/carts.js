@@ -1,5 +1,3 @@
-console.log("Este es js de carts.handlebars");
-
 let buttons = document.querySelectorAll(".button-cart");
 
 let cart = document.querySelector(".userCart");
@@ -35,7 +33,6 @@ const goShopping = (buttonId) => {
 
 const finalizePurchase = async (buttonId) => {
 	try {
-		console.log("cid es: ",cid)
 		let response = await fetch(`/api/carts/${cid}/purchase`, {
 			method: "GET",
 			headers: { "content-type": "application/json" },

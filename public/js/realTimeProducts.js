@@ -1,5 +1,3 @@
-console.log("Este es js de realTimeProducts.handlebars");
-
 const socket = io();
 
 // INICIO Segmento configuración js para html________________________________
@@ -173,8 +171,6 @@ socket.on("newProductAdded", (newProduct) => {
 		addToCartButton.dataset["id"] = newProduct.id;
 		addToCartButton.classList.add("addToCart");
 		addToCartButton.innerText = "Añadir al 🛒";
-
-		console.log("Status del newProduct es: ", newProduct.status);
 
 		const newProductCardHTML = document.createElement("div");
 		newProductCardHTML.classList.add("cartCard");

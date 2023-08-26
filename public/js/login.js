@@ -1,5 +1,3 @@
-console.log("Este es js de login.handlebars");
-
 const loginForm = document.querySelector("#loginForm");
 
 loginForm.addEventListener("submit", async (event) => {

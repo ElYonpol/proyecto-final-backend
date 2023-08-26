@@ -15,7 +15,6 @@ describe("Testing Product Dao", () => {
 		this.timeout(5000);
 	});
 	it("Nuestro dao debe poder obtener un array con productos", async function () {
-		console.log("Product Dao", this.productsDao);
 		const result = await this.productsDao.get();
 		assert.strictEqual(Array.isArray(result), true);
 	});

@@ -17,14 +17,9 @@ describe("Testing Proyecto Final JP", () => {
 				stock: 13,
 			};
 
-			console.log("productMock", productMock);
-
 			const { statusCode, ok, _body } = await requester
 				.post("/api/products")
 				.send(productMock);
-			console.log("statusCode", statusCode);
-			console.log("ok", ok);
-			console.log("body", _body);
 			expect(_body.payload).to.have.property("_id");
 			expect(_body.payload.adopted).to.equal(false);
 		});
@@ -42,9 +37,6 @@ describe("Testing Proyecto Final JP", () => {
 			const { statusCode, ok, _body } = await requester
 				.post("/api/products")
 				.send(productMock);
-		console.log(statusCode);
-		console.log(ok);
-		console.log(_body);
 			expect(statusCode).to.equal(400);
 		});
 
@@ -80,7 +72,6 @@ describe("Testing Proyecto Final JP", () => {
 			const result = await requester.post("/api/sessions/login").send(userMock);
 			const cookieResult = result.headers["set-cookie"][0];
 
-	console.log(cookieResult)
 			expect(cookieResult).to.be.ok;
 			cookie = {
 				name: cookieResult.split("=")[0],
