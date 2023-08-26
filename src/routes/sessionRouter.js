@@ -47,7 +47,7 @@ sessionsRouter.post(
 			const uid = req.user._id;
 			const userToUpdate = { last_connection: presentDate };
 			await userMgr.update(uid, userToUpdate);
-			
+
 			res.json({ success: true, userInfo });
 		} catch (error) {
 			res.status(404).json({
@@ -64,7 +64,18 @@ sessionsRouter.post(
 // GET http://localhost:8080/api/sessions/current
 sessionsRouter.get("/current", (req, res) => {
 	try {
-		res.status(200).json({ status: "success", payload: req.user });
+		console.log("req.session.user es:", req.session.user);
+		const userLoggedIn = req.session.user ? true : false;
+		console.log("userLoggedIn:", userLoggedIn);
+
+		if (!userLoggedIn) {
+			res.status(404).json({
+				status: "No hay usuario logueado",
+				payload: { error: error, message: error.message },
+			});
+		} else {
+			res.status(200).json({ status: "success", payload: req.session.user });
+		}
 	} catch (error) {
 		res.status(404).json({
 			status: "error session current",
@@ -96,7 +107,7 @@ sessionsRouter.get("/logout", (req, res) => {
 	try {
 		req.session.destroy((err) => {
 			if (err) return res.send({ status: "Error en logout", message: err });
-			res.json({ success: true });
+			res.json({ success: true, payload: "Usuario deslogueado correctamente" });
 		});
 	} catch (error) {
 		res.status(404).json({

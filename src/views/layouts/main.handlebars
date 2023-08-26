@@ -113,9 +113,7 @@
 							<li>
 								<form id="logoutForm" action="/api/sessions/logout" method="get"><button class="btn--transparent" type="submit">Logout</button></form>
 							</li>
-							{{#if userInfo}}
-								<li><a class="nav__link" href="{{concatenateURLCarts userInfo.cid}}"> Ir a 🛒</a></li>
-							{{/if}}
+							{{> cartIcon}}
 						</ul>
 					</div>
 				</div>
