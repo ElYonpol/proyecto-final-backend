@@ -9,13 +9,11 @@ const showCartIcon = async () => {
 		});
 
 		let data = await response.json();
-		console.log("data es:", data);
 
 		if (data.status === "success") {
 			let cid = data.payload.cart;
 			userCart.href = `/carts/${cid}`;
 			userCart.style.display = "";
-			console.log("userCart.href es:", userCart.href);
 		}
 	} catch (error) {
 		Swal.fire({

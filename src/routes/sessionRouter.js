@@ -64,9 +64,7 @@ sessionsRouter.post(
 // GET http://localhost:8080/api/sessions/current
 sessionsRouter.get("/current", (req, res) => {
 	try {
-		console.log("req.user es;", req.user);
 		const userLoggedIn = req.user ? true : false;
-		console.log("userLoggedIn:", userLoggedIn);
 
 		if (!userLoggedIn) {
 			res
@@ -76,7 +74,6 @@ sessionsRouter.get("/current", (req, res) => {
 			res.status(200).json({ status: "success", payload: req.user[0] });
 		}
 	} catch (error) {
-		console.log("Error es:", error);
 		res.status(404).json({
 			status: "error session current",
 			payload: {
