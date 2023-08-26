@@ -64,19 +64,19 @@ sessionsRouter.post(
 // GET http://localhost:8080/api/sessions/current
 sessionsRouter.get("/current", (req, res) => {
 	try {
-		console.log("req.session.user es:", req.session.user);
-		const userLoggedIn = req.session.user ? true : false;
+		console.log("req.user es;", req.user);
+		const userLoggedIn = req.user ? true : false;
 		console.log("userLoggedIn:", userLoggedIn);
 
 		if (!userLoggedIn) {
-			res.status(404).json({
-				status: "No hay usuario logueado",
-				payload: { error: error, message: error.message },
-			});
+			res
+				.status(404)
+				.json({ status: "error", payload: "No hay usuario logueado" });
 		} else {
-			res.status(200).json({ status: "success", payload: req.session.user });
+			res.status(200).json({ status: "success", payload: req.user[0] });
 		}
 	} catch (error) {
+		console.log("Error es:", error);
 		res.status(404).json({
 			status: "error session current",
 			payload: {

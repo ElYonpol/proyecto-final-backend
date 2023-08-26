@@ -52,8 +52,6 @@ const finalizePurchase = async (buttonId) => {
 				showConfirmButton: false,
 				timer: 2000,
 				willClose: () => {
-					// Redirige al usuario a la página de inicio si es ADMIN,
-					// o a la página de productos si es USER o PREMIUM
 					window.location.href = windowRedirectUrl;
 				},
 			});
