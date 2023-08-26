@@ -48,7 +48,7 @@ const finalizePurchase = async (buttonId) => {
 			Swal.fire({
 				icon: "success",
 				title: `¡Compra realizada!`,
-				text: `Login exitoso, redirigiendo a ${windowRedirectMessage}`,
+				text: `Su compra ha sido realizada, redirigiendo a ${windowRedirectMessage}`,
 				showConfirmButton: false,
 				timer: 2000,
 				willClose: () => {
