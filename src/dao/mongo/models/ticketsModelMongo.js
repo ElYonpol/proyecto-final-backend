@@ -16,8 +16,7 @@ const TicketSchema = new Schema(
 			type: Number,
 		},
 		purchaser: {
-			type: Schema.Types.ObjectId,
-			ref: "users",
+			type: String,
 		},
 		products: [
 			{

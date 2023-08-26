@@ -47,7 +47,7 @@ sessionsRouter.post(
 			const uid = req.user._id;
 			const userToUpdate = { last_connection: presentDate };
 			await userMgr.update(uid, userToUpdate);
-			console.log("userinfo.cart es:", userInfo.cid);
+			
 			res.json({ success: true, userInfo });
 		} catch (error) {
 			res.status(404).json({

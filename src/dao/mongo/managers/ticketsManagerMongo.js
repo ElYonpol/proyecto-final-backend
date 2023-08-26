@@ -25,6 +25,13 @@ class TicketDaoMongo {
 		return await this.ticketModel.updateOne({ _id: tid }, { status: false });
 	};
 
+	getTicketByUserId = async (uid) => {
+		return await this.ticketModel.find({ purchaser: uid }).lean();
+	};
+
+	getTicketByTicketCode = async (ticketCode) => {
+		return await this.ticketModel.findOne({ ticketCode: ticketCode }).lean();
+	};
 }
 
 const ticketMgr = new TicketDaoMongo();

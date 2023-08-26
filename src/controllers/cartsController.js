@@ -129,7 +129,7 @@ class CartController {
 		try {
 			const cid = req.user[0].cart.toString();
 			const userEmail = req.user[0].email;
-			const userId = req.user[0]._id;
+			const userId = req.user[0]._id.toString();
 			const productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
 			let productsInPurchase = [];
@@ -168,37 +168,36 @@ class CartController {
 			if (productsInPurchase.length > 0) {
 				// Genero el ticket de compra
 				const randomTicketNumber = () => {
-					Math.random().toString(36).substring(2, 18);
+					return Math.random().toString(36).substring(2, 18);
 				};
+
 				let newTicketCode = randomTicketNumber();
 				console.log("newTicketCode:", newTicketCode);
 
-				const newTicket = {
+				let newTicket = {
 					ticketCode: newTicketCode,
 					purchaseDateTime: Date.now(),
 					totalTicketAmount: ticketAmount,
 					purchaser: userId,
 					products: productsInPurchase,
 				};
+				
 				const ticket = await ticketService.createItem(newTicket);
 				console.log("Ticket creado:", { ticket });
+
+				newTicket._id = ticket._id;
+
+				console.log("Ticket con ID es:", newTicket);
 
 				res.status(200).json({ status: "success", payload: newTicket });
 			} else {
 				// Carrito vacío
 				if (productsInPurchase.length === 0) {
-					res.status(400).json({
-						error: "Error: El carrito está vacío",
-						productIds,
-					});
+					res.json({ status: "carrito vacío", payload: productIds });
 				}
 				// No se puede realizar la compra, productos con falta de stock
 				const productIds = cart[0].products.map((item) => item.product);
-				res.status(400).json({
-					error:
-						"Error: No se puede realizar la compra en los siguientes productos por falta de stock: ",
-					productIds,
-				});
+				res.json({ status: "compra incompleta", payload: productIds });
 			}
 		} catch (error) {
 			res.status(404).json({

@@ -63,6 +63,32 @@ class TicketController {
 			});
 		}
 	}
+
+	async getTicketByUserId(req, res) {
+		try {
+			const uid = req.user[0]._id;
+			const resp = await ticketService.getTicketByUserId(uid);
+			res.status(200).json({ status: "success", payload: resp });
+		} catch (error) {
+			res.status(404).json({
+				status: "error",
+				payload: { error: error, message: error.message },
+			});
+		}
+	}
+
+	async getTicketByTicketCode(req, res) {
+		try {
+			const ticketCode = req.params.ticketCode
+			const resp = await ticketService.getTicketByTicketCode(ticketCode);
+			res.status(200).json({ status: "success", payload: resp });
+		} catch (error) {
+			res.status(404).json({
+				status: "error",
+				payload: { error: error, message: error.message },
+			});
+		}
+	}
 }
 
 module.exports = { TicketController };

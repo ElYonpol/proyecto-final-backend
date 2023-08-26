@@ -1,0 +1,27 @@
+<h1 class="display-1">
+	<div class="display-1--intro">¡Gracias por su compra!</div>
+</h1>
+
+<div id="divProdTable" class="table-responsive align-self-center w-100">
+	<table
+		id="ticketTable"
+		class="table table-sm table-primary table-striped align-self-center text-center"
+	>
+		<thead class="table-dark">
+			<tr>
+				<th scope="col">Ticket N°</th>
+				<th scope="col">Fecha Compra</th>
+				<th scope="col">Monto Total</th>
+				<th scope="col">Usuario</th>
+			</tr>
+		</thead>
+		<tbody class="productList">
+			<tr>
+				<th scope="row">{{ticketInfo.ticketCode}}</th>
+				<td>{{ticketInfo.purchaseDateTime}}</td>
+				<td>${{ticketInfo.totalTicketAmount}}</td>
+				<td>{{ticketInfo.purchaser}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

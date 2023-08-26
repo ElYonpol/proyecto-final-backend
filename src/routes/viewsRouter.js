@@ -4,6 +4,7 @@ const {
 	orderService,
 	cartService,
 	userService,
+	ticketService,
 } = require("../service/service.js");
 const { uploader } = require("../utils/uploader.js");
 const sendMailTransport = require("../utils/nodemailer.js");
@@ -17,51 +18,59 @@ viewsRouter.get("/", (req, res) => {
 });
 
 //Listar productos con tabla con formato
-viewsRouter.get("/products", authRole(["user", "premium"]), async (req, res) => {
-	const { limit = 10, page = 1, sort = null } = req.query;
-	const query = req.query.query ? JSON.parse(req.query.query) : {};
-	const specs = sort
-		? { limit, page, sort: { price: sort }, lean: true }
-		: { limit, page, lean: true };
-	const { docs, ...rest } = await productService.getItems(query, specs);
-	const categories = await productService.getProductCategories();
+viewsRouter.get(
+	"/products",
+	authRole(["user", "premium"]),
+	async (req, res) => {
+		const { limit = 10, page = 1, sort = null } = req.query;
+		const query = req.query.query ? JSON.parse(req.query.query) : {};
+		const specs = sort
+			? { limit, page, sort: { price: sort }, lean: true }
+			: { limit, page, lean: true };
+		const { docs, ...rest } = await productService.getItems(query, specs);
+		const categories = await productService.getProductCategories();
 
-	// Traigo la información del usuario logueado
-	let { first_name, last_name, role, email, cart } = req.user[0];
+		// Traigo la información del usuario logueado
+		let { first_name, last_name, role, email, cart } = req.user[0];
 
-	const userInfo = {
-		full_name: first_name + " " + last_name,
-		role,
-		email,
-		cart,
-	};
+		const userInfo = {
+			full_name: first_name + " " + last_name,
+			role,
+			email,
+			cart,
+		};
 
-	res.render("products", {
-		style: "index.css",
-		products: docs,
-		paginate: rest,
-		categories,
-		userInfo,
-	});
-});
+		res.render("products", {
+			style: "index.css",
+			products: docs,
+			paginate: rest,
+			categories,
+			userInfo,
+		});
+	}
+);
 
 //Listar productos con tabla con formato y socket
-viewsRouter.get("/realtimeproducts", authRole(["premium", "admin"]), async (req, res) => {
-	const { limit = 10, page = 1, sort = null } = req.query;
-	const query = req.query.query ? JSON.parse(req.query.query) : {};
-	const specs = sort
-		? { limit, page, sort: { price: sort }, lean: true }
-		: { limit, page, lean: true };
-	const { docs, ...rest } = await productService.getItems(query, specs);
-	const categories = await productService.getProductCategories();
+viewsRouter.get(
+	"/realtimeproducts",
+	authRole(["premium", "admin"]),
+	async (req, res) => {
+		const { limit = 10, page = 1, sort = null } = req.query;
+		const query = req.query.query ? JSON.parse(req.query.query) : {};
+		const specs = sort
+			? { limit, page, sort: { price: sort }, lean: true }
+			: { limit, page, lean: true };
+		const { docs, ...rest } = await productService.getItems(query, specs);
+		const categories = await productService.getProductCategories();
 
-	res.render("realTimeProducts", {
-		style: "index.css",
-		products: docs,
-		paginate: rest,
-		categories,
-	});
-});
+		res.render("realTimeProducts", {
+			style: "index.css",
+			products: docs,
+			paginate: rest,
+			categories,
+		});
+	}
+);
 
 viewsRouter.get("/carts", authRole(["admin"]), async (req, res) => {
 	const query = {};
@@ -103,33 +112,27 @@ viewsRouter.get("/carts/:cid", async (req, res) => {
 	});
 });
 
-viewsRouter.get("/carts/:cid/purchase", async (req, res) => {
-	const cid = req.user[0].cart.toString();
-	const productsInCart = await cartService.getProductsByCartId(cid);
+viewsRouter.get("/purchase/:ticketCode", async (req, res) => {
+	const uid = req.user[0]._id.toString();
+	// const ticketArray = await ticketService.getTicketByUserId(uid)
+	// const ticket = ticketArray[0]
+	const ticketCode = req.params.ticketCode
+	const ticket = await ticketService.getTicketByTicketCode(ticketCode)
+	console.log("ticket es:",ticket);
 
-	let isCartEmpty = false;
-	if (productsInCart.length === 0) {
-		isCartEmpty = true;
-	}
+	let { purchaseDateTime, totalTicketAmount, purchaser, products } =
+		ticket;
 
-	// Traigo la información del usuario logueado
-	let { first_name, last_name, role, email, cart } = req.user[0];
-
-	const userInfo = {
-		full_name: first_name + " " + last_name,
-		first_name,
-		last_name,
-		role,
-		email,
-		cart,
-		isCartEmpty,
-		cid,
+	const ticketInfo = {
+		ticketCode,
+		purchaseDateTime,
+		totalTicketAmount,
+		purchaser,
 	};
-
-	res.render("carts", {
+	res.render("purchase", {
 		style: "index.css",
-		userInfo,
-		products: productsInCart,
+		ticketInfo,
+		products: products[0],
 	});
 });
 

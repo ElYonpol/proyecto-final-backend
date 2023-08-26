@@ -6,6 +6,12 @@ class TicketRepository extends RepositoryGeneric {
 	}
 
 	//Métodos extras o redefiniciones a los del genérico
+	async getTicketByUserId(uid) {
+		return await this.dao.getTicketByUserId(uid);
+	}
+	async getTicketByTicketCode(ticketCode) {
+		return await this.dao.getTicketByTicketCode(ticketCode);
+	}
 }
 
 module.exports = TicketRepository;

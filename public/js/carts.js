@@ -5,6 +5,9 @@ let buttons = document.querySelectorAll(".button-cart");
 let cart = document.querySelector(".userCart");
 let isCartEmpty = cart.id;
 
+let userCartId = document.querySelector(".userCartId");
+let cid = userCartId.id
+
 if (isCartEmpty === true) {
 	Swal.fire({
 		icon: "info",
@@ -32,6 +35,7 @@ const goShopping = (buttonId) => {
 
 const finalizePurchase = async (buttonId) => {
 	try {
+		console.log("cid es: ",cid)
 		let response = await fetch(`/api/carts/${cid}/purchase`, {
 			method: "GET",
 			headers: { "content-type": "application/json" },
@@ -39,23 +43,34 @@ const finalizePurchase = async (buttonId) => {
 
 		let data = await response.json();
 
-		if (data.status !== "success") {
-			return Swal.fire({
+		if (data.status === "success") {
+			let tid = data.payload.ticketCode
+			let windowRedirectUrl = `/purchase/${tid}`;
+			let windowRedirectMessage = "emisión de comprobante";
+
+			Swal.fire({
+				icon: "success",
+				title: `¡Compra realizada!`,
+				text: `Login exitoso, redirigiendo a ${windowRedirectMessage}`,
+				showConfirmButton: false,
+				timer: 2000,
+				willClose: () => {
+					// Redirige al usuario a la página de inicio si es ADMIN,
+					// o a la página de productos si es USER o PREMIUM
+					window.location.href = windowRedirectUrl;
+				},
+			});
+		} else {
+			Swal.fire({
 				icon: "error",
-				title: "Ocurrió un error",
-				text: "No se pudo agregar el producto al carrito.",
+				title: "Error",
+				text: "No se puede finalizar la compra, intente nuevamente",
+				showConfirmButton: false,
+				toast: true,
+				position: "top-right",
+				timer: 1500,
 			});
 		}
-
-		Swal.fire({
-			icon: "success",
-			title: "¡Producto agregado!",
-			text: "Producto agregado correctamente al carrito",
-			toast: true,
-			position: "top-right",
-			showConfirmButton: false,
-			timer: 1500,
-		});
 	} catch (error) {
 		Swal.fire({
 			icon: "error",
