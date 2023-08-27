@@ -1,5 +1,5 @@
-const UserDto = require("../dto/userDto");
-const RepositoryGeneric = require("./repositoryGeneric");
+const UserDto = require("../dto/userDto.js");
+const RepositoryGeneric = require("./repositoryGeneric.js");
 
 class UserRepository extends RepositoryGeneric {
 	constructor(dao) {

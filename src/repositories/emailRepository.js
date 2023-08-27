@@ -1,4 +1,4 @@
-const RepositoryGeneric = require("./repositoryGeneric");
+const RepositoryGeneric = require("./repositoryGeneric.js");
 
 class EmailRepository extends RepositoryGeneric {
 	constructor(dao) {

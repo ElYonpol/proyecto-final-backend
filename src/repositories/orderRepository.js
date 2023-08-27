@@ -1,4 +1,4 @@
-const RepositoryGeneric = require("./repositoryGeneric");
+const RepositoryGeneric = require("./repositoryGeneric.js");
 
 class OrderRepository extends RepositoryGeneric {
 	constructor(dao) {
