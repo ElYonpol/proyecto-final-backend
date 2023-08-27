@@ -38,6 +38,7 @@ viewsRouter.get(
 			role,
 			email,
 			cart,
+			cid: cart._id.toString(),
 		};
 
 		res.render("products", {

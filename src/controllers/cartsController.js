@@ -69,7 +69,6 @@ class CartController {
 
 	addProductToCartbyId = async (req, res) => {
 		try {
-			// const cid = req.params.cid;
 			const cid = req.user[0].cart.toString();
 			const pid = req.params.pid;
 			const user = req.user[0];
@@ -132,7 +131,7 @@ class CartController {
 			const userId = req.user[0]._id.toString();
 			const productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
-			
+
 			let productsInPurchase = [];
 			let productsToKeepInCart = [];
 			let ticketAmount = 0;
@@ -182,7 +181,7 @@ class CartController {
 					purchaser: userId,
 					products: productsInPurchase,
 				};
-				
+
 				const ticket = await ticketService.createItem(newTicket);
 
 				newTicket._id = ticket._id;

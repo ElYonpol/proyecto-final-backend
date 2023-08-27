@@ -52,8 +52,8 @@
 		>&#8677;</button>
 	{{/if}}
 </div>
-
-<div class="userCart display-1--description" id={{userInfo.cart}}>{{userInfo.full_name}} seleccioná el producto deseado:</div>
+<div id="cid" hidden>{{userInfo.cid}}</div>
+<div class="userCart display-1--description" id="{{userInfo.cid}}">{{userInfo.full_name}} seleccioná el producto deseado:</div>
 
 <div class="cartCards--container">
 	{{#each products}}
