@@ -1,4 +1,4 @@
-const { orderService } = require("../service/service");
+const { orderService } = require("../service/service.js");
 
 class OrderController {
 	async getOrders(req, res) {

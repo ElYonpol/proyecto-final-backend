@@ -15,6 +15,7 @@ const pruebasRouter = require("./pruebasRouter.js");
 const mockingRouter = require("./mockingRouter.js");
 const loggerRouter = require("./loggerRouter.js");
 const passwordsRouter = require("./passwordsRouter.js");
+const paymentsRouter = require("./paymentsRouter.js");
 const errorHandler = require("../middleware/errors/indexError.js");
 const { authRole } = require("../middleware/authMiddleware.js");
 
@@ -31,6 +32,7 @@ router.use("/api/emails", emailsRouter);
 router.use("/api/mockingproducts", mockingRouter);
 router.use("/api/pruebas", pruebasRouter);
 router.use("/api/loggerTest", loggerRouter);
+router.use("/api/payment-intents", paymentsRouter)
 
 // _________________________________ cookies y session________________________
 router.use("/api/sessions", sessionsRouter);

@@ -3,7 +3,6 @@ const {	usersCreationSchema, usersUpdatingSchema } = require("../validation/user
 const UserController = require("../controllers/usersController.js");
 const { usersValidation } = require("../middleware/validator.js");
 const { authRole } = require("../middleware/authMiddleware.js");
-const { authToken } = require("../utils/jsonwebtoken.js");
 
 const usersRouter = Router();
 
@@ -11,8 +10,6 @@ const { getUsers, getUserByID, createUser, updateUser, deleteUser, changeUserRol
 
 // GET http://localhost:8080/api/users
 usersRouter.get("/", authRole(["admin"]), getUsers); // El email deber ser admin@admin.com y el pass admin
-// usersRouter.get("/", authToken, authRole(["admin"]), getUsers); // El email deber ser admin@admin.com y el pass admin
-// usersRouter.get("/", getUsers); // Opción sin authToken ni authRole
 
 // GET http://localhost:8080/api/users/:uid
 usersRouter.get("/:uid", authRole(["admin"]), getUserByID);

@@ -132,11 +132,13 @@ class CartController {
 			const userId = req.user[0]._id.toString();
 			const productsInCart = await cartService.getProductsByCartId(cid);
 			const cart = await cartService.getItem(cid);
+			
 			let productsInPurchase = [];
 			let productsToKeepInCart = [];
 			let ticketAmount = 0;
 			let updatedProductStock = 0;
 			let purchaseQuantity = 0;
+
 			// Verifico stock por producto y armo array de productos a comprar
 			for (let i = 0; i < productsInCart.length; i++) {
 				const product = productsInCart[i];
@@ -189,7 +191,7 @@ class CartController {
 			} else {
 				// Carrito vacío
 				if (productsInPurchase.length === 0) {
-					res.json({ status: "carrito vacío", payload: productIds });
+					res.json({ status: "carrito vacío", payload: {} });
 				}
 				// No se puede realizar la compra, productos con falta de stock
 				const productIds = cart[0].products.map((item) => item.product);

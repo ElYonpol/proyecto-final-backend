@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const { OrderController } = require("../controllers/ordersController");
+const { OrderController } = require("../controllers/ordersController.js");
 
 const ordersRouter = Router();
 const orderController = new OrderController();
 
-// GET http://localhost:8080/api/
+// GET http://localhost:8080/api/orders
 ordersRouter.get("/", orderController.getOrders);
 
 ordersRouter.get("/:oid", orderController.getOrder);
