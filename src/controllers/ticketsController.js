@@ -1,4 +1,4 @@
-const { ticketService } = require("../service/service");
+const { ticketService } = require("../service/service.js");
 
 class TicketController {
 	async getTickets(req, res) {

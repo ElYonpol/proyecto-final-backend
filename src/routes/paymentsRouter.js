@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { PaymentsService } = require("../service/paymentsService");
+const { PaymentsService } = require("../service/paymentsService.js");
 
 const paymentsRouter = Router();
 

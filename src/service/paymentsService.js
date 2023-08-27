@@ -1,5 +1,5 @@
 const { Stripe } = require("stripe");
-const { objConfig } = require("../config/config");
+const { objConfig } = require("../config/config.js");
 
 class PaymentsService {
 	constructor() {
