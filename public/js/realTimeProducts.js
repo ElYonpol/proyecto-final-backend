@@ -8,8 +8,9 @@ const sort = document.getElementById("sort");
 const category = document.getElementById("category");
 const state = document.getElementById("status");
 const buttons = document.querySelectorAll(".addToCart");
-const cart = document.querySelector(".userCart");
-let cid;
+let cart = document.getElementById("cid");
+let cid = cart.innerText;
+const submitForm = document.querySelector("#newProductForm");
 
 // INICIO Subsegmento ordenamiento y filtros ________________________________
 const findIndex = (valueToFind, options) => {
@@ -125,8 +126,6 @@ const addToCart = async (pid) => {
 		});
 	}
 };
-
-const submitForm = document.querySelector("#newProductForm");
 
 submitForm.addEventListener("submit", async (event) => {
 	event.preventDefault();

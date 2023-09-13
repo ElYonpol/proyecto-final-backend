@@ -118,8 +118,8 @@
 		>&#8677;</button>
 	{{/if}}
 </div>
-
-<div class="userCart display-1--description" id={{userData.cart._id}}>--</div>
+<div id="cid" hidden>{{userInfo.cid}}</div>
+<div class="userCart display-1--description" id="{{userInfo.cid}}">{{userInfo.full_name}} seleccioná el producto deseado:</div>
 
 <div id="cartCards--list" class="cartCards--container">
 	{{#each products}}
@@ -142,7 +142,8 @@
 				{{else}}
 					<p class="cartCard-content__body">No disponible</p>
 				{{/if}}
-				<button class="addToCart button-cart" data-id={{id}}>Añadir al 🛒</button>
+				<button class="addToCart button-cart" 				<button class="addToCart button-cart" id={{_id}}>Añadir al carrito</button>
+>Añadir al 🛒</button>
 			</div>
 		</div>
 	{{/each}}

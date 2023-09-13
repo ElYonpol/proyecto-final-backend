@@ -5,6 +5,13 @@
 </h1>
 
 <div class="display-1--description">
+	<a href="/createProduct">
+		<button class="button-cart">
+			Crear Producto Nuevo</button>
+	</a>
+</div>
+
+<div class="display-1--description">
 	<span><strong>Productos:</strong> {{paginate.totalDocs}}</span>
 	|
 	<span><strong>Página:</strong>
@@ -35,27 +42,41 @@
 </div>
 <div class="display-1--description">
 	{{#if paginate.hasPrevPage}}
-		<button class="button-cart" title="Primera página" alt="Primera página" onclick="changePage(1)">&#8676;</button>
 		<button
-			class="button-cart" title="Página anterior" alt="Página anterior"
+			class="button-cart"
+			title="Primera página"
+			alt="Primera página"
+			onclick="changePage(1)"
+		>&#8676;</button>
+		<button
+			class="button-cart"
+			title="Página anterior"
+			alt="Página anterior"
 			onclick="changePage({{paginate.prevPage}})"
 		>&#8810;</button>
 	{{/if}}
 	{{#if paginate.hasNextPage}}
 		<button
-			class="button-cart" title="Página siguiente" alt="Página siguiente"
+			class="button-cart"
+			title="Página siguiente"
+			alt="Página siguiente"
 			onclick="changePage({{paginate.nextPage}})"
 		>&#8811;</button>
 		<button
-			class="button-cart" title="Última página" alt="Última página"
+			class="button-cart"
+			title="Última página"
+			alt="Última página"
 			onclick="changePage({{paginate.totalPages}})"
 		>&#8677;</button>
 	{{/if}}
 </div>
 <div id="cid" hidden>{{userInfo.cid}}</div>
-<div class="userCart display-1--description" id="{{userInfo.cid}}">{{userInfo.full_name}} seleccioná el producto deseado:</div>
+<div
+	class="userCart display-1--description"
+	id="{{userInfo.cid}}"
+>{{userInfo.full_name}} seleccioná el producto deseado:</div>
 
-<div class="cartCards--container">
+<div id="cartCards--list" class="cartCards--container">
 	{{#each products}}
 		<div class="cartCard">
 			<div class="cartCard-image">

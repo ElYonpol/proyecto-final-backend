@@ -1,0 +1,59 @@
+<script defer src="/static/js/createProduct.js"></script>
+
+<h1 class="display-1">
+	<div class="display-1--intro">Crear Producto</div>
+</h1>
+
+<form id="newProductForm">
+	<fieldset>
+		<legend><span class="number">1</span>Datos del producto a crear</legend>
+		<label for="newProductCode">Código:</label>
+		<input
+			type="text"
+			id="newProductCode"
+			name="newProductCode"
+			placeholder="Código del producto"
+		/>
+
+		<label for="newProductCategory">Categoría:</label>
+		<select id="newProductCategory" name="newProductCategory">
+			<option value="Estética">Estética</option>
+			<option value="Prótesis">Prótesis</option>
+			<option value="Rehabilitación">Rehabilitación</option>
+		</select>
+
+		<label for="newProductTitle">Título:</label>
+		<input
+			type="text"
+			id="newProductTitle"
+			name="newProductTitle"
+			placeholder="Nombre del producto"
+		/>
+
+		<label for="newProductDescription">Descripción:</label>
+		<input
+			type="text"
+			id="newProductDescription"
+			name="newProductDescription"
+			placeholder="Descripción del producto"
+		/>
+
+		<label for="newProductPrice">Precio:</label>
+		<input
+			type="number"
+			id="newProductPrice"
+			name="newProductPrice"
+			placeholder="Precio del producto"
+		/>
+
+		<label for="newProductStock">Stock:</label>
+		<input
+			type="number"
+			id="newProductStock"
+			name="newProductStock"
+			placeholder="Stock del producto"
+		/>
+
+		<button class="btn--submit__contact" type="submit">Crear Producto</button>
+	</fieldset>
+</form>

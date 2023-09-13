@@ -20,7 +20,7 @@ viewsRouter.get("/", (req, res) => {
 //Listar productos con tabla con formato
 viewsRouter.get(
 	"/products",
-	authRole(["user", "premium"]),
+	authRole(["user", "premium", "admin"]),
 	async (req, res) => {
 		const { limit = 10, page = 1, sort = null } = req.query;
 		const query = req.query.query ? JSON.parse(req.query.query) : {};
@@ -54,7 +54,7 @@ viewsRouter.get(
 //Listar productos con tabla con formato y socket
 viewsRouter.get(
 	"/realtimeproducts",
-	authRole(["premium", "admin"]),
+	authRole(["user","premium", "admin"]),
 	async (req, res) => {
 		const { limit = 10, page = 1, sort = null } = req.query;
 		const query = req.query.query ? JSON.parse(req.query.query) : {};
@@ -68,6 +68,24 @@ viewsRouter.get(
 			style: "index.css",
 			products: docs,
 			paginate: rest,
+			categories,
+		});
+	}
+);
+
+//Crear un producto
+viewsRouter.get(
+	"/createProduct",
+	authRole(["user","premium", "admin"]),
+	async (req, res) => {
+		const arrayUser = req.user ?? [{}];
+		const { role } = arrayUser[0]
+		const userLoggedIn = req.user ? true : false;
+
+		const categories = await productService.getProductCategories();
+
+		res.render("createProduct", {
+			style: "index.css",
 			categories,
 		});
 	}
