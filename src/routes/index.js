@@ -24,7 +24,7 @@ const router = Router();
 router.use("/", viewsRouter);
 
 router.use("/api/products", productsRouter);
-router.use("/api/carts", authRole(["user", "premium"]), cartsRouter); // TODO: quitar role admin
+router.use("/api/carts", authRole(["user", "premium"]), cartsRouter);
 router.use("/api/users", usersRouter);
 router.use("/api/passwords", passwordsRouter);
 router.use("/api/orders", ordersRouter);
