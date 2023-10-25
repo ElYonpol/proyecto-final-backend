@@ -1,6 +1,6 @@
 const loginForm = document.querySelector("#loginForm");
 
-const ServerDeploy = "https://proyecto-final-backend-production-18df.up.railway.app/"
+const loginServerDeploy = "https://proyecto-final-backend-production-18df.up.railway.app/"
 
 loginForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
@@ -11,7 +11,7 @@ loginForm.addEventListener("submit", async (event) => {
 		obj[key] = value;
 	});
 
-	await fetch(`${ServerDeploy}` + "api/sessions/login", {
+	await fetch(`${loginServerDeploy}` + "api/sessions/login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

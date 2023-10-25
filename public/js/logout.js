@@ -1,11 +1,11 @@
 const logoutForm = document.querySelector("#logoutForm");
 
-const ServerDeploy = "https://proyecto-final-backend-production-18df.up.railway.app/"
+const logoutServerDeploy = "https://proyecto-final-backend-production-18df.up.railway.app/"
 
 logoutForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
-	await fetch(`${ServerDeploy}` + "api/sessions/login", {
+	await fetch(`${logoutServerDeploy}` + "api/sessions/logout", {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
