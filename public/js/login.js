@@ -11,7 +11,6 @@ loginForm.addEventListener("submit", async (event) => {
 		obj[key] = value;
 	});
 
-	// await fetch("http://localhost:8080/api/sessions/login", {
 	await fetch(`${ServerDeploy}` + "api/sessions/login", {
 		method: "POST",
 		headers: {
